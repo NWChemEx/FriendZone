@@ -10,13 +10,12 @@ import os
 
 # -- Project information -----------------------------------------------------
 
-project = u'pluginplay'
+project = u'friendzone'
 copyright = u'2020, NWChemEx Team'
 author = u'NWChemEx Team'
 
 # Get the version from version.txt
-with open('../../version.txt', 'r') as file:
-    version = file.read().replace('\n', '')
+version = '1.0.0'
 # The full version, including alpha/beta/rc tags
 release = version
 
@@ -35,7 +34,6 @@ needs_sphinx = '1.3'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
-    #'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
