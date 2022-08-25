@@ -27,15 +27,18 @@ class TestMoleculeConversions(unittest.TestCase):
 
         # Compare the atoms
         for i in range(corr.natm):
-            atom_i = pyscf_mol._atom[i]
-            corr_atom_i = corr._atom[i]
 
             # Ensure same atomic symbol
-            self.assertEqual(atom_i[0], corr_atom_i[0])
+            self.assertEqual(pyscf_mol.atom_symbol(i), corr.atom_symbol(i))
+
+            # Ensure same atomic number
+            self.assertEqual(pyscf_mol.atom_charge(i), corr.atom_charge(i))
 
             # Ensure (approximately) the same coordinates
+            carts = pyscf_mol.atom_coord(i, 'Bohr')
+            corr_carts = corr.atom_coord(i, 'Bohr')
             for q in range(3):
-                self.assertAlmostEqual(atom_i[1][q], corr_atom_i[1][q])
+                self.assertAlmostEqual(carts[q], corr_carts[q])
 
     def setUp(self):
         h2 = 'H0 0.0 0.0 0.0; H1 0.0 0.0 1.6818473865225443'

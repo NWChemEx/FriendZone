@@ -13,6 +13,15 @@ def convert_to_pyscf(nwx_mol, pyscf_mol=None):
     just change the Molecule part of the input, leaving all other state
     untouched.
 
+    Notes on implementation
+    =======================
+    - PySCF requires each atom to have a unique atomic symbol if we want to
+      specify the atomic basis set per atom (as opposed to saying that all
+      carbons use one set of parameters). For this reason we number the
+      atoms, *e.g.*, the first hydrogen has symbol ``'H0``, the second
+      ``'H1'``, *etc.*
+
+
     :param nwx_mol: The Molecule object we are converting from
     :type nwx_mol: chemist.Molecule
     :param pyscf_mol: The user can optionally specify an already existing
@@ -48,7 +57,7 @@ def convert_to_pyscf(nwx_mol, pyscf_mol=None):
 
     # Remove trailing ';'
     atoms = atoms[:-1]
-    print(atoms)
+
     pyscf_mol.atom = atoms
     pyscf_mol.build()
     return pyscf_mol

@@ -4,7 +4,7 @@ from simde import simde, chemist, pluginplay
 from mokup import mokup
 
 
-class TestRHFEnergy(unittest.TestCase):
+class TestMP2Energy(unittest.TestCase):
 
     def setUp(self):
         h2 = mokup.molecule.h2
@@ -15,9 +15,9 @@ class TestRHFEnergy(unittest.TestCase):
         self.molecules = [h2, h2_2, h2o]
         self.bs = [sto3g]
         self.corr = {
-            (h2, sto3g): -1.09418483235277,
-            (h2_2, sto3g): -2.1883696566775592,
-            (h2o, sto3g): -74.9420800589486
+            (h2, sto3g): -1.1112481262263467,
+            (h2_2, sto3g): -2.2224962465716924,
+            (h2o, sto3g): -74.99122976221274
         }
 
     def test_rhf_energy(self):
@@ -30,9 +30,5 @@ class TestRHFEnergy(unittest.TestCase):
                 sys = chemist.ChemicalSystem(mol)
                 aos = mokup.get_bases(m_mol, m_aos)
 
-                [e] = mm.at("PySCF RHF").run_as[simde.AOEnergy](aos, sys)
+                [e] = mm.at("PySCF RMP2").run_as[simde.AOEnergy](aos, sys)
                 self.assertAlmostEqual(e, self.corr[(m_mol, m_aos)], places=5)
-
-
-if __name__ == '__main__':
-    unittest.main()

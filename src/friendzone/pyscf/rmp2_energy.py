@@ -2,17 +2,18 @@ from simde import simde, pluginplay
 from . import molecule_conversions
 from . import ao_space_conversions
 import pyscf
+import pyscf.mp
 
 module_desc = """
 Description
 ===========
 
-Computes the restricted SCF energy of a molecule/AO basis set pair by
+Computes the restricted MP2 energy of a molecule/AO basis set pair by
 calling PySCF.
 """
 
 
-class RHFEnergy(pluginplay.ModuleBase):
+class RMP2Energy(pluginplay.ModuleBase):
 
     def __init__(self):
         super().__init__(self)
@@ -32,8 +33,8 @@ class RHFEnergy(pluginplay.ModuleBase):
         mol.verbose = 0
 
         # Run the energy
-        rhf = pyscf.scf.RHF(mol)
-        egy = rhf.kernel()  # N.B. egy comes back as a numpy.float64
+        mf = pyscf.scf.RHF(mol).run()
+        my_mp = pyscf.mp.MP2(mf).run()
 
         rv = self.results()
-        return simde.AOEnergy.wrap_results(rv, float(egy))
+        return simde.AOEnergy.wrap_results(rv, float(my_mp.e_tot))
