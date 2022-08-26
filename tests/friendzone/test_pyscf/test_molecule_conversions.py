@@ -3,42 +3,10 @@ from pyscf import gto
 from friendzone.pyscf.molecule_conversions import (convert_to_pyscf,
                                                    convert_from_pyscf)
 from mokup import mokup
+from .test_pyscf import compare_pyscf_mol
 
 
 class TestMoleculeConversions(unittest.TestCase):
-
-    def compare_pyscf_mol(self, pyscf_mol, corr):
-        """ AFAIK PySCF does not have a way of comparing Mol instances, so
-        we wrote this function. N.B., the names of the arguments are logical
-        only, permuting the reference and the object being checked will generate
-        the same result.
-
-        :param pyscf_mol: The molecule we generated
-        :type pyscf_mol: pyscf.gto.Mole
-        :param corr: The reference instance to compare against
-        :type corr: pyscf.gto.Mole
-        """
-
-        # Ensure same number of atoms
-        self.assertEqual(pyscf_mol.natm, corr.natm)
-
-        # Ensure same units
-        self.assertEqual(pyscf_mol.unit, corr.unit)
-
-        # Compare the atoms
-        for i in range(corr.natm):
-
-            # Ensure same atomic symbol
-            self.assertEqual(pyscf_mol.atom_symbol(i), corr.atom_symbol(i))
-
-            # Ensure same atomic number
-            self.assertEqual(pyscf_mol.atom_charge(i), corr.atom_charge(i))
-
-            # Ensure (approximately) the same coordinates
-            carts = pyscf_mol.atom_coord(i, 'Bohr')
-            corr_carts = corr.atom_coord(i, 'Bohr')
-            for q in range(3):
-                self.assertAlmostEqual(carts[q], corr_carts[q])
 
     def setUp(self):
         h2 = 'H0 0.0 0.0 0.0; H1 0.0 0.0 1.6818473865225443'
@@ -69,7 +37,7 @@ class TestMoleculeConversions(unittest.TestCase):
         for mol_name, mol in self.nwx_mols.items():
             pyscf_mol = convert_to_pyscf(mol)
             corr = self.pyscf_mols[mol_name]
-            self.compare_pyscf_mol(pyscf_mol, corr)
+            compare_pyscf_mol(self, pyscf_mol, corr)
 
     def test_convert_to_pyscf_no_default(self):
         """Tests convert_to_pyscf by providing a Mole object"""
@@ -83,7 +51,7 @@ class TestMoleculeConversions(unittest.TestCase):
             self.assertEqual(pyscf_mol.spin, 2)
 
             # Compare the rest of the state
-            self.compare_pyscf_mol(pyscf_mol, corr)
+            compare_pyscf_mol(self, pyscf_mol, corr)
 
     def test_convert_from_pyscf(self):
         for mol_name, mol in self.pyscf_mols.items():

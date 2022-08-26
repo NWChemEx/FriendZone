@@ -8,7 +8,8 @@ on:
 jobs:
   build:
     uses: NWChemEx-Project/.github/.github/workflows/c-cpp_tmpl.yml@master
-    with: 
-      dependencies: 'gcc gcovr cmake openmpi boost'
+    with:
+      dependencies: >
+        gcc gcovr openblas cblas lapacke scalapack boost eigen3 openmpi pyscf
     secrets:
       CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
