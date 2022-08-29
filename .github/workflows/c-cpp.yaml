@@ -11,5 +11,6 @@ jobs:
     with:
       dependencies: >
         gcc gcovr openblas cblas lapacke scalapack boost eigen3 openmpi pyscf
+        cppyy
     secrets:
       CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}

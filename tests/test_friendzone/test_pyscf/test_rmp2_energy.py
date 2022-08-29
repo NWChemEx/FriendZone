@@ -4,9 +4,21 @@ from simde import simde, chemist, pluginplay
 from mokup import mokup
 
 
-class TestMP2Energy(unittest.TestCase):
+class TestRMP2Energy(unittest.TestCase):
+    '''Tests functionality found in the friendzone.pyscf.rmp2_energy module.
+
+    :param molecules: A list of molecules to run
+    :type molecules: list(mokup.molecule)
+
+    :param bs: A list of basis sets to run
+    :type bs: list(mokup.basis_set)
+
+    :param corr: Map from molecule-basis set pairs to its total MP2 energy.
+    :type corr: dict(tuple(mokup.molecule, mokup.basis_set), float)
+    '''
 
     def setUp(self):
+        '''Initializes the attributes.'''
         h2 = mokup.molecule.h2
         h2_2 = mokup.molecule.h2_2
         h2o = mokup.molecule.h2o
@@ -20,7 +32,14 @@ class TestMP2Energy(unittest.TestCase):
             (h2o, sto3g): -74.99122976221274
         }
 
-    def test_rhf_energy(self):
+    def test_rmp2_energy(self):
+        '''Tests the run member of the RMP2Energy class.
+
+        This unit test loops over all molecule-basis set pairs, computes the
+        MP2 energy of the input, and then compares the energy to the reference
+        values.
+        '''
+
         mm = pluginplay.ModuleManager()
         friendzone.pyscf.load_modules(mm)
 

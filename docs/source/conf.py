@@ -7,6 +7,7 @@
 # http://www.sphinx-doc.org/en/master/config
 
 import os
+import sys
 
 # -- Project information -----------------------------------------------------
 
@@ -19,10 +20,6 @@ version = '1.0.0'
 # The full version, including alpha/beta/rc tags
 release = version
 
-##############################################################################
-#           Shouldn't need to change anything below this point               #
-##############################################################################
-
 # -- General configuration ---------------------------------------------------
 
 # We use numref which is introduced in Sphinx 1.3
@@ -32,12 +29,8 @@ needs_sphinx = '1.3'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.githubpages'
+    'sphinx.ext.doctest', 'sphinx.ext.todo', 'sphinx.ext.coverage',
+    'sphinx.ext.mathjax', 'sphinx.ext.githubpages', 'autoapi.extension'
 ]
 dir_path = os.path.dirname(os.path.realpath(__file__))
 doc_path = os.path.dirname(dir_path)
@@ -60,7 +53,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -101,12 +94,10 @@ html_theme = 'sphinx_rtd_theme'
 #
 # html_sidebars = {}
 
-
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = project + 'doc'
-
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -132,18 +123,16 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, project + '.tex',project + ' Documentation', author, 'manual'),
+    (master_doc, project + '.tex', project + ' Documentation', author,
+     'manual'),
 ]
-
 
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, project.lower(), project + ' Documentation', [author], 1)
-]
-
+man_pages = [(master_doc, project.lower(), project + ' Documentation',
+              [author], 1)]
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -151,12 +140,13 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, project, project + ' Documentation',
-     author, project, 'One line description of project.', 'Miscellaneous'),
+    (master_doc, project, project + ' Documentation', author, project,
+     'One line description of project.', 'Miscellaneous'),
 ]
 
-
 # -- Extension configuration -------------------------------------------------
+autoapi_dirs = ['../../src', '../../tests']
+autoapi_add_toctree_entry = False
 
 # -- Options for intersphinx extension ---------------------------------------
 

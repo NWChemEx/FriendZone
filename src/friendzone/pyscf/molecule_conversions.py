@@ -1,9 +1,16 @@
+'''Conversions involving chemist.Molecule and pyscf.gto.Mole
+
+The functions in this module provide infrastructure pertaining to converting
+Chemist's Molecule class to (the molecule part of) PySCF's Mole class and
+vice versa.
+'''
+
 from pyscf import gto
 from simde import chemist
 
 
 def convert_to_pyscf(nwx_mol, pyscf_mol=None):
-    """ Converts a chemist.Molecule instance into a PySCF Mole object.
+    '''Converts a chemist.Molecule instance into a PySCF Mole object.
 
     PySCF's Mol object contains state that in NWChemEx is spread out across a
     number of classes (*e.g.*, ChemicalSystem, Molecule, and AOSpace). This
@@ -13,13 +20,13 @@ def convert_to_pyscf(nwx_mol, pyscf_mol=None):
     just change the Molecule part of the input, leaving all other state
     untouched.
 
-    Notes on implementation
-    =======================
-    - PySCF requires each atom to have a unique atomic symbol if we want to
-      specify the atomic basis set per atom (as opposed to saying that all
-      carbons use one set of parameters). For this reason we number the
-      atoms, *e.g.*, the first hydrogen has symbol ``'H0``, the second
-      ``'H1'``, *etc.*
+    .. note::
+
+       PySCF requires each atom to have a unique atomic symbol if we want to
+       specify the atomic basis set per atom (as opposed to saying that all
+       carbons use one set of parameters). For this reason we number the
+       atoms, *e.g.*, the first hydrogen has symbol ``'H0'``, the second
+       ``'H1'``, *etc.*
 
 
     :param nwx_mol: The Molecule object we are converting from
@@ -32,7 +39,7 @@ def convert_to_pyscf(nwx_mol, pyscf_mol=None):
 
     :return: The PySCF Mole object whose atoms are populated from ``nwx_mol``
     :rtype: pyscf.gto.Mole
-    """
+    '''
 
     if pyscf_mol == None:
         pyscf_mol = gto.Mole()
@@ -64,14 +71,14 @@ def convert_to_pyscf(nwx_mol, pyscf_mol=None):
 
 
 def convert_from_pyscf(pyscf_mol):
-    """ Converts a PySCF Mole object into a Chemist Molecule object
+    '''Converts a PySCF Mole object into a Chemist Molecule object
 
     :param pyscf_mol: The Mole object we are converting from
     :type pyscf_mol: pyscf.gto.Mole
 
     :return: The Chemist Molecule object with atoms populated from ``pyscf_mol``
     :rtype: chemist.Molecule
-    """
+    '''
 
     nwx_mol = chemist.Molecule()
 

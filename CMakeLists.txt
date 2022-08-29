@@ -34,7 +34,7 @@ if("${BUILD_TESTING}")
     add_test(
         NAME pyscf_api
         COMMAND ${Python3_EXECUTABLE} "-m" "unittest"
-        WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/tests/friendzone"
+        WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/tests/test_friendzone"
     )
     set_property(
         TEST pyscf_api

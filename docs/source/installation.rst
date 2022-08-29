@@ -17,7 +17,7 @@ Step 0: Setup a Python Virtual Environment
 FriendZone's modules are written in Python. So it is a good idea to setup a
 Python virtual environment prior to installing anything. This is done by:
 
-.. code-block:: terminal
+.. code-block:: bash
 
    python -m venv venv
    source venv/bin/activate
@@ -38,9 +38,6 @@ For the sake of these instructions we assume ``${BUILD_DIR}`` is the
 absolute path to the build directory. In turn, ``${BUILD_DIR}/Python`` is the
 absolute path to the generated Python bindings.
 
-.. note::
-
-   At the moment FriendZone can not automate Step 1 for you.
 
 ***************************************
 Step 2: Install FriendZone Dependencies
@@ -48,7 +45,7 @@ Step 2: Install FriendZone Dependencies
 
 This is done by running (in the root directory of the FriendZone repo):
 
-.. code-block:: terminal
+.. code-block:: bash
 
    pip install -r requirements.txt
 

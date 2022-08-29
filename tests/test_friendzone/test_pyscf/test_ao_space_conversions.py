@@ -2,31 +2,30 @@ import unittest
 from pyscf import gto
 from friendzone.pyscf.ao_space_conversions import atom_to_ao, convert_to_pyscf
 from mokup import mokup
-from .test_pyscf import compare_pyscf_basis, compare_pyscf_mol
+from .test_pyscf import string_geoms, compare_pyscf_basis, compare_pyscf_mol
 import pyscf
 
 
 class TestAOSpaceConversions(unittest.TestCase):
+    ''' Tests functionality found in the friendzone.pyscf.ao_space_conversions
+    module.
+
+    :param nwx_aos: A dictionary mapping molecule names to their AO basis sets.
+    :type nwx_aos: dict(str, chemist.orbital_space.AOSpaceD)
+
+    :param pyscf_mols: A dictionary mapping molecule names to PySCF Mole
+        objects. The state of the Mole objects is consistent with calling
+        ``molecule_conversions.convert_to_pyscf``.
+    :type pyscf_mols: dict(str, pyscf.gto.Mole)
+
+    :param pyscf_mols_and_aos: Similar to ``pyscf_mos``, but also contains the
+        AO basis set. These are the correct answers.
+    :type pyscf_mols_and_aos: dict(str, pyscf.gto.Mole)
+    '''
 
     def setUp(self):
-        h2 = 'H0 0.0 0.0 0.0; H1 0.0 0.0 1.6818473865225443'
-        h2_2 = '''
-            H0 0.0 0.0  0.0
-            H1 0.0 0.0  1.6818473865225443
-            H2 0.0 0.0 41.6818473865225443
-            H3 0.0 0.0 43.363694773
-            '''
-        h2o = '''
-            O0  0.0               -0.143222342980786 0.0
-            H0  1.638033502034240  1.136556880358410 0.0
-            H1 -1.638033502034240  1.136556880358410 0.0
-            '''
-        h2_h2 = '''
-        H0 0.0 0.0  0.0
-        H1 0.0 0.0  1.6818473865225443
-        ghost_H0 0.0 0.0 41.6818473865225443
-        ghost_H1 0.0 0.0 43.363694773
-        '''
+        '''Initializes the attributes'''
+        geoms = string_geoms()
 
         bs = mokup.basis_set.sto3g
         self.nwx_aos = {
@@ -35,9 +34,9 @@ class TestAOSpaceConversions(unittest.TestCase):
             'H2O': mokup.get_bases(mokup.molecule.h2o, bs)
         }
         self.pyscf_mols = {
-            'H2': gto.M(atom=h2, unit='B'),
-            'H2_2': gto.M(atom=h2_2, unit='B'),
-            'H2O': gto.M(atom=h2o, unit='B')
+            'H2': gto.M(atom=geoms['H2'], unit='B'),
+            'H2_2': gto.M(atom=geoms['H2_2'], unit='B'),
+            'H2O': gto.M(atom=geoms['H2O'], unit='B')
         }
 
         h_bs = gto.basis.parse('''
@@ -71,13 +70,19 @@ class TestAOSpaceConversions(unittest.TestCase):
             'ghost_H1': h_bs
         }
         self.pyscf_mols_and_aos = {
-            'H2': gto.M(atom=h2, unit='B', basis=h2_basis),
-            'H2_2': gto.M(atom=h2_2, unit='B', basis=h2_2_basis),
-            'H2O': gto.M(atom=h2o, unit='B', basis=h2o_basis),
-            'H2(H2)': gto.M(atom=h2_h2, unit='B', basis=h2_h2_basis)
+            'H2': gto.M(atom=geoms['H2'], unit='B', basis=h2_basis),
+            'H2_2': gto.M(atom=geoms['H2_2'], unit='B', basis=h2_2_basis),
+            'H2O': gto.M(atom=geoms['H2O'], unit='B', basis=h2o_basis),
+            'H2(H2)': gto.M(atom=geoms['H2(H2)'], unit='B', basis=h2_h2_basis)
         }
 
     def test_atom_to_ao(self):
+        '''Tests atom_to_ao
+
+        At the moment ``atom_to_ao`` is somewhat simplistic so the main testing
+        point is that the resulting list is correct.
+        '''
+
         for mol_name, aos in self.nwx_aos.items():
             pyscf_mol = self.pyscf_mols[mol_name]
             atom2center = atom_to_ao(pyscf_mol, aos)
@@ -85,25 +90,44 @@ class TestAOSpaceConversions(unittest.TestCase):
             self.assertEqual(atom2center, corr)
 
     def test_convert_to_pyscf(self):
+        '''Tests convert_to_pyscf when there are no ghost atoms present.
+
+        This unit test assumes that atom_to_ao always works. This unit test
+        also assumes that there are no ghost atoms in the system. Subject to
+        these assumptions, we check that:
+        - the AO basis set parameters are added to the result correctly
+        - the atoms are unchanged
+        '''
         for mol_name, aos in self.nwx_aos.items():
             pyscf_mol = self.pyscf_mols[mol_name]
-            atom2center = [i for i in range(pyscf_mol.natm)]
-            pyscf_mol = convert_to_pyscf(aos, atom2center, pyscf_mol)
+            pyscf_mol = convert_to_pyscf(aos, pyscf_mol)
             corr = self.pyscf_mols_and_aos[mol_name]
             compare_pyscf_basis(self, pyscf_mol, corr)
             compare_pyscf_mol(self, pyscf_mol, corr)
 
     def test_convert_to_pyscf_ghost_atoms(self):
+        '''Tests convert_to_pyscf when there are ghost atoms present.
+
+        This unit test is similar to ``test_convert_to_pyscf``, but we
+        now know we have ghost atoms in the system. Here we check that:
+        - the AO basis set parameters are added to the result correctly
+        - the atoms are updated with ghost atoms
+        '''
         pyscf_mol = self.pyscf_mols['H2']
         aos = self.nwx_aos['H2_2']
-        atom2center = [0, 1]
-        pyscf_mol = convert_to_pyscf(aos, atom2center, pyscf_mol)
+        pyscf_mol = convert_to_pyscf(aos, pyscf_mol)
 
         corr = self.pyscf_mols_and_aos['H2(H2)']
         compare_pyscf_basis(self, pyscf_mol, corr)
         compare_pyscf_mol(self, pyscf_mol, corr)
 
     def test_convert_to_pyscf_error_checking(self):
+        ''' Tests the error checking capabilities of convert_to_pyscf
+
+        At the moment the error checking in ``convert_to_pyscf`` amounts to
+        detecting inconcistencies in the number of centers/atoms.
+        '''
+
         pyscf_h2 = self.pyscf_mols['H2']
         pyscf_h2_2 = self.pyscf_mols['H2_2']
         nwx_h2 = self.nwx_aos['H2']
@@ -112,23 +136,9 @@ class TestAOSpaceConversions(unittest.TestCase):
         fxn = convert_to_pyscf
         a_exp = AssertionError
 
-        # This passes an empty list whe the list should contain two elements
-        # tripping len(atom2center) != pyscf_mol.natm.
-        self.assertRaises(a_exp, fxn, nwx_h2, [], pyscf_h2)
-
         # This passes an AOSpace with two centers when there are four real
         # atoms, in turn len(nwx_ao_space) < pyscf_mol.natm is tripped.
-        atom2center = [0, 1, 2, 3]
-        self.assertRaises(a_exp, fxn, nwx_h2, atom2center, pyscf_h2_2)
-
-        # This maps atoms 0 and 1 to center 0 violating the assumption that
-        # each atom maps to one (and only one) center
-        atom2center = [0, 0]
-        self.assertRaises(KeyError, fxn, nwx_h2, atom2center, pyscf_h2)
-
-        # This maps atom 1 and to center 4, but nwx_ao_space only has 2 centers
-        atom2center = [0, 4]
-        self.assertRaises(KeyError, fxn, nwx_h2, atom2center, pyscf_h2)
+        self.assertRaises(a_exp, fxn, nwx_h2, pyscf_h2_2)
 
 
 if __name__ == '__main__':

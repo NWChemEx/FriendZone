@@ -1,33 +1,31 @@
 from simde import simde, pluginplay
-from . import molecule_conversions
+from . import chemical_system_conversions
 from . import ao_space_conversions
 import pyscf
 
-module_desc = """
-Description
-===========
-
-Computes the restricted SCF energy of a molecule/AO basis set pair by
-calling PySCF.
-"""
-
 
 class RHFEnergy(pluginplay.ModuleBase):
+    '''Computes the restricted SCF energy of a molecule/AO basis set pair by
+    calling PySCF.
+    '''
 
     def __init__(self):
+        '''Standard module ctor'''
+
         super().__init__(self)
-        self.description(module_desc)
+        self.description(RHFEnergy.__doc__)
         self.satisfies_property_type[simde.AOEnergy]()
 
     def run_(self, inputs, submods):
+        '''Computes the restricted SCF energy with PySCF'''
+
         [aos, sys] = simde.AOEnergy.unwrap_inputs(inputs)
 
-        # Add state from Molecule class
-        mol = molecule_conversions.convert_to_pyscf(sys.molecule())
+        # Add state from ChemcialSystem
+        mol = chemical_system_conversions.convert_to_pyscf(sys)
 
         # Add state from AOSpace class
-        atom2center = [i for i in range(mol.natm)]
-        mol = ao_space_conversions.convert_to_pyscf(aos, atom2center, mol)
+        mol = ao_space_conversions.convert_to_pyscf(aos, mol)
 
         mol.verbose = 0
 

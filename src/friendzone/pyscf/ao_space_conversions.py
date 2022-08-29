@@ -1,9 +1,17 @@
+'''Conversions involving chemist.AOSpaceD and pyscf.gto.Mole
+
+The functions in this module provide infrastructure pertaining to converting
+Chemist's AOSpaceD class to (the basis set part of) PySCF's Mole class
+
+.. note::
+
+   Right now there are no functions for the reverse procedure (PySCF to
+   Chemist). If such methods are needed they can be added here.
+'''
+
 from pyscf import gto
 from simde import chemist
 import math
-
-# N.B. I'm not sure if we really ever need to convert PySCF's basis back to NWX
-# so I skipped that conversion for now.
 
 
 def atom_to_ao(pyscf_mol, nwx_ao_space):
@@ -71,8 +79,53 @@ def atom_to_ao(pyscf_mol, nwx_ao_space):
     return rv
 
 
-def convert_to_pyscf(nwx_ao_space, atom2center, pyscf_mol):
+def convert_to_pyscf(nwx_ao_space, pyscf_mol):
     '''Adds the state of an NWChemEx AOSpace to a PySCF Mole object.
+
+    This function fills in the part of the PySCF mole object pertaining to
+    the AO basis set. This is accomplished by calling atom_to_ao to map the
+    centers in ``nwx_ao_space`` to the atoms in ``pyscf_mol``. Any unassigned
+    centers are assumed to be ghost atoms.
+
+    .. note::
+
+       This function does not rely on the atomic basis set names (*e.g.*,
+       STO-3G, cc-pVDZ), nor does it try to ascertain if, say, all carbons
+       have the same atomic basis set.
+
+    .. note::
+
+       Unfortunately PySCF's public API for setting the basis set is string
+       based, so this routine builds up a string representation of the basis
+       set in ``nwx_ao_space`` to pass it to PySCF. The format for each
+       shell is:
+
+       .. code::
+
+          <Atomic Symbol> <Letter for Angular Momentum>
+              <exponent 0> <coefficient 0>
+              <exponent 1> <coefficient 1>
+
+    .. note::
+
+       Our ghost atom solution assumes that all centers not present in
+       ``pyscf_mol`` are ghost atoms. It gets a bit hacky from there, but we
+       do the best we can given that AFAIK PySCF forces us to assign atomic
+       numbers to ghost atoms. For geometry specification, PySCF lets us do
+       something like:
+
+       .. code::
+
+          ghost_H 0.0 0.0 0.0
+
+       to define a ghost atom, sitting at the origin, which uses hydrogen's
+       basis set. By using atom names like ``ghost_H0``, ``ghost_H1``, etc. we
+       can tell the ghost atoms apart and more importantly can assign each
+       ghost atom its own basis set analogous to how we assigned basis sets
+       for each real atom. The only difference is when we generate the basis
+       set string, we always use hydrogen as the atomic symbol (the identity
+       of the ghost atom's atomic identity is irrelevant for all
+       purposes beyond assigning basis functions).
 
     :param nwx_ao_space: NWChemEx represents AOs via the AOSpace object. This
         class is conceptually a container of AtomicBasisSet objects (each of
@@ -80,13 +133,6 @@ def convert_to_pyscf(nwx_ao_space, atom2center, pyscf_mol):
         the NWChemEx AOSpace object we are using to populate the basis set of
         the ``pyscf_mol`` object
     :type nwx_ao_space: chemist.AOSpaceD
-
-    :param atom2center: A list such that ``atom2center[i]`` is the offset of
-        the AtomicBasisSet (*i.e.*, element of ``nwx_ao_space``) for the
-        ``i``-th atom in ``pyscf_mol``. *N.B*, NWChemEx does not count ghost
-        atoms as atoms, so  ``len(atom2center)`` may be less than the number
-        of centers in ``nwx_ao_space``.
-    :type atom2center: list(int)
 
     :param pyscf_mol: This is the input to PySCF we are adding an AO basis set
         to. It is assumed that each atom has a unique symbol (*e.g.*, the
@@ -99,67 +145,11 @@ def convert_to_pyscf(nwx_ao_space, atom2center, pyscf_mol):
         ``nwx_ao_space`` to it.
     :rtype: pyscf.gto.Mole
 
-    :raises AssertionError: If the number of atoms in ``pyscf_mol`` is not
-        equal to the length of ``atom2center`` or if the number of centers
-        in ``atom2center`` is less than the number of atoms in ``pyscf_mol``.
-    :raises KeyError: If a center is assigned to more than one atom or if an
-        element of ``atom2center`` is greater than or equal to
-        ``len(nwx_ao_space)``
-
-    Notes on implementation
-    =======================
-    - In probably 99% of cases we could "cheat" and use atomic basis set
-      names (*e.g.*, STO-3G, cc-pVDZ); however, there's no guarantees that:
-
-      1. the creator of the NWChemEx basis set tagged it right, and
-      2. PySCF agrees on the parameters of the basis set
-
-    - Again, in probably 99% of cases atomic basis sets are set per atom type,
-      *e.g.*, all carbons share the same AO parameters. This means we probably
-      could set the parameters once. However, this involves floating point
-      comparisons on our side (to ensure that the parameters really are the
-      same) which we want to avoid. It's not clear that it saves us anything
-      anyways since under the hood the parameters are probably just set per
-      atom anyways.
-
-    Basis Set Format
-    ----------------
-
-    Unfortunately PySCF's public API for setting the basis set is string
-    based, so this routine builds up a string representation of the basis
-    set in ``nwx_ao_space`` to pass it to PySCF. The format for each
-    shell is:
-
-    .. code::
-
-       <Atomic Symbol> <Letter for Angular Momentum>
-           <exponent 0> <coefficient 0>
-           <exponent 1> <coefficient 1>
-
-    Ghost Atoms
-    -----------
-
-    Our ghost atom solution assumes that all centers not present in
-    atom2center are ghost atoms. It gets a bit hacky from there, but we do the
-    best we can given that AFAIK PySCF forces us to assign atomic numbers to
-    ghost atoms. For geometry specification, PySCF lets us do something like:
-
-    .. code::
-
-       ghost_H 0.0 0.0 0.0
-
-    to define a ghost atom, sitting at the origin, which uses hydrogen's basis
-    set. By using atom names like ``ghost_H0``, ``ghost_H1``, etc. we can tell
-    the ghost atoms apart and more importantly can assign each ghost atom its
-    own basis set analogous to how we assigned basis sets for each real atom.
-    The only difference is when we generate the basis set string, we always
-    use hydrogen as the atomic symbol (the identity of the ghost atom's atomic
-    identity is irrelevant for all purposes beyond assigning basis functions).
+    :raises AssertionError: If the number of centers in ``nwx_ao_space`` is
+        less than the number of atoms in ``pyscf_mol``.
     '''
 
-    # Assume pyscf_mol has the atoms already (correctly) set. In that case
-    # atom2center better agree with pyscf_mol on the number of atoms
-    assert len(atom2center) == pyscf_mol.natm
+    atom2center = atom_to_ao(pyscf_mol, nwx_ao_space)
 
     # We have ghost atoms if nwx_ao_space.size() != pyscf_mol.natm.
     n_atoms = pyscf_mol.natm
