@@ -49,8 +49,9 @@ class TestRHFEnergy(unittest.TestCase):
                 mol = mokup.get_molecule(m_mol)
                 sys = chemist.ChemicalSystem(mol)
                 aos = mokup.get_bases(m_mol, m_aos)
-
-                [e] = mm.at("PySCF RHF").run_as[simde.AOEnergy](aos, sys)
+                mod = mm.at("PySCF RHF")
+                mod.turn_off_memoization()
+                [e] = mod.run_as[simde.AOEnergy](aos, sys)
                 self.assertAlmostEqual(e, self.corr[(m_mol, m_aos)], places=5)
 
 
