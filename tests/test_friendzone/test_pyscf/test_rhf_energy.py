@@ -41,31 +41,17 @@ class TestRHFEnergy(unittest.TestCase):
         SCF energy of the input, and then compares the energy to the reference
         values.
         '''
-
-        geom = '''
-        O  0.0               -0.143222342980786 0.0
-        H  1.638033502034240  1.136556880358410 0.0
-        H -1.638033502034240  1.136556880358410 0.0
-        '''
-
-        mol = pyscf.gto.M(atom=geom, unit='B', basis='sto-3g')
-        rhf = pyscf.scf.RHF(mol)
-        egy = rhf.kernel()
-        key = (self.molecules[2], self.bs[0])
-        self.assertAlmostEqual(egy, self.corr[key])
-
         mm = pluginplay.ModuleManager()
         friendzone.pyscf.load_modules(mm)
 
-        #for m_mol in self.molecules:
-        #    for m_aos in self.bs:
-        #        mol = mokup.get_molecule(m_mol)
-        #        sys = chemist.ChemicalSystem(mol)
-        #        aos = mokup.get_bases(m_mol, m_aos)
-        #        mod = mm.at("PySCF RHF")
-        #        mod.turn_off_memoization()
-        #        [e] = mod.run_as[simde.AOEnergy](aos, sys)
-        #        self.assertAlmostEqual(e, self.corr[(m_mol, m_aos)], places=5)
+        for m_mol in self.molecules:
+            for m_aos in self.bs:
+                mol = mokup.get_molecule(m_mol)
+                sys = chemist.ChemicalSystem(mol)
+                aos = mokup.get_bases(m_mol, m_aos)
+                mod = mm.at("PySCF RHF")
+                [e] = mod.run_as[simde.AOEnergy](aos, sys)
+                self.assertAlmostEqual(e, self.corr[(m_mol, m_aos)], places=5)
 
 
 if __name__ == '__main__':

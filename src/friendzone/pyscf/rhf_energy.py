@@ -1,4 +1,4 @@
-from simde import simde, pluginplay
+from simde import simde, chemist, pluginplay
 from . import chemical_system_conversions
 from . import ao_space_conversions
 import pyscf
