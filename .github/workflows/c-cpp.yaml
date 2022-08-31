@@ -10,7 +10,7 @@ jobs:
     uses: ./.github/workflows/c-cpp_tmpl.yml
     with:
       dependencies: >
-        gcc gcovr openblas cblas lapacke scalapack boost eigen3 openmpi pyscf
-        cppyy
+        gcc gcovr cmake openblas cblas lapacke scalapack boost eigen3 openmpi
+        cppyy numpy pyscf
     secrets:
       CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
