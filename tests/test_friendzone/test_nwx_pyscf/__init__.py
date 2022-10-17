@@ -1,8 +1,8 @@
 '''Contains tests associated with the PySCF sub-package of FriendZone.
 
-The test_pyscf package is set up so that the tests for the
-``friendzone.pyscf.x.py`` module are in the
-``test_friendzone.test_pyscf.test_x.py`` module.
+The test_nwx_pyscf package is set up so that the tests for the
+``friendzone.nwx_pyscf.x.py`` module are in the
+``test_friendzone.test_nwx_pyscf.test_x.py`` module.
 '''
 from simde import pluginplay
 
