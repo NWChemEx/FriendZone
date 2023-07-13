@@ -1,1 +1,3 @@
-git+https://github.com/pyscf/pyscf
+pydantic == 1.8.2
+qcengine
+networkx

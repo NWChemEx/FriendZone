@@ -34,3 +34,6 @@ toolchain.cmake
 # These are the default names for the components of the cache
 cache.db
 uuid.db
+
+# This is a generated file
+src/python/friendzone/friends.py

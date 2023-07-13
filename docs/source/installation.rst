@@ -22,28 +22,12 @@ Python virtual environment prior to installing anything. This is done by:
    python -m venv venv
    source venv/bin/activate
 
-*******************
-Step 1: Build SimDE
-*******************
-
-FriendZone depends explicitly on SimDE. If you intend to use FriendZone with
-modules provided by NWChemEx (*e.g.*, modules for assigning AO basis sets),
-you may opt to instead build NWChemEx (which will also build SimDE).
-Regardless of whether you decide to build SimDE only, or SimDE + NWChemEx,
-you should ensure you build the Python bindings using the Python environment
-from step 0.
-
-When you build SimDE (and/or NWChemEx) you will do so in a build directory.
-For the sake of these instructions we assume ``${BUILD_DIR}`` is the
-absolute path to the build directory. In turn, ``${BUILD_DIR}/Python`` is the
-absolute path to the generated Python bindings.
-
-
 ***************************************
-Step 2: Install FriendZone Dependencies
+Step 1: Install FriendZone Dependencies
 ***************************************
 
-This is done by running (in the root directory of the FriendZone repo):
+Make sure your Python virtual environment from Step 0 is activated and then
+run:
 
 .. code-block:: bash
 
@@ -51,10 +35,30 @@ This is done by running (in the root directory of the FriendZone repo):
 
 Again make sure you are in the same virtual environment you created in step 0
 
+**************************
+Step 2: Install FriendZone
+**************************
+
+Once the dependencies are installed, FriendZone can be built using the usual
+CMake commands:
+
+.. code-block:: bash
+
+   cmake -H. \
+         -B<build_dir> \
+         -DCMAKE_INSTALL_PREFIX:PATH=<where/to/install/libraries> \
+         -DCMAKE_TOOLCHAIN_FILE:PATH=<path/to/toolchain.cmake>
+   cmake --build build --target install --parallel 2
+
+Here ``<build_dir>`` is the name of the build directory CMake should use (most
+users just set this to ``-Bbuild``), ``<where/to/install/libraries>`` should
+be set to where you want to install dependencies FriendZone builds for you, and
+``<path/to/toolchain.cmake>`` should point to your ``toolchain.cmake`` file.
+
 
 ********************************
 Step 3: Play Nicely with Friends
 ********************************
 
-Since FriendZone is Python only there's no need to install FriendZone, just
-make sure it's in your Python path (along with ``${BUILD_DIR}/Python``).
+Once FriendZone is installed you should be able to just include
+``NWX_MODULE_PATH`` in your ``PYTHONPATH`` and be able to use it!
