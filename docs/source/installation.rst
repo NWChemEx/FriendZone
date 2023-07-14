@@ -66,7 +66,10 @@ users just set this to ``-Bbuild``), ``<where/to/install/libraries>`` should
 be set to where you want to install the dependencies FriendZone builds for you,
 and ``<path/to/toolchain.cmake>`` should point to your ``toolchain.cmake`` file.
 Of particular note, make sure that in your toolchain file you set
-``NWX_MODULE_PATH`` to where you want FriendZone installed.
+``NWX_MODULE_PATH`` to where you want FriendZone installed and you may want to
+set both ``Python_EXECUTABLE`` and ``Python3_EXECUTABLE`` to the Python
+interpreter from your virtual environment (with the environment activated
+run ``which python3`` to get it's path).
 
 
 TODO: Link to full build tutorial.
