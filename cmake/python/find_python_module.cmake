@@ -13,7 +13,6 @@ include(python/find_python)
 # :type module_name: str
 #]]
 function(find_python_module fpm_was_found fpm_module_name)
-    assert_has_pip()
     execute_process(
         COMMAND "${Python3_EXECUTABLE}" "-m" "pip" "list"
         COMMAND grep "${fpm_module_name}"

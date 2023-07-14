@@ -4,36 +4,47 @@
 Installation
 ############
 
-.. note::
-
-   These instructions represent the current state of how to get FriendZone up
-   and running. As building Python bindings for SimDE becomes easier these
-   instructions should become more streamlined.
-
 ******************************************
 Step 0: Setup a Python Virtual Environment
 ******************************************
 
-FriendZone's modules are written in Python. So it is a good idea to setup a
-Python virtual environment prior to installing anything. This is done by:
+FriendZone interacts with its friends through Python. We thus highly recommend
+(and this tutorial will assume) that you setup a Python virtual environment
+prior to installing anything. This is done by:
 
 .. code-block:: bash
 
-   python -m venv venv
-   source venv/bin/activate
+   python -m venv my_venv
+   source my_venv/bin/activate
+
+Here ``my_venv`` is the name of the virtual environment you are creating (feel
+free to change this). The above commands will create a virtual environment
+``my_venv`` which lives in the directory you run the commands in (Python
+virtual environments are simply directories) and activate it (which makes that
+the Python installation used until the environment is deactivated, which is
+done by running the appropriately named command ``deactivate``).
 
 ***************************************
 Step 1: Install FriendZone Dependencies
 ***************************************
 
-Make sure your Python virtual environment from Step 0 is activated and then
-run:
+FriendZone depends on `SimDE <https://github.com/NWChemEx-Project/SimDE>`__,
+several Python modules, and whatever friends (*i.e.*, other electronic structure
+packages) you want to enable. FriendZone's build system can build and install
+SimDE for you (if it is not found), but at present it can not install the Python
+modules or friends.
+
+To install the Python module dependencies into the virtual environment from
+Step 0 (so assuming it is still activated) simply run the following in the
+root directory of FriendZone:
 
 .. code-block:: bash
 
    pip install -r requirements.txt
 
-Again make sure you are in the same virtual environment you created in step 0
+The installation instructions for each friend can vary widely and we have
+dedicated the entire :ref:`how_to_install_our_various_friends` section below
+to this topic.
 
 **************************
 Step 2: Install FriendZone
@@ -52,9 +63,13 @@ CMake commands:
 
 Here ``<build_dir>`` is the name of the build directory CMake should use (most
 users just set this to ``-Bbuild``), ``<where/to/install/libraries>`` should
-be set to where you want to install dependencies FriendZone builds for you, and
-``<path/to/toolchain.cmake>`` should point to your ``toolchain.cmake`` file.
+be set to where you want to install the dependencies FriendZone builds for you,
+and ``<path/to/toolchain.cmake>`` should point to your ``toolchain.cmake`` file.
+Of particular note, make sure that in your toolchain file you set
+``NWX_MODULE_PATH`` to where you want FriendZone installed.
 
+
+TODO: Link to full build tutorial.
 
 ********************************
 Step 3: Play Nicely with Friends
@@ -62,3 +77,27 @@ Step 3: Play Nicely with Friends
 
 Once FriendZone is installed you should be able to just include
 ``NWX_MODULE_PATH`` in your ``PYTHONPATH`` and be able to use it!
+
+
+.. _how_to_install_our_various_friends:
+
+**********************************
+How to Install Our Various Friends
+**********************************
+
+NWChem
+======
+
+Full instructions can be
+found `here <https://nwchemgit.github.io/Download.html>`__.
+
+The easiest way to install NWChem (although such an installation is unlikely
+to be high-performance) is via a Linux package manager. On Ubuntu/Debian, this
+is simply:
+
+.. code-block::
+
+   sudo apt-get install nwchem
+
+For performance critical runs, it is strongly recommended that you build NWChem
+from source.

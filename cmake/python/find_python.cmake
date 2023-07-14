@@ -7,16 +7,7 @@ include_guard()
 #]]
 function(find_python)
     find_package(Python3 COMPONENTS Interpreter QUIET REQUIRED)
-    message(DEBUG "Found Python3: ${Python3_EXECUTABLE}")
-endfunction()
-
-function(assert_has_pip)
-    execute_process(
-        COMMAND "${Python3_EXECUTABLE}" "-m" "pip" "--version"
-        COMMAND "cut" "-d " "-f4"
-        OUTPUT_VARIABLE _ahp_hint
-        COMMAND_ERROR_IS_FATAL ANY
-    )
+    message(STATUS "Found Python3: ${Python3_EXECUTABLE}")
 endfunction()
 
 find_python()

@@ -34,7 +34,9 @@ include(nwx_versions)
 
 ### Options ###
 option(BUILD_TESTING "Should we build the tests?" OFF)
-option(ENABLE_NWCHEM "Should we build the NWChem modules?" ON)
+option(BUILD_PYBIND11_PYBINDINGS "Use Pybind11 to build Python bindings?" ON)
+option(ENABLE_NWCHEM "Should we build supporf for friend: NWChem ?" ON)
+
 
 ## Find friends ##
 include(nwchem)
@@ -60,15 +62,24 @@ cpp_find_or_build_dependency(
 )
 
 if("${NWX_MODULE_DIRECTORY}" STREQUAL "")
-message(
-    FATAL_ERROR "NWX_MODULE_DIRECTORY must be set to the directory "
-                "where you would like the Python modules installed."
-)
+    message(
+        FATAL_ERROR "NWX_MODULE_DIRECTORY must be set to the directory "
+                    "where you would like the Python modules installed."
+    )
 endif()
 
 
 if("${BUILD_TESTING}")
+    include(CTest)
+    include(nwx_pybind11)
     set(PYTHON_TEST_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/python")
+
+    message("calling nwx_pybind11_tests")
+    nwx_pybind11_tests(
+        pyFriendZone_unit_tests
+        "${PYTHON_TEST_DIR}/unit_tests/test_friendzone.py"
+        SUBMODULES simde chemist pluginplay parallelzone
+    )
 endif()
 
 install(

@@ -3,12 +3,18 @@ import qcelemental as qcel
 def chemical_system2qc_mol(chem_sys):
     """ Converts a chemist.ChemicalSystem object into a QCElemental.Molecule
 
-        At present there is far more information in the input chemical system
-        then in the output object. In particular, our implementation only
-        worries about:
+    At present there is far more information in the input chemical system
+    then in the output object. In particular, our implementation only
+    worries about:
 
-        - Chemical symbols
-        - Cartesian coordinates (including the Bohr to angstrom conversion)
+    - Chemical symbols
+    - Cartesian coordinates (including the Bohr to angstrom conversion)
+
+    :param chem_sys: The NWChemEx description of the chemical system we want to
+                     convert.
+    :type chem_sys: chemist.ChemicalSystem
+    :return: The QCElemental representation of ``chem_sys``
+    :rtype: qcelemental.models.Molecule
     """
 
     out = ""
