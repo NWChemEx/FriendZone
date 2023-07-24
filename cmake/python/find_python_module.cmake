@@ -15,7 +15,7 @@ include(python/find_python)
 function(find_python_module fpm_was_found fpm_module_name)
     execute_process(
         COMMAND "${Python3_EXECUTABLE}" "-m" "pip" "list"
-        COMMAND grep "${fpm_module_name}"
+        COMMAND grep -w "${fpm_module_name}"
         OUTPUT_VARIABLE _fpm_modules
     )
     if("${_fpm_modules}" STREQUAL "")
