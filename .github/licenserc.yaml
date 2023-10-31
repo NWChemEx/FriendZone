@@ -24,5 +24,6 @@ header:
     - docs/requirements.txt
     - docs/source/bibliography/*.bib
     - version.txt
+    - cmake/friends.py.in
 
   comment: never
