@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; friendzone 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FriendZone Design" href="design.html" />
+    <link rel="prev" title="FriendZone" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            friendzone
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-0-setup-a-python-virtual-environment">Step 0: Setup a Python Virtual Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-install-friendzone-dependencies">Step 1: Install FriendZone Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-install-friendzone">Step 2: Install FriendZone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-play-nicely-with-friends">Step 3: Play Nicely with Friends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-install-our-various-friends">How to Install Our Various Friends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nwchem">NWChem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">FriendZone Design</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">APIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/friendzone/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">friendzone</span></code></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">friendzone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<span id="installing-fz"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<section id="step-0-setup-a-python-virtual-environment">
+<h2>Step 0: Setup a Python Virtual Environment<a class="headerlink" href="#step-0-setup-a-python-virtual-environment" title="Link to this heading"></a></h2>
+<p>FriendZone interacts with its friends through Python. We thus highly recommend
+(and this tutorial will assume) that you setup a Python virtual environment
+prior to installing anything. This is done by:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>my_venv
+<span class="nb">source</span><span class="w"> </span>my_venv/bin/activate
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">my_venv</span></code> is the name of the virtual environment you are creating (feel
+free to change this). The above commands will create a virtual environment
+<code class="docutils literal notranslate"><span class="pre">my_venv</span></code> which lives in the directory you run the commands in (Python
+virtual environments are simply directories) and activate it (which makes that
+the Python installation used until the environment is deactivated, which is
+done by running the appropriately named command <code class="docutils literal notranslate"><span class="pre">deactivate</span></code>).</p>
+</section>
+<section id="step-1-install-friendzone-dependencies">
+<h2>Step 1: Install FriendZone Dependencies<a class="headerlink" href="#step-1-install-friendzone-dependencies" title="Link to this heading"></a></h2>
+<p>FriendZone depends on <a class="reference external" href="https://github.com/NWChemEx-Project/SimDE">SimDE</a>,
+several Python modules, and whatever friends (<em>i.e.</em>, other electronic structure
+packages) you want to enable. FriendZone’s build system can build and install
+SimDE for you (if it is not found), but at present it can not install the Python
+modules or friends.</p>
+<p>To install the Python module dependencies into the virtual environment from
+Step 0 (so assuming it is still activated) simply run the following in the
+root directory of FriendZone:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<p>The installation instructions for each friend can vary widely and we have
+dedicated the entire <a class="reference internal" href="#how-to-install-our-various-friends"><span class="std std-ref">How to Install Our Various Friends</span></a> section below
+to this topic.</p>
+</section>
+<section id="step-2-install-friendzone">
+<h2>Step 2: Install FriendZone<a class="headerlink" href="#step-2-install-friendzone" title="Link to this heading"></a></h2>
+<p>Once the dependencies are installed, FriendZone can be built using the usual
+CMake commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake<span class="w"> </span>-H.<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-B&lt;build_dir&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-DCMAKE_INSTALL_PREFIX:PATH<span class="o">=</span>&lt;where/to/install/libraries&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-DCMAKE_TOOLCHAIN_FILE:PATH<span class="o">=</span>&lt;path/to/toolchain.cmake&gt;
+cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>install<span class="w"> </span>--parallel<span class="w"> </span><span class="m">2</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">&lt;build_dir&gt;</span></code> is the name of the build directory CMake should use (most
+users just set this to <code class="docutils literal notranslate"><span class="pre">-Bbuild</span></code>), <code class="docutils literal notranslate"><span class="pre">&lt;where/to/install/libraries&gt;</span></code> should
+be set to where you want to install the dependencies FriendZone builds for you,
+and <code class="docutils literal notranslate"><span class="pre">&lt;path/to/toolchain.cmake&gt;</span></code> should point to your <code class="docutils literal notranslate"><span class="pre">toolchain.cmake</span></code> file.
+Of particular note, make sure that in your toolchain file you set
+<code class="docutils literal notranslate"><span class="pre">NWX_MODULE_PATH</span></code> to where you want FriendZone installed and you may want to
+set both <code class="docutils literal notranslate"><span class="pre">Python_EXECUTABLE</span></code> and <code class="docutils literal notranslate"><span class="pre">Python3_EXECUTABLE</span></code> to the Python
+interpreter from your virtual environment (with the environment activated
+run <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">python3</span></code> to get it’s path).</p>
+<p>TODO: Link to full build tutorial.</p>
+</section>
+<section id="step-3-play-nicely-with-friends">
+<h2>Step 3: Play Nicely with Friends<a class="headerlink" href="#step-3-play-nicely-with-friends" title="Link to this heading"></a></h2>
+<p>Once FriendZone is installed you should be able to just include
+<code class="docutils literal notranslate"><span class="pre">NWX_MODULE_PATH</span></code> in your <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> and be able to use it!</p>
+</section>
+<section id="how-to-install-our-various-friends">
+<span id="id1"></span><h2>How to Install Our Various Friends<a class="headerlink" href="#how-to-install-our-various-friends" title="Link to this heading"></a></h2>
+<section id="nwchem">
+<h3>NWChem<a class="headerlink" href="#nwchem" title="Link to this heading"></a></h3>
+<p>Full instructions can be
+found <a class="reference external" href="https://nwchemgit.github.io/Download.html">here</a>.</p>
+<p>The easiest way to install NWChem (although such an installation is unlikely
+to be high-performance) is via a Linux package manager. On Ubuntu/Debian, this
+is simply:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">nwchem</span>
+</pre></div>
+</div>
+<p>For performance critical runs, it is strongly recommended that you build NWChem
+from source.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="FriendZone" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="design.html" class="btn btn-neutral float-right" title="FriendZone Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

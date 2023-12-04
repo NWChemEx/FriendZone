@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FriendZone Design &mdash; friendzone 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="friendzone" href="autoapi/friendzone/index.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            friendzone
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FriendZone Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#friendzone-architecture">FriendZone Architecture</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">APIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/friendzone/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">friendzone</span></code></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">friendzone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FriendZone Design</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/design.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="friendzone-design">
+<h1>FriendZone Design<a class="headerlink" href="#friendzone-design" title="Link to this heading"></a></h1>
+<p>This page details some of the decisions made in designing FriendZone.</p>
+<section id="friendzone-architecture">
+<h2>FriendZone Architecture<a class="headerlink" href="#friendzone-architecture" title="Link to this heading"></a></h2>
+<p>FriendZone is meant to be a single NWChemEx plugin. This is because:</p>
+<ul class="simple">
+<li><p>Relatively speaking, wrapping an additional backend requires a fairly minor
+amounts of code. Making new repositories for each backend is thus overkill.</p></li>
+<li><p>Some of the conversion infrastructure can be reused, <em>e.g.</em>, many backends
+expect inputs in XYZ format so the conversion from a <code class="docutils literal notranslate"><span class="pre">Chemist::Molecule</span></code>
+to XYZ format can be reused.</p></li>
+</ul>
+<p>FriendZone is written as a Python package:</p>
+<ul class="simple">
+<li><p>Many third party electronic structure packages provide Python support.</p></li>
+<li><p>Driving backends which rely on the traditional input script/executable model
+is easier from Python than C++.</p></li>
+</ul>
+<p>The Python package implementing FriendZone is comprised of sub-packages.
+Each sub-package is responsible for providing PluginPlay::Modules for one
+backend (when the PluginPlay::Modules are backend specific) or for all
+backends which share a common API (<em>e.g.</em>, one sub-pacakge for interfacing
+with backends which support QCSchema). This decision stems from:</p>
+<ul class="simple">
+<li><p>Organization. Putting all of, say, PySCF’s bindings together offers a logical
+separation of content.</p></li>
+<li><p>Ease of optional support. If down the road we want to make support for a
+specific backend optional it is easier to do this at a Python package
+level than by picking and choosing individual Python modules.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoapi/friendzone/index.html" class="btn btn-neutral float-right" title="friendzone" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+:py:mod:`molecules`
+===================
+
+.. py:module:: molecules
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   molecules.make_h2
+
+
+
+.. py:function:: make_h2()
+
+

@@ -1,0 +1,36 @@
+:py:mod:`friendzone`
+====================
+
+.. py:module:: friendzone
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   nwx2nwchem/index.rst
+   nwx2qcengine/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   friendzone.load_nwchem_modules
+   friendzone.load_modules
+
+
+
+.. py:function:: load_nwchem_modules(mm)
+
+
+.. py:function:: load_modules(mm)
+
+
