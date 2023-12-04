@@ -22,7 +22,7 @@ on:
 
 jobs:
   Common-Merge:
-    uses: ./.github/workflows/common_merge.yaml
+    uses: NWChemEx-Project/.github/.github/workflows/common_merge.yaml@master
     with:
       doc_target: 'Sphinx'
       generate_module_docs: false
