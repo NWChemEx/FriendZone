@@ -19,7 +19,7 @@ project(friendzone VERSION "${VERSION}" LANGUAGES CXX)
 include(FetchContent)
 FetchContent_Declare(
     nwx_cmake
-    GIT_REPOSITORY https://github.com/NWChemEx-Project/NWXCMake
+    GIT_REPOSITORY https://github.com/NWChemEx/NWXCMake
 )
 FetchContent_MakeAvailable(nwx_cmake)
 list(APPEND CMAKE_MODULE_PATH "${nwx_cmake_SOURCE_DIR}/cmake")
@@ -53,7 +53,7 @@ configure_file(
 ## Build FriendZone's dependencies ##
 cpp_find_or_build_dependency(
     simde
-    URL github.com/NWChemEx-Project/SimDE
+    URL github.com/NWChemEx/SimDE
     PRIVATE TRUE
     VERSION ${NWX_SIMDE_VERSION}
     BUILD_TARGET simde
