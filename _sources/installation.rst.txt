@@ -42,7 +42,7 @@ done by running the appropriately named command ``deactivate``).
 Step 1: Install FriendZone Dependencies
 ***************************************
 
-FriendZone depends on `SimDE <https://github.com/NWChemEx-Project/SimDE>`__,
+FriendZone depends on `SimDE <https://github.com/NWChemEx/SimDE>`__,
 several Python modules, and whatever friends (*i.e.*, other electronic structure
 packages) you want to enable. FriendZone's build system can build and install
 SimDE for you (if it is not found), but at present it can not install the Python
