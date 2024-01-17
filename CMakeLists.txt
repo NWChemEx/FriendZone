@@ -13,33 +13,28 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.14)
-set(VERSION 1.0.0) #TODO: get from git
-project(friendzone VERSION "${VERSION}" LANGUAGES CXX)
 
-include(FetchContent)
-FetchContent_Declare(
-    nwx_cmake
-    GIT_REPOSITORY https://github.com/NWChemEx/NWXCMake
-)
-FetchContent_MakeAvailable(nwx_cmake)
-list(APPEND CMAKE_MODULE_PATH "${nwx_cmake_SOURCE_DIR}/cmake")
+#Downloads common CMake modules used throughout NWChemEx
+include(cmake/get_nwx_cmake.cmake)
 
-set(
-    CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake"
-    CACHE STRING "" FORCE
-)
+#Sets the version to whatever git thinks it is
+include(get_version_from_git)
+get_version_from_git(friendzone_version "${CMAKE_CURRENT_LIST_DIR}")
+project(friendzone VERSION "${friendzone_version}" LANGUAGES CXX)
 
-include(get_cmaize)
 include(nwx_versions)
+include(get_cmaize)
+include(nwx_cxx_api_docs)
 
 ### Options ###
-option(BUILD_TESTING "Should we build the tests?" OFF)
-option(BUILD_PYBIND11_PYBINDINGS "Use Pybind11 to build Python bindings?" ON)
-option(ENABLE_NWCHEM "Should we build supporf for friend: NWChem ?" ON)
-
+cmaize_option_list(
+    BUILD_TESTING OFF "Should we build the tests?"
+    BUILD_PYBIND11_PYBINDINGS ON "Use Pybind11 to build Python bindings?"
+    ENABLE_NWCHEM ON "Should we build supporf for friend: NWChem ?"
+)
 
 ## Find friends ##
-include(nwchem)
+include(cmake/nwchem.cmake)
 
 ## Configure file with enabled friends ##
 set(friends_template "${CMAKE_CURRENT_LIST_DIR}/cmake/friends.py.in")
@@ -59,15 +54,9 @@ cpp_find_or_build_dependency(
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
+               BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
+               ENABLE_EXPERIMENTAL_FEATURES=${ENABLE_EXPERIMENTAL_FEATURES}
 )
-
-if("${NWX_MODULE_DIRECTORY}" STREQUAL "")
-    message(
-        FATAL_ERROR "NWX_MODULE_DIRECTORY must be set to the directory "
-                    "where you would like the Python modules installed."
-    )
-endif()
-
 
 if("${BUILD_TESTING}")
     include(CTest)
@@ -76,7 +65,7 @@ if("${BUILD_TESTING}")
 
     message("calling nwx_pybind11_tests")
     nwx_pybind11_tests(
-        pyFriendZone_unit_tests
+        py_${PROJECT_NAME}
         "${PYTHON_TEST_DIR}/unit_tests/test_friendzone.py"
         SUBMODULES simde chemist pluginplay parallelzone
     )

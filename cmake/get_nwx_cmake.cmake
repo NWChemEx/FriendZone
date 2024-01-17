@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2024 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,20 +13,19 @@
 # limitations under the License.
 
 include_guard()
-include(cmake/python/python.cmake)
 
-#[[[ Determines if NWChem and the necessary Python interface are installed.
-#
-#  At present FriendZone can not install
-#]]
-function(find_nwchem)
-    find_program(NWCHEM_FOUND nwchem REQUIRED)
-    assert_python_module("qcelemental")
-    assert_python_module("qcengine")
-    assert_python_module("networkx")
-    message("Found nwchem: ${NWCHEM_FOUND}")
-endfunction()
+macro(get_nwx_cmake)
+    include(FetchContent)
+    FetchContent_Declare(
+        nwx_cmake
+        GIT_REPOSITORY https://github.com/NWChemEx/NWXCMake
+    )
+    FetchContent_MakeAvailable(nwx_cmake)
+    set(
+        CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${nwx_cmake_SOURCE_DIR}/cmake"
+        CACHE STRING ""
+        FORCE
+    )
+endmacro()
 
-if("${ENABLE_NWCHEM}")
-    find_nwchem()
-endif()
+get_nwx_cmake()
