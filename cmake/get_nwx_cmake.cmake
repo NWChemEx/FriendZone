@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2024 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,14 +14,18 @@
 
 include_guard()
 
-#[[[ Wraps the process of finding the Python interpreter.
-#
-# At the moment this is a thin wrapper around find_package with our preffered
-# options.
-#]]
-function(find_python)
-    find_package(Python COMPONENTS Interpreter QUIET REQUIRED)
-    message(STATUS "Found Python: ${Python_EXECUTABLE}")
-endfunction()
+macro(get_nwx_cmake)
+    include(FetchContent)
+    FetchContent_Declare(
+        nwx_cmake
+        GIT_REPOSITORY https://github.com/NWChemEx/NWXCMake
+    )
+    FetchContent_MakeAvailable(nwx_cmake)
+    set(
+        CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${nwx_cmake_SOURCE_DIR}/cmake"
+        CACHE STRING ""
+        FORCE
+    )
+endmacro()
 
-find_python()
+get_nwx_cmake()
