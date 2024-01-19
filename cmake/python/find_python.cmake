@@ -20,8 +20,8 @@ include_guard()
 # options.
 #]]
 function(find_python)
-    find_package(Python3 COMPONENTS Interpreter QUIET REQUIRED)
-    message(STATUS "Found Python3: ${Python3_EXECUTABLE}")
+    find_package(Python COMPONENTS Interpreter QUIET REQUIRED)
+    message(STATUS "Found Python: ${Python_EXECUTABLE}")
 endfunction()
 
 find_python()

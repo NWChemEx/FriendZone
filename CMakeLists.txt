@@ -30,11 +30,18 @@ include(nwx_cxx_api_docs)
 cmaize_option_list(
     BUILD_TESTING OFF "Should we build the tests?"
     BUILD_PYBIND11_PYBINDINGS ON "Use Pybind11 to build Python bindings?"
+    ENABLE_EXPERIMENTAL_FEATURES OFF "Build features which are not 1.0-ed yet?"
     ENABLE_NWCHEM ON "Should we build supporf for friend: NWChem ?"
 )
 
+## Get the CMake utilities for this project ##
+set(
+    CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake"
+    CACHE STRING "" FORCE
+)
+
 ## Find friends ##
-include(cmake/nwchem.cmake)
+include(nwchem)
 
 ## Configure file with enabled friends ##
 set(friends_template "${CMAKE_CURRENT_LIST_DIR}/cmake/friends.py.in")
@@ -46,7 +53,7 @@ configure_file(
 )
 
 ## Build FriendZone's dependencies ##
-cpp_find_or_build_dependency(
+cmaize_find_or_build_dependency(
     simde
     URL github.com/NWChemEx/SimDE
     PRIVATE TRUE
@@ -63,7 +70,6 @@ if("${BUILD_TESTING}")
     include(nwx_pybind11)
     set(PYTHON_TEST_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/python")
 
-    message("calling nwx_pybind11_tests")
     nwx_pybind11_tests(
         py_${PROJECT_NAME}
         "${PYTHON_TEST_DIR}/unit_tests/test_friendzone.py"

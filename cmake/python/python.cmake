@@ -13,5 +13,5 @@
 # limitations under the License.
 
 include_guard()
-include(cmake/python/find_python.cmake)
-include(cmake/python/find_python_module.cmake)
+include(python/find_python)
+include(python/find_python_module)

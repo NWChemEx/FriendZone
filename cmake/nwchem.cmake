@@ -13,7 +13,7 @@
 # limitations under the License.
 
 include_guard()
-include(cmake/python/python.cmake)
+include(python/python)
 
 #[[[ Determines if NWChem and the necessary Python interface are installed.
 #
