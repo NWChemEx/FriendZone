@@ -31,7 +31,7 @@ cmaize_option_list(
     BUILD_TESTING OFF "Should we build the tests?"
     BUILD_PYBIND11_PYBINDINGS ON "Use Pybind11 to build Python bindings?"
     ENABLE_EXPERIMENTAL_FEATURES OFF "Build features which are not 1.0-ed yet?"
-    ENABLE_NWCHEM ON "Should we build supporf for friend: NWChem ?"
+    ENABLE_NWCHEM ON "Should we build support for friend: NWChem ?"
 )
 
 ## Get the CMake utilities for this project ##
