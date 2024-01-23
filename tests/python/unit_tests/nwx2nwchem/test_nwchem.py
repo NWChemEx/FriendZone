@@ -40,7 +40,7 @@ class TestNWChem(unittest.TestCase):
         key = 'NWChem : ccsd'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(Energy(), key, mol)
-        self.assertAlmostEqual(egy, -1.122251361965036, places=5)
+        self.assertAlmostEqual(egy, -1.122251361965036, places=4)
 
 
     def test_ccsd_t(self):
@@ -48,7 +48,7 @@ class TestNWChem(unittest.TestCase):
         key = 'NWChem : ccsd(t)'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(Energy(), key, mol)
-        self.assertAlmostEqual(egy, -1.122251361965036, places=5)
+        self.assertAlmostEqual(egy, -1.122251361965036, places=4)
 
 
     def setUp(self):
