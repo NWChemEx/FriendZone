@@ -14,8 +14,6 @@
   ~ limitations under the License.
 -->
 
-[![Actions](https://github.com/NWChemEx/SCF/workflows/C_C++_CI/badge.svg)](https://github.com/NWChemEx/SCF)
-
 FriendZone
 ==========
 

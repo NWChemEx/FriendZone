@@ -31,4 +31,3 @@ packages.
    :caption: APIs:
 
    autoapi/friendzone/index
-   autoapi/test_pyscf/index
