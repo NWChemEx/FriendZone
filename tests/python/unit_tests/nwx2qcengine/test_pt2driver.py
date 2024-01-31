@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from friendzone.nwx2qcengine.pt2driver import pt2driver
-from simde import Energy
+from simde import TotalEnergy
 import unittest
 
 
@@ -24,7 +24,7 @@ class NotAPT:
 class Testpt2driver(unittest.TestCase):
 
     def test_pts_that_map_to_energy(self):
-        for pt in [Energy()]:
+        for pt in [TotalEnergy()]:
             self.assertEqual(pt2driver(pt), 'energy')
 
     def test_bad_pt(self):

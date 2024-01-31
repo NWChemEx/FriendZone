@@ -16,4 +16,12 @@ from .nwx2nwchem import load_nwchem_modules
 
 
 def load_modules(mm):
+    """Loads the collection of all modules provided by Friendzone. This function
+    calls the various friend specific module loading functions, including:
+
+    *  `load_nwchem_modules`
+    
+    :param mm: The ModuleManager that the all Modules will be loaded into.
+    :type mm: pluginplay.ModuleManager
+    """
     load_nwchem_modules(mm)

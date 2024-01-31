@@ -174,6 +174,19 @@ autoapi_options = [
     #    'imported-members',
 ]
 
+# This skips classes that derived from ModuleBase, because those classes will
+# have Module API documentation producable by PluginPlay
+def skip_pluginplay_modules(app, what, name, obj, skip, options):
+    bases = obj.obj['bases'] if 'bases' in obj.obj.keys() else []
+    if 'pluginplay.ModuleBase' in bases:
+        skip = True
+    return skip
+
+
+def setup(sphinx):
+    sphinx.connect("autoapi-skip-member", skip_pluginplay_modules)
+
+
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.

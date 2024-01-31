@@ -14,7 +14,7 @@
 
 from pluginplay import ModuleManager
 from friendzone import friends, load_modules
-from simde import Energy
+from simde import TotalEnergy
 from molecules import make_h2
 import unittest
 
@@ -25,28 +25,28 @@ class TestNWChem(unittest.TestCase):
         mol = make_h2()
         key = 'NWChem : SCF'
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        egy = self.mm.run_as(Energy(), key, mol)
+        egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.094184522864, places=5)
 
     def test_mp2(self):
         mol = make_h2()
-        key = 'NWChem : mp2'
+        key = 'NWChem : MP2'
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        egy = self.mm.run_as(Energy(), key, mol)
+        egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.111247857166, places=5)
 
     def test_ccsd(self):
         mol = make_h2()
-        key = 'NWChem : ccsd'
+        key = 'NWChem : CCSD'
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        egy = self.mm.run_as(Energy(), key, mol)
+        egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.122251361965036, places=4)
 
     def test_ccsd_t(self):
         mol = make_h2()
-        key = 'NWChem : ccsd(t)'
+        key = 'NWChem : CCSD(T)'
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        egy = self.mm.run_as(Energy(), key, mol)
+        egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.122251361965036, places=4)
 
     def setUp(self):
