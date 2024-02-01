@@ -174,6 +174,7 @@ autoapi_options = [
     #    'imported-members',
 ]
 
+
 # This skips classes that derived from ModuleBase, because those classes will
 # have Module API documentation producable by PluginPlay
 def skip_pluginplay_modules(app, what, name, obj, skip, options):
@@ -196,3 +197,15 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+# -- Nitpick Ignore options --------------------------------------------------
+
+# Nitpick requires all references to be resolved
+# This will ignore those that references that can't be linked
+nitpick_ignore = []
+for line in open('nitpick_exceptions'):
+    if line.strip() == "" or line.startswith("#"):
+        continue
+    dtype, target = line.split(None, 1)
+    target = target.strip()
+    nitpick_ignore.append((dtype, target))

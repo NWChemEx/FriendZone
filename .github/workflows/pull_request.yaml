@@ -25,7 +25,7 @@ jobs:
     uses: NWChemEx/.github/.github/workflows/common_pull_request.yaml@master
     with:
       config_file: '.github/.licenserc.yaml'
-      source_dir: ''
+      source_dir: 'friendzone_cxx_api'
       compilers: '["gcc-11"]'
       doc_target: 'Sphinx'
     secrets: inherit

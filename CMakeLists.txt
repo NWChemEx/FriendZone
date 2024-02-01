@@ -26,6 +26,8 @@ include(nwx_versions)
 include(get_cmaize)
 include(nwx_cxx_api_docs)
 
+nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
 ### Options ###
 cmaize_option_list(
     BUILD_TESTING OFF "Should we build the tests?"

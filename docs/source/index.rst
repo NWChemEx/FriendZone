@@ -32,3 +32,4 @@ packages.
 
    autoapi/friendzone/index
    module_api/index
+   C++ API <https://nwchemex.github.io/friendzone/friendzone_cxx_api/index.html>
