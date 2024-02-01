@@ -61,9 +61,12 @@
 <li class="toctree-l3"><a class="reference internal" href="nwx2qcengine/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">friendzone.nwx2qcengine</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="friends/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">friendzone.friends</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#friendzone.load_nwchem_modules"><code class="docutils literal notranslate"><span class="pre">load_nwchem_modules()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#friendzone.load_modules"><code class="docutils literal notranslate"><span class="pre">load_modules()</span></code></a></li>
 </ul>
 </li>
@@ -71,6 +74,8 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_api/index.html">Module API</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://nwchemex.github.io/friendzone/friendzone_cxx_api/index.html">C++ API</a></li>
 </ul>
 
         </div>
@@ -113,29 +118,39 @@
 </ul>
 </div>
 </section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="friends/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">friendzone.friends</span></code></a></li>
+</ul>
+</div>
+</section>
 <section id="package-contents">
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.load_nwchem_modules" title="friendzone.load_nwchem_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_nwchem_modules</span></code></a>(mm)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#friendzone.load_modules" title="friendzone.load_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_modules</span></code></a>(mm)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.load_modules" title="friendzone.load_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_modules</span></code></a>(mm)</p></td>
+<td><p>Loads the collection of all modules provided by Friendzone. This function</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="friendzone.load_nwchem_modules">
-<span class="sig-prename descclassname"><span class="pre">friendzone.</span></span><span class="sig-name descname"><span class="pre">load_nwchem_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.load_nwchem_modules" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="friendzone.load_modules">
 <span class="sig-prename descclassname"><span class="pre">friendzone.</span></span><span class="sig-name descname"><span class="pre">load_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.load_modules" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Loads the collection of all modules provided by Friendzone. This function
+calls the various friend specific module loading functions, including:</p>
+<ul class="simple">
+<li><p><cite>load_nwchem_modules</cite></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mm</strong> (<em>pluginplay.ModuleManager</em>) – The ModuleManager that the all Modules will be loaded into.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 </section>

@@ -1,0 +1,37 @@
+:py:mod:`friendzone.friends`
+============================
+
+.. py:module:: friendzone.friends
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   friendzone.friends.friends
+   friendzone.friends.is_friend_enabled
+
+
+
+.. py:function:: friends()
+
+   Returns a dictionary of potential friends and whether they were enabled.
+
+   :return: Key-value pairs where the key is the name of a potential
+            friend and the value is whether that friend was enabled or not
+
+
+.. py:function:: is_friend_enabled(friend)
+
+   Wraps the process of determining if a particular friend was enabled.
+
+   :return: True if FriendZone was configured with support for ``friend``
+            and false otherwise.
+   :rtype: bool
+
+

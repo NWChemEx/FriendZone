@@ -85,9 +85,6 @@ set both ``Python_EXECUTABLE`` and ``Python3_EXECUTABLE`` to the Python
 interpreter from your virtual environment (with the environment activated
 run ``which python3`` to get it's path).
 
-
-TODO: Link to full build tutorial.
-
 ********************************
 Step 3: Play Nicely with Friends
 ********************************
@@ -109,12 +106,19 @@ Full instructions can be
 found `here <https://nwchemgit.github.io/Download.html>`__.
 
 The easiest way to install NWChem (although such an installation is unlikely
-to be high-performance) is via a Linux package manager. On Ubuntu/Debian, this
+to be high-performance) is via a package manager. On Ubuntu/Debian, this
 is simply:
 
 .. code-block::
 
    sudo apt-get install nwchem
+
+
+For Mac, NWChem can be installed via [Homebrew](https://brew.sh/):
+
+.. code-block::
+
+    brew install nwchem
 
 For performance critical runs, it is strongly recommended that you build NWChem
 from source.

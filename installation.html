@@ -66,6 +66,8 @@
 <p class="caption" role="heading"><span class="caption-text">APIs:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="autoapi/friendzone/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">friendzone</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_api/index.html">Module API</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://nwchemex.github.io/friendzone/friendzone_cxx_api/index.html">C++ API</a></li>
 </ul>
 
         </div>
@@ -147,7 +149,6 @@ Of particular note, make sure that in your toolchain file you set
 set both <code class="docutils literal notranslate"><span class="pre">Python_EXECUTABLE</span></code> and <code class="docutils literal notranslate"><span class="pre">Python3_EXECUTABLE</span></code> to the Python
 interpreter from your virtual environment (with the environment activated
 run <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">python3</span></code> to get it’s path).</p>
-<p>TODO: Link to full build tutorial.</p>
 </section>
 <section id="step-3-play-nicely-with-friends">
 <h2>Step 3: Play Nicely with Friends<a class="headerlink" href="#step-3-play-nicely-with-friends" title="Link to this heading"></a></h2>
@@ -161,9 +162,13 @@ run <code class="docutils literal notranslate"><span class="pre">which</span> <s
 <p>Full instructions can be
 found <a class="reference external" href="https://nwchemgit.github.io/Download.html">here</a>.</p>
 <p>The easiest way to install NWChem (although such an installation is unlikely
-to be high-performance) is via a Linux package manager. On Ubuntu/Debian, this
+to be high-performance) is via a package manager. On Ubuntu/Debian, this
 is simply:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">nwchem</span>
+</pre></div>
+</div>
+<p>For Mac, NWChem can be installed via [Homebrew](<a class="reference external" href="https://brew.sh/">https://brew.sh/</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">nwchem</span>
 </pre></div>
 </div>
 <p>For performance critical runs, it is strongly recommended that you build NWChem

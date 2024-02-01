@@ -14,6 +14,15 @@ Subpackages
    nwx2qcengine/index.rst
 
 
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   friends/index.rst
+
+
 Package Contents
 ----------------
 
@@ -23,14 +32,18 @@ Functions
 
 .. autoapisummary::
 
-   friendzone.load_nwchem_modules
    friendzone.load_modules
 
 
 
-.. py:function:: load_nwchem_modules(mm)
-
-
 .. py:function:: load_modules(mm)
+
+   Loads the collection of all modules provided by Friendzone. This function
+   calls the various friend specific module loading functions, including:
+
+   *  `load_nwchem_modules`
+
+   :param mm: The ModuleManager that the all Modules will be loaded into.
+   :type mm: pluginplay.ModuleManager
 
 
