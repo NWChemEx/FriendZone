@@ -23,6 +23,7 @@ header:
     - LICENSE
     - docs/requirements.txt
     - docs/source/bibliography/*.bib
+    - docs/source/nitpick_exceptions
     - version.txt
     - cmake/friends.py.in
 

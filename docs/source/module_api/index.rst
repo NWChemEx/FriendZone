@@ -1,4 +1,4 @@
-.. Copyright 2023 NWChemEx-Project
+.. Copyright 2022 NWChemEx-Project
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -12,24 +12,10 @@
 .. See the License for the specific language governing permissions and
 .. limitations under the License.
 
-##########
-FriendZone
-##########
-
-FriendZone maintains a series of interfaces to existing electronic structure
-packages.
+**********
+Module API
+**********
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   installation
-   design
-
-.. toctree::
-   :maxdepth: 2
-   :caption: APIs:
-
-   autoapi/friendzone/index
-   module_api/index
-   C++ API <https://nwchemex.github.io/friendzone/friendzone_cxx_api/index.html>
+   :maxdepth: 1
+   :caption: Packages

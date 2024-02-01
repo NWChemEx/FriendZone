@@ -14,6 +14,7 @@
 
 import qcelemental as qcel
 
+
 def chemical_system2qc_mol(chem_sys):
     """ Converts a chemist.ChemicalSystem object into a QCElemental.Molecule
 
@@ -37,8 +38,8 @@ def chemical_system2qc_mol(chem_sys):
     for i in range(mol.size()):
         atom_i = mol.at(i)
         symbol = atom_i.name
-        x      = str(atom_i.x * au2ang)
-        y      = str(atom_i.y * au2ang)
-        z      = str(atom_i.z * au2ang)
+        x = str(atom_i.x * au2ang)
+        y = str(atom_i.y * au2ang)
+        z = str(atom_i.z * au2ang)
         out += symbol + " " + x + " " + y + " " + z + "\n"
     return qcel.models.Molecule.from_data(out)

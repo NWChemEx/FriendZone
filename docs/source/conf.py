@@ -51,7 +51,7 @@ doc_path = os.path.dirname(dir_path)
 root_path = os.path.dirname(doc_path)
 
 # Add any paths that contain templates here, relative to this directory.
-#templates_path = ['_templates']
+# templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -96,7 +96,7 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static']
+# html_static_path = ['_static']
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -159,8 +159,34 @@ texinfo_documents = [
 ]
 
 # -- Extension configuration -------------------------------------------------
-autoapi_dirs = ['../../src', '../../tests']
+autoapi_dirs = [
+    '../../src',
+    # '../../tests',
+]
 autoapi_add_toctree_entry = False
+autoapi_options = [
+    'members',
+    'undoc-members',
+    'private-members',
+    'show-inheritance',
+    'show-module-summary',
+    'special-members',
+    #    'imported-members',
+]
+
+
+# This skips classes that derived from ModuleBase, because those classes will
+# have Module API documentation producable by PluginPlay
+def skip_pluginplay_modules(app, what, name, obj, skip, options):
+    bases = obj.obj['bases'] if 'bases' in obj.obj.keys() else []
+    if 'pluginplay.ModuleBase' in bases:
+        skip = True
+    return skip
+
+
+def setup(sphinx):
+    sphinx.connect("autoapi-skip-member", skip_pluginplay_modules)
+
 
 # -- Options for intersphinx extension ---------------------------------------
 
@@ -171,3 +197,15 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+# -- Nitpick Ignore options --------------------------------------------------
+
+# Nitpick requires all references to be resolved
+# This will ignore those that references that can't be linked
+nitpick_ignore = []
+for line in open('nitpick_exceptions'):
+    if line.strip() == "" or line.startswith("#"):
+        continue
+    dtype, target = line.split(None, 1)
+    target = target.strip()
+    nitpick_ignore.append((dtype, target))

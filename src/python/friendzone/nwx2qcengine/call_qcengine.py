@@ -17,6 +17,7 @@ import qcelemental as qcel
 from .chemical_system2qc_mol import chemical_system2qc_mol
 from .pt2driver import pt2driver
 
+
 def call_qcengine(pt, mol, program, **kwargs):
     """ Wraps calling a program through the QCEngine API.
 
@@ -60,7 +61,6 @@ def call_qcengine(pt, mol, program, **kwargs):
         :return: The requested property.
         :rtype: Varies depending on the requested property
     """
-
 
     driver = pt2driver(pt)
     qc_mol = chemical_system2qc_mol(mol)

@@ -26,6 +26,6 @@ jobs:
     with:
       config_file: '.github/.licenserc.yaml'
       source_dir: ''
-      compilers: ''
-      doc_target: 'Sphinx'
+      compilers: '["gcc-11"]'
+      doc_target: 'friendzone_cxx_api'
     secrets: inherit

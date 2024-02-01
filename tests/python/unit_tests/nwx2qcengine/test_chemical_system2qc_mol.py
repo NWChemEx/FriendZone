@@ -17,7 +17,9 @@ from molecules import make_h2
 import qcelemental as qcel
 import unittest
 
+
 class TestChemicalSystem2QC(unittest.TestCase):
+
     def test_h2(self):
         mol = make_h2()
         qcel_mol = chemical_system2qc_mol(mol)
