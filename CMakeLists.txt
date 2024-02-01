@@ -26,6 +26,19 @@ include(nwx_versions)
 include(get_cmaize)
 include(nwx_cxx_api_docs)
 
+### Files and Paths ###
+set(friends_template "${CMAKE_CURRENT_LIST_DIR}/cmake/friends.py.in")
+set(python_src_directory "${CMAKE_CURRENT_LIST_DIR}/src/python")
+
+# # Doxygen docs
+if("${ONLY_BUILD_DOCS}")
+    # If we are only building the docs, we need to produce friends.py here
+    configure_file(
+        "${friends_template}"
+        "${python_src_directory}/friendzone/friends.py"
+        @ONLY
+    )
+endif()
 nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 ### Options ###
@@ -46,8 +59,6 @@ set(
 include(nwchem)
 
 ## Configure file with enabled friends ##
-set(friends_template "${CMAKE_CURRENT_LIST_DIR}/cmake/friends.py.in")
-set(python_src_directory "${CMAKE_CURRENT_LIST_DIR}/src/python")
 configure_file(
     "${friends_template}"                            # Input file
     "${python_src_directory}/friendzone/friends.py"  # Output file
