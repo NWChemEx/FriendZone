@@ -77,6 +77,10 @@ cmaize_find_or_build_dependency(
                ENABLE_EXPERIMENTAL_FEATURES=${ENABLE_EXPERIMENTAL_FEATURES}
 )
 
+#TOOD: Replace cmaize_add_library when it supports Python
+add_library(${PROJECT_NAME} INTERFACE)
+target_link_libraries(${PROJECT_NAME} INTERFACE simde nwchem)
+
 if("${BUILD_TESTING}")
     include(CTest)
     include(nwx_pybind11)

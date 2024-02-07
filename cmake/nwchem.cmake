@@ -29,4 +29,5 @@ endfunction()
 
 if("${ENABLE_NWCHEM}")
     find_nwchem()
+    add_library(nwchem INTERFACE)
 endif()
