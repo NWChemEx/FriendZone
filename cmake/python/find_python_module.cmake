@@ -13,7 +13,6 @@
 # limitations under the License.
 
 include_guard()
-include(python/find_python)
 
 #[[[ Attempts to find a Python module, returns whether it was found or not.
 #
