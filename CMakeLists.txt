@@ -49,6 +49,18 @@ cmaize_option_list(
     ENABLE_NWCHEM ON "Should we build support for friend: NWChem ?"
 )
 
+## Build FriendZone's dependencies ##
+cmaize_find_or_build_dependency(
+    simde
+    URL github.com/NWChemEx/SimDE
+    VERSION ${NWX_SIMDE_VERSION}
+    BUILD_TARGET simde
+    FIND_TARGET nwx::simde
+    CMAKE_ARGS BUILD_TESTING=OFF
+               BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
+               ENABLE_EXPERIMENTAL_FEATURES=${ENABLE_EXPERIMENTAL_FEATURES}
+)
+
 ## Get the CMake utilities for this project ##
 set(
     CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake"
@@ -63,18 +75,6 @@ configure_file(
     "${friends_template}"                            # Input file
     "${python_src_directory}/friendzone/friends.py"  # Output file
     @ONLY                                            # Only replace @ variables
-)
-
-## Build FriendZone's dependencies ##
-cmaize_find_or_build_dependency(
-    simde
-    URL github.com/NWChemEx/SimDE
-    VERSION ${NWX_SIMDE_VERSION}
-    BUILD_TARGET simde
-    FIND_TARGET nwx::simde
-    CMAKE_ARGS BUILD_TESTING=OFF
-               BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
-               ENABLE_EXPERIMENTAL_FEATURES=${ENABLE_EXPERIMENTAL_FEATURES}
 )
 
 #TOOD: Replace cmaize_add_library when it supports Python
