@@ -15,6 +15,7 @@
 from ..friends import is_friend_enabled
 import pluginplay as pp
 from simde import TotalEnergy
+from simde.provisional import AOEnergyNuclearGradientD
 from ..nwx2qcengine.call_qcengine import call_qcengine
 
 
@@ -37,6 +38,28 @@ class NWChemViaMolSSI(pp.ModuleBase):
         rv = self.results()
         return pt.wrap_results(rv, e)
 
+class NWChemGradientViaMolSSI(pp.ModuleBase):
+
+    def __init__(self):
+        pp.ModuleBase.__init__(self)
+        self.satisfies_property_type(AOEnergyNuclearGradientD())
+        self.description("Calls NWChem via MolSSI's QCEngine")
+        self.add_input('method')
+        self.add_input("basis set")
+
+    def run_(self, inputs, submods):
+        pt = AOEnergyNuclearGradientD()
+
+        # This line is awkward and needs to be cleaned up
+        nwx_basis, mol, mol_again = pt.unwrap_inputs(inputs)
+
+        method = inputs['method'].value()
+        basis = inputs['basis set'].value()
+
+        e = call_qcengine(pt, mol, 'nwchem', method=method, basis=basis)
+        rv = self.results()
+        return pt.wrap_results(rv, e)
+
 
 def load_nwchem_modules(mm):
     """Loads the collection of modules that wrap NWChem calls.
@@ -47,7 +70,8 @@ def load_nwchem_modules(mm):
     #.  NWChem : MP2
     #.  NWChem : CCSD
     #.  NWChem : CCSD(T)
-    
+    #.  NWChem : SCF Gradient
+
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
@@ -56,3 +80,6 @@ def load_nwchem_modules(mm):
             mod_key = 'NWChem : ' + method
             mm.add_module(mod_key, NWChemViaMolSSI())
             mm.change_input(mod_key, 'method', method)
+        
+        mm.add_module('NWChem : SCF Gradient', NWChemGradientViaMolSSI())
+        mm.change_input('NWChem : SCF Gradient', 'method', 'SCF')
