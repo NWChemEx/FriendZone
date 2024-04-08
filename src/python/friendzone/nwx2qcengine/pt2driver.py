@@ -31,7 +31,7 @@ def pt2driver(pt):
     """
     if pt.type() == simde.TotalEnergy().type():
         return 'energy'
-    if pt.type() == simde.provisional.AOEnergyNuclearGradientD().type():
+    if pt.type() == simde.provisional.EnergyNuclearGradientD().type():
         return 'gradient'
 
     raise Exception('PropertyType is not registered')

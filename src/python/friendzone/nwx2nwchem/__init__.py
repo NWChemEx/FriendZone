@@ -15,7 +15,7 @@
 from ..friends import is_friend_enabled
 import pluginplay as pp
 from simde import TotalEnergy
-from simde.provisional import AOEnergyNuclearGradientD
+from simde.provisional import EnergyNuclearGradientD
 from ..nwx2qcengine.call_qcengine import call_qcengine
 
 
@@ -42,16 +42,16 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
 
     def __init__(self):
         pp.ModuleBase.__init__(self)
-        self.satisfies_property_type(AOEnergyNuclearGradientD())
+        self.satisfies_property_type(EnergyNuclearGradientD())
         self.description("Calls NWChem via MolSSI's QCEngine")
         self.add_input('method')
         self.add_input("basis set")
 
     def run_(self, inputs, submods):
-        pt = AOEnergyNuclearGradientD()
+        pt = EnergyNuclearGradientD()
 
         # This line is awkward and needs to be cleaned up
-        nwx_basis, mol, mol_again = pt.unwrap_inputs(inputs)
+        mol, = pt.unwrap_inputs(inputs)
 
         method = inputs['method'].value()
         basis = inputs['basis set'].value()

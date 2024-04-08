@@ -15,7 +15,7 @@
 from pluginplay import ModuleManager
 from friendzone import friends, load_modules
 from simde import TotalEnergy
-from simde.provisional import AOEnergyNuclearGradientD
+from simde.provisional import EnergyNuclearGradientD
 from chemist.basis_set import AtomicBasisSetD
 from molecules import make_h2
 import unittest
@@ -56,7 +56,7 @@ class TestNWChem(unittest.TestCase):
         bs = AtomicBasisSetD()
         key = 'NWChem : SCF Gradient'
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        grad = self.mm.run_as(AOEnergyNuclearGradientD(), key, mol, bs, mol)
+        grad = self.mm.run_as(EnergyNuclearGradientD(), key, mol)
         print(grad)
 
     def setUp(self):
