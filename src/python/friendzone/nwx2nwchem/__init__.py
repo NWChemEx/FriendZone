@@ -57,6 +57,7 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
         basis = inputs['basis set'].value()
 
         e = call_qcengine(pt, mol, 'nwchem', method=method, basis=basis)
+        e = [c for cs in e for c in cs] # Flatten out the list of lists
         rv = self.results()
         return pt.wrap_results(rv, e)
 

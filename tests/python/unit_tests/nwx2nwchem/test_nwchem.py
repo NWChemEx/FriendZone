@@ -57,7 +57,9 @@ class TestNWChem(unittest.TestCase):
         key = 'NWChem : SCF Gradient'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         grad = self.mm.run_as(EnergyNuclearGradientD(), key, mol)
-        print(grad)
+        corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
+        for g, c in zip(grad, corr):
+            self.assertAlmostEqual(g, c, places=4)
 
     def setUp(self):
         if not friends.is_friend_enabled('nwchem'):
