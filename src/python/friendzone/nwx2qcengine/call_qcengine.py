@@ -64,6 +64,6 @@ def call_qcengine(pt, mol, program, **kwargs):
 
     driver = pt2driver(pt)
     qc_mol = chemical_system2qc_mol(mol)
-    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, model=kwargs)
+    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
     results = qcng.compute(inp, program)
     return results.return_result

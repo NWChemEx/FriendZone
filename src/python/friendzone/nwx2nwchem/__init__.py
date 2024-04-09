@@ -27,16 +27,20 @@ class NWChemViaMolSSI(pp.ModuleBase):
         self.description("Calls NWChem via MolSSI's QCEngine")
         self.add_input('method')
         self.add_input("basis set")
+        self.add_input("keywords").set_default({})
 
     def run_(self, inputs, submods):
         pt = TotalEnergy()
         mol, = pt.unwrap_inputs(inputs)
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
+        keywords = inputs['keywords'].value()
 
-        e = call_qcengine(pt, mol, 'nwchem', method=method, basis=basis)
+        model = {"method": method, "basis": basis}
+        e = call_qcengine(pt, mol, 'nwchem', model=model, keywords=keywords)
         rv = self.results()
         return pt.wrap_results(rv, e)
+
 
 class NWChemGradientViaMolSSI(pp.ModuleBase):
 
@@ -46,6 +50,7 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
         self.description("Calls NWChem via MolSSI's QCEngine")
         self.add_input('method')
         self.add_input("basis set")
+        self.add_input("keywords").set_default({})
 
     def run_(self, inputs, submods):
         pt = EnergyNuclearGradientD()
@@ -55,9 +60,11 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
 
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
+        keywords = inputs['keywords'].value()
 
-        e = call_qcengine(pt, mol, 'nwchem', method=method, basis=basis)
-        e = [c for cs in e for c in cs] # Flatten out the list of lists
+        model = {"method": method, "basis": basis}
+        e = call_qcengine(pt, mol, 'nwchem', model=model, keywords=keywords)
+        e = [c for cs in e for c in cs]  # Flatten out the list of lists
         rv = self.results()
         return pt.wrap_results(rv, e)
 
@@ -81,6 +88,6 @@ def load_nwchem_modules(mm):
             mod_key = 'NWChem : ' + method
             mm.add_module(mod_key, NWChemViaMolSSI())
             mm.change_input(mod_key, 'method', method)
-        
+
         mm.add_module('NWChem : SCF Gradient', NWChemGradientViaMolSSI())
         mm.change_input('NWChem : SCF Gradient', 'method', 'SCF')

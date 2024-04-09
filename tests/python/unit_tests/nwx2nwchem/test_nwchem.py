@@ -16,7 +16,6 @@ from pluginplay import ModuleManager
 from friendzone import friends, load_modules
 from simde import TotalEnergy
 from simde.provisional import EnergyNuclearGradientD
-from chemist.basis_set import AtomicBasisSetD
 from molecules import make_h2
 import unittest
 
@@ -53,9 +52,17 @@ class TestNWChem(unittest.TestCase):
 
     def test_scf_gradient(self):
         mol = make_h2()
-        bs = AtomicBasisSetD()
         key = 'NWChem : SCF Gradient'
         self.mm.change_input(key, 'basis set', 'sto-3g')
+        self.mm.change_input(
+            key, "keywords", {
+                "scf; uhf; ": "end",
+                "geometry__nocenter": ".true.",
+                "geometry__noautoz": ".true.",
+                "set scf:maxiter": 100000,
+                "set scf:thresh": 1.0e-8,
+                "set cphf:maxiter": 100000
+            })
         grad = self.mm.run_as(EnergyNuclearGradientD(), key, mol)
         corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
         for g, c in zip(grad, corr):
