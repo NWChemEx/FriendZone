@@ -53,16 +53,14 @@ class TestNWChem(unittest.TestCase):
     def test_scf_gradient(self):
         mol = make_h2()
         key = 'NWChem : SCF Gradient'
+        # Keywords need to work to prevent molecular translation
+        # At time of writing, they only work with Kazuumi's fork
+        keywords = { 
+            "geometry__nocenter": ".true.",
+            "geometry__noautoz": ".true.",
+        }
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        self.mm.change_input(
-            key, "keywords", {
-                "scf; uhf; ": "end",
-                "geometry__nocenter": ".true.",
-                "geometry__noautoz": ".true.",
-                "set scf:maxiter": 100000,
-                "set scf:thresh": 1.0e-8,
-                "set cphf:maxiter": 100000
-            })
+        self.mm.change_input(key, "keywords", keywords)
         grad = self.mm.run_as(EnergyNuclearGradientD(), key, mol)
         corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
         for g, c in zip(grad, corr):

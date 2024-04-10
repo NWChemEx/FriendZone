@@ -54,10 +54,7 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
 
     def run_(self, inputs, submods):
         pt = EnergyNuclearGradientD()
-
-        # This line is awkward and needs to be cleaned up
         mol, = pt.unwrap_inputs(inputs)
-
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
         keywords = inputs['keywords'].value()

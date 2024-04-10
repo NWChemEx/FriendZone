@@ -56,7 +56,7 @@ def call_qcengine(pt, mol, program, **kwargs):
                         backend?
         :type program: str
         :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                       ``AtomicInput`` class via the ``model`` key.
+                       ``AtomicInput`` class constructor.
 
         :return: The requested property.
         :rtype: Varies depending on the requested property
