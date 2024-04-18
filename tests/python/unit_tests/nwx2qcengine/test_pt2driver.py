@@ -14,7 +14,7 @@
 
 from friendzone.nwx2qcengine.pt2driver import pt2driver
 from simde import TotalEnergy
-from simde.provisional import EnergyNuclearGradientD
+from simde import EnergyNuclearGradientStdVectorD
 import unittest
 
 
@@ -29,7 +29,7 @@ class Testpt2driver(unittest.TestCase):
             self.assertEqual(pt2driver(pt), 'energy')
 
     def test_pts_that_map_to_gradient(self):
-        for pt in [EnergyNuclearGradientD()]:
+        for pt in [EnergyNuclearGradientStdVectorD()]:
             self.assertEqual(pt2driver(pt), 'gradient')
 
     def test_bad_pt(self):
