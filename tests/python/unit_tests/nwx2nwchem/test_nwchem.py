@@ -16,6 +16,7 @@ from pluginplay import ModuleManager
 from friendzone import friends, load_modules
 from simde import TotalEnergy
 from simde import EnergyNuclearGradientStdVectorD
+from chemist import PointSetD
 from molecules import make_h2
 import unittest
 
@@ -61,7 +62,7 @@ class TestNWChem(unittest.TestCase):
         }
         self.mm.change_input(key, 'basis set', 'sto-3g')
         self.mm.change_input(key, "keywords", keywords)
-        grad = self.mm.run_as(EnergyNuclearGradientStdVectorD(), key, mol, arg1)
+        grad = self.mm.run_as(EnergyNuclearGradientStdVectorD(), key, mol, PointSetD())
         corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
         for g, c in zip(grad, corr):
             self.assertAlmostEqual(g, c, places=4)
