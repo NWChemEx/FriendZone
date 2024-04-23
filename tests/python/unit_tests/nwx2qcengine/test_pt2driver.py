@@ -13,8 +13,7 @@
 # limitations under the License.
 
 from friendzone.nwx2qcengine.pt2driver import pt2driver
-from simde import TotalEnergy
-from simde import EnergyNuclearGradientStdVectorD
+import simde
 import unittest
 
 
@@ -25,11 +24,17 @@ class NotAPT:
 class Testpt2driver(unittest.TestCase):
 
     def test_pts_that_map_to_energy(self):
-        for pt in [TotalEnergy()]:
+        energy_pts = {
+            simde.TotalEnergy(),
+        }
+        for pt in energy_pts:
             self.assertEqual(pt2driver(pt), 'energy')
 
     def test_pts_that_map_to_gradient(self):
-        for pt in [EnergyNuclearGradientStdVectorD()]:
+        gradient_pts = {
+            simde.EnergyNuclearGradientStdVectorD(),
+        }
+        for pt in gradient_pts:
             self.assertEqual(pt2driver(pt), 'gradient')
 
     def test_bad_pt(self):
