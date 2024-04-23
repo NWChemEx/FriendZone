@@ -55,7 +55,8 @@ class TestNWChem(unittest.TestCase):
         mol = make_h2()
         key = 'NWChem : SCF Gradient'
         self.mm.change_input(key, 'basis set', 'sto-3g')
-        grad = self.mm.run_as(EnergyNuclearGradientStdVectorD(), key, mol, PointSetD())
+        grad = self.mm.run_as(EnergyNuclearGradientStdVectorD(), key, mol,
+                              PointSetD())
         corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
         for g, c in zip(grad, corr):
             self.assertAlmostEqual(g, c, places=4)
