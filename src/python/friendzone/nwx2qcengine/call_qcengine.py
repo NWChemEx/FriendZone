@@ -46,7 +46,7 @@ def call_qcengine(pt, mol, program, **kwargs):
         to module instances, whereas QCEngine requires strings). It is the
         responsibility of the module wrapping the call to ``call_qcengine`` to
         pass these additional inputs in as kwargs that can be forwarded to a
-        QCElemental.models.AtomicInput object via the ``model`` keyword.
+        QCElemental.models.AtomicInput object.
 
         :param pt: The property type we are computing.
         :type pt: pluginplay.PropertyType
