@@ -28,7 +28,7 @@ class NWChemViaMolSSI(pp.ModuleBase):
         self.add_input('method')
         self.add_input("basis set")
         self.add_input("keywords").set_default({})
-        self.add_input("MPI config").set_default(None)   # Kazuumi addition
+        self.add_input("MPI config").set_default(None)  # Kazuumi addition
 
     def run_(self, inputs, submods):
         pt = TotalEnergy()
@@ -36,10 +36,15 @@ class NWChemViaMolSSI(pp.ModuleBase):
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
         keywords = inputs['keywords'].value()
-        MPIconfig = inputs['MPI config'].value()       # Kazuumi addition
+        MPIconfig = inputs['MPI config'].value()  # Kazuumi addition
 
         model = {"method": method, "basis": basis}
-        e = call_qcengine(pt, mol, 'nwchem', MPIconfig, model=model, keywords=keywords)  # Kazuumi addition
+        e = call_qcengine(pt,
+                          mol,
+                          'nwchem',
+                          MPIconfig,
+                          model=model,
+                          keywords=keywords)  # Kazuumi addition
         rv = self.results()
         return pt.wrap_results(rv, e)
 
@@ -53,19 +58,24 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
         self.add_input('method')
         self.add_input("basis set")
         self.add_input("keywords").set_default({})
-        self.add_input("MPI config").set_default(None)   # Kazuumi addition
+        self.add_input("MPI config").set_default(None)  # Kazuumi addition
 
     def run_(self, inputs, submods):
         pt = EnergyNuclearGradientStdVectorD()
-#       mol, = pt.unwrap_inputs(inputs)             # old version
-        mol,pointset1 = pt.unwrap_inputs(inputs)    # new version
+        #       mol, = pt.unwrap_inputs(inputs)             # old version
+        mol, pointset1 = pt.unwrap_inputs(inputs)  # new version
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
         keywords = inputs['keywords'].value()
-        MPIconfig = inputs['MPI config'].value()       # Kazuumi addition
+        MPIconfig = inputs['MPI config'].value()  # Kazuumi addition
 
         model = {"method": method, "basis": basis}
-        e, f = call_qcengine(pt, mol, 'nwchem', MPIconfig, model=model, keywords=keywords)  # Kazuumi addition
+        e, f = call_qcengine(pt,
+                             mol,
+                             'nwchem',
+                             MPIconfig,
+                             model=model,
+                             keywords=keywords)  # Kazuumi addition
         f = [c for cs in f for c in cs]  # Flatten out the list of lists
         rv = self.results()
         return pt.wrap_results(rv, f)
@@ -80,20 +90,26 @@ class NWChemEnergyAndGradientViaMolSSI(pp.ModuleBase):
         self.add_input('method')
         self.add_input("basis set")
         self.add_input("keywords").set_default({})
-        self.add_input("MPI config").set_default(None)   # Kazuumi addition
+        self.add_input("MPI config").set_default(None)  # Kazuumi addition
 
     def run_(self, inputs, submods):
         pt = EnergyNuclearGradientStdVectorD()
-#       mol, = pt.unwrap_inputs(inputs)             # old version
-        mol,pointset1 = pt.unwrap_inputs(inputs)    # new version
+        #       mol, = pt.unwrap_inputs(inputs)             # old version
+        mol, pointset1 = pt.unwrap_inputs(inputs)  # new version
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
         keywords = inputs['keywords'].value()
-        MPIconfig = inputs['MPI config'].value()       # Kazuumi addition
+        MPIconfig = inputs['MPI config'].value()  # Kazuumi addition
 
         model = {"method": method, "basis": basis}
-        e, f = call_qcengine(pt, mol, 'nwchem', MPIconfig, model=model, keywords=keywords)  # Kazuumi addition
-        combined_ef = [c for cs in f for c in cs]  # Flatten out the list of lists
+        e, f = call_qcengine(pt,
+                             mol,
+                             'nwchem',
+                             MPIconfig,
+                             model=model,
+                             keywords=keywords)  # Kazuumi addition
+        combined_ef = [c for cs in f
+                       for c in cs]  # Flatten out the list of lists
         combined_ef.append(e)
         rv = self.results()
         return pt.wrap_results(rv, combined_ef)

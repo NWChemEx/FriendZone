@@ -67,6 +67,7 @@ def call_qcengine(pt, mol, program, MPIconfig, **kwargs):
     inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
     results = qcng.compute(inp, program, task_config=MPIconfig)
     if (driver == "gradient" and "qcvars" in results.extras):
-        return float(results.extras["qcvars"]["CURRENT ENERGY"]), results.return_result
+        return float(
+            results.extras["qcvars"]["CURRENT ENERGY"]), results.return_result
     else:
         return results.return_result

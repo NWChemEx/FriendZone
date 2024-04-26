@@ -43,4 +43,7 @@ def chemical_system2qc_mol(chem_sys):
         z = str(atom_i.z * au2ang)
         out += symbol + " " + x + " " + y + " " + z + "\n"
     # Fixing CoM and orientation and turning off symmetry to prevent molecular translation
-    return qcel.models.Molecule.from_data(out, fix_com=True, fix_orientation=True, fix_symmetry="C1")
+    return qcel.models.Molecule.from_data(out,
+                                          fix_com=True,
+                                          fix_orientation=True,
+                                          fix_symmetry="C1")
