@@ -28,6 +28,7 @@ class NWChemViaMolSSI(pp.ModuleBase):
         self.add_input('method')
         self.add_input("basis set")
         self.add_input("keywords").set_default({})
+        self.add_input("MPI config").set_default(None)   # Kazuumi addition
 
     def run_(self, inputs, submods):
         pt = TotalEnergy()
@@ -35,9 +36,10 @@ class NWChemViaMolSSI(pp.ModuleBase):
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
         keywords = inputs['keywords'].value()
+        MPIconfig = inputs['MPI config'].value()       # Kazuumi addition
 
         model = {"method": method, "basis": basis}
-        e = call_qcengine(pt, mol, 'nwchem', model=model, keywords=keywords)
+        e = call_qcengine(pt, mol, 'nwchem', MPIconfig, model=model, keywords=keywords)  # Kazuumi addition
         rv = self.results()
         return pt.wrap_results(rv, e)
 
@@ -51,19 +53,50 @@ class NWChemGradientViaMolSSI(pp.ModuleBase):
         self.add_input('method')
         self.add_input("basis set")
         self.add_input("keywords").set_default({})
+        self.add_input("MPI config").set_default(None)   # Kazuumi addition
 
     def run_(self, inputs, submods):
         pt = EnergyNuclearGradientStdVectorD()
-        mol, arg = pt.unwrap_inputs(inputs)
+#       mol, = pt.unwrap_inputs(inputs)             # old version
+        mol,pointset1 = pt.unwrap_inputs(inputs)    # new version
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
         keywords = inputs['keywords'].value()
+        MPIconfig = inputs['MPI config'].value()       # Kazuumi addition
 
         model = {"method": method, "basis": basis}
-        e = call_qcengine(pt, mol, 'nwchem', model=model, keywords=keywords)
-        e = [c for cs in e for c in cs]  # Flatten out the list of lists
+        e, f = call_qcengine(pt, mol, 'nwchem', MPIconfig, model=model, keywords=keywords)  # Kazuumi addition
+        f = [c for cs in f for c in cs]  # Flatten out the list of lists
         rv = self.results()
-        return pt.wrap_results(rv, e)
+        return pt.wrap_results(rv, f)
+
+
+class NWChemEnergyAndGradientViaMolSSI(pp.ModuleBase):
+
+    def __init__(self):
+        pp.ModuleBase.__init__(self)
+        self.satisfies_property_type(EnergyNuclearGradientStdVectorD())
+        self.description("Calls NWChem via MolSSI's QCEngine")
+        self.add_input('method')
+        self.add_input("basis set")
+        self.add_input("keywords").set_default({})
+        self.add_input("MPI config").set_default(None)   # Kazuumi addition
+
+    def run_(self, inputs, submods):
+        pt = EnergyNuclearGradientStdVectorD()
+#       mol, = pt.unwrap_inputs(inputs)             # old version
+        mol,pointset1 = pt.unwrap_inputs(inputs)    # new version
+        method = inputs['method'].value()
+        basis = inputs['basis set'].value()
+        keywords = inputs['keywords'].value()
+        MPIconfig = inputs['MPI config'].value()       # Kazuumi addition
+
+        model = {"method": method, "basis": basis}
+        e, f = call_qcengine(pt, mol, 'nwchem', MPIconfig, model=model, keywords=keywords)  # Kazuumi addition
+        combined_ef = [c for cs in f for c in cs]  # Flatten out the list of lists
+        combined_ef.append(e)
+        rv = self.results()
+        return pt.wrap_results(rv, combined_ef)
 
 
 def load_nwchem_modules(mm):
@@ -73,18 +106,28 @@ def load_nwchem_modules(mm):
 
     #.  NWChem : SCF
     #.  NWChem : MP2
+    #.  NWChem : B3LYP
     #.  NWChem : CCSD
     #.  NWChem : CCSD(T)
     #.  NWChem : SCF Gradient
+    #.  NWChem : MP2 Gradient
+    #.  NWChem : B3LYP Gradient
 
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
     if is_friend_enabled('nwchem'):
-        for method in ['SCF', 'MP2', 'CCSD', 'CCSD(T)']:
+        for method in ['SCF', 'MP2', 'B3LYP', 'CCSD', 'CCSD(T)']:
             mod_key = 'NWChem : ' + method
             mm.add_module(mod_key, NWChemViaMolSSI())
             mm.change_input(mod_key, 'method', method)
 
-        mm.add_module('NWChem : SCF Gradient', NWChemGradientViaMolSSI())
-        mm.change_input('NWChem : SCF Gradient', 'method', 'SCF')
+        for method in ['SCF', 'MP2', 'B3LYP']:
+            mod_key = 'NWChem : ' + method + ' Gradient'
+            mm.add_module(mod_key, NWChemGradientViaMolSSI())
+            mm.change_input(mod_key, 'method', method)
+
+        for method in ['SCF', 'MP2', 'B3LYP']:
+            mod_key = 'NWChem : ' + method + ' EnergyAndGradient'
+            mm.add_module(mod_key, NWChemEnergyAndGradientViaMolSSI())
+            mm.change_input(mod_key, 'method', method)
