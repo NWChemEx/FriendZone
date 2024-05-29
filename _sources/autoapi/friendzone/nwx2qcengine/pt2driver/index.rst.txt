@@ -1,21 +1,19 @@
-:py:mod:`friendzone.nwx2qcengine.pt2driver`
-===========================================
+friendzone.nwx2qcengine.pt2driver
+=================================
 
 .. py:module:: friendzone.nwx2qcengine.pt2driver
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    friendzone.nwx2qcengine.pt2driver.pt2driver
 
 
+Module Contents
+---------------
 
 .. py:function:: pt2driver(pt)
 

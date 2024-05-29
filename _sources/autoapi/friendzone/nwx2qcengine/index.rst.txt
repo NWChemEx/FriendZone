@@ -1,17 +1,17 @@
-:py:mod:`friendzone.nwx2qcengine`
-=================================
+friendzone.nwx2qcengine
+=======================
 
 .. py:module:: friendzone.nwx2qcengine
 
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   call_qcengine/index.rst
-   chemical_system2qc_mol/index.rst
-   pt2driver/index.rst
+   /autoapi/friendzone/nwx2qcengine/call_qcengine/index
+   /autoapi/friendzone/nwx2qcengine/chemical_system2qc_mol/index
+   /autoapi/friendzone/nwx2qcengine/pt2driver/index
 
 

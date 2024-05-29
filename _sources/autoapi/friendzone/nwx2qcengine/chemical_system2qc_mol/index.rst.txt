@@ -1,21 +1,19 @@
-:py:mod:`friendzone.nwx2qcengine.chemical_system2qc_mol`
-========================================================
+friendzone.nwx2qcengine.chemical_system2qc_mol
+==============================================
 
 .. py:module:: friendzone.nwx2qcengine.chemical_system2qc_mol
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    friendzone.nwx2qcengine.chemical_system2qc_mol.chemical_system2qc_mol
 
 
+Module Contents
+---------------
 
 .. py:function:: chemical_system2qc_mol(chem_sys)
 

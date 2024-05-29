@@ -1,21 +1,19 @@
-:py:mod:`friendzone.nwx2qcengine.call_qcengine`
-===============================================
+friendzone.nwx2qcengine.call_qcengine
+=====================================
 
 .. py:module:: friendzone.nwx2qcengine.call_qcengine
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    friendzone.nwx2qcengine.call_qcengine.call_qcengine
 
 
+Module Contents
+---------------
 
 .. py:function:: call_qcengine(pt, mol, program, **kwargs)
 

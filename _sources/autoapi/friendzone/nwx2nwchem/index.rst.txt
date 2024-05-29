@@ -1,21 +1,19 @@
-:py:mod:`friendzone.nwx2nwchem`
-===============================
+friendzone.nwx2nwchem
+=====================
 
 .. py:module:: friendzone.nwx2nwchem
 
 
-Package Contents
-----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    friendzone.nwx2nwchem.load_nwchem_modules
 
 
+Package Contents
+----------------
 
 .. py:function:: load_nwchem_modules(mm)
 

@@ -1,15 +1,11 @@
-:py:mod:`friendzone.friends`
-============================
+friendzone.friends
+==================
 
 .. py:module:: friendzone.friends
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -17,6 +13,8 @@ Functions
    friendzone.friends.is_friend_enabled
 
 
+Module Contents
+---------------
 
 .. py:function:: friends()
 
