@@ -11,6 +11,7 @@ Subpackages
    :maxdepth: 1
 
    /autoapi/friendzone/nwx2nwchem/index
+   /autoapi/friendzone/nwx2qcelemental/index
    /autoapi/friendzone/nwx2qcengine/index
 
 

@@ -5,6 +5,7 @@ Modules API
 .. toctree::
    :maxdepth: 1
 
+   ChemicalSystem_via_QCElemental
    NWChem___CCSD
    NWChem___CCSD(T)
    NWChem___MP2

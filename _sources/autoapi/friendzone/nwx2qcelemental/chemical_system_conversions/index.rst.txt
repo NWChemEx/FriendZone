@@ -1,7 +1,7 @@
-friendzone.nwx2qcengine.chemical_system2qc_mol
-==============================================
+friendzone.nwx2qcelemental.chemical_system_conversions
+======================================================
 
-.. py:module:: friendzone.nwx2qcengine.chemical_system2qc_mol
+.. py:module:: friendzone.nwx2qcelemental.chemical_system_conversions
 
 
 Functions
@@ -9,7 +9,8 @@ Functions
 
 .. autoapisummary::
 
-   friendzone.nwx2qcengine.chemical_system2qc_mol.chemical_system2qc_mol
+   friendzone.nwx2qcelemental.chemical_system_conversions.chemical_system2qc_mol
+   friendzone.nwx2qcelemental.chemical_system_conversions.qc_mol2molecule
 
 
 Module Contents
@@ -31,5 +32,18 @@ Module Contents
    :type chem_sys: chemist.ChemicalSystem
    :return: The QCElemental representation of ``chem_sys``
    :rtype: qcelemental.models.Molecule
+
+
+.. py:function:: qc_mol2molecule(qc_mol)
+
+   Converts a QCElemental.Molecule object to a Chemist.Molecule object.
+
+
+   .. note::
+
+      QCElemental's Molecule class contains extra information that
+      Chemist's Molecule class does not. At present this function ignores all
+      extra information.
+
 
 
