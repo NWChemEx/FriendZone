@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import qcelemental as qcel
+from chemist import Atom, Molecule
 
 
 def chemical_system2qc_mol(chem_sys):
@@ -43,3 +44,36 @@ def chemical_system2qc_mol(chem_sys):
         z = str(atom_i.z * au2ang)
         out += symbol + " " + x + " " + y + " " + z + "\n"
     return qcel.models.Molecule.from_data(out)
+
+
+def qc_mol2molecule(qc_mol):
+    """ Converts a QCElemental.Molecule object to a Chemist.Molecule object.
+
+
+    .. note::
+
+       QCElemental's Molecule class contains extra information that
+       Chemist's Molecule class does not. At present this function ignores all
+       extra information.
+
+    """
+
+    mol = chemist.Molecule(qc_mol.molecular_charge,
+                           qc_mol.molecular_multiplicity)
+
+    n_atoms = len(qc_mol.atom_labels)
+
+    for i in range(n_atoms):
+        sym = qc_mol.atom_labels[i]
+        Zi = qc_mol.atomic_numbers[i]
+        mass = qc_mol.masses[i]
+        i3 = 3 * i
+        x = qc_mol.geometry[i3]
+        y = qc_mol.geometry[i3 + 1]
+        z = qc_mol.geometry[i3 + 2]
+        nuclear_charge = float(Zi)
+        nelectrons = Zi
+        ai = chemist.Atom(sym, Zi, mass, x, y, z, nuclear_charge, nelectrons)
+        mol.push_back(ai)
+
+    return mol
