@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import qcelemental as qcel
-from chemist import Atom, Molecule
+from chemist import Molecule, Nuclei, Nucleus
 
 
 def chemical_system2qc_mol(chem_sys):
@@ -58,22 +58,20 @@ def qc_mol2molecule(qc_mol):
 
     """
 
-    mol = chemist.Molecule(qc_mol.molecular_charge,
-                           qc_mol.molecular_multiplicity)
-
     n_atoms = len(qc_mol.atom_labels)
+    nuclei = Nuclei()
+    mass_conversion = qcel.constants.conversion_factor("dalton", "au_mass")
 
     for i in range(n_atoms):
-        sym = qc_mol.atom_labels[i]
+        sym = qc_mol.symbols[i]
         Zi = qc_mol.atomic_numbers[i]
-        mass = qc_mol.masses[i]
-        i3 = 3 * i
-        x = qc_mol.geometry[i3]
-        y = qc_mol.geometry[i3 + 1]
-        z = qc_mol.geometry[i3 + 2]
+        mass = qc_mol.masses[i] * mass_conversion
+        x = qc_mol.geometry[i][0]
+        y = qc_mol.geometry[i][1]
+        z = qc_mol.geometry[i][2]
         nuclear_charge = float(Zi)
-        nelectrons = Zi
-        ai = chemist.Atom(sym, Zi, mass, x, y, z, nuclear_charge, nelectrons)
-        mol.push_back(ai)
+        nuclei.push_back(Nucleus(sym, Zi, mass, x, y, z, nuclear_charge))
 
-    return mol
+    charge = int(qc_mol.molecular_charge)
+    multiplicity = int(qc_mol.molecular_multiplicity)
+    return Molecule(charge, multiplicity, nuclei)

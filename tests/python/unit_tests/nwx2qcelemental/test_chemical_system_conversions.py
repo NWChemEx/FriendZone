@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from friendzone.nwx2qceelemental.chemical_system_conversions import *
+from friendzone.nwx2qcelemental.chemical_system_conversions import *
 from molecules import make_h2
 import qcelemental as qcel
 import unittest
+from compare_molecules import compare_molecules
 
 
 class TestChemicalSystem2QC(unittest.TestCase):
@@ -32,7 +33,8 @@ class TestChemicalSystem2QC(unittest.TestCase):
 class TestQCMol2Molecule(unittest.TestCase):
 
     def test_h2(self):
-        corr = make_h2()
+        corr = make_h2().molecule
         h2_as_str = "H 0.0 0.0 0.0\nH 0.0 0.0 0.8899966917653396"
         mol = qcel.models.Molecule.from_data(h2_as_str)
-        self.assertEqual(qc_mol2molecule(mol), corr)
+        result = qc_mol2molecule(mol)
+        compare_molecules(self, result, corr)
