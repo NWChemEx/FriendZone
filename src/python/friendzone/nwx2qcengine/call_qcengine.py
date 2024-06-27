@@ -14,7 +14,7 @@
 
 import qcengine as qcng
 import qcelemental as qcel
-from .chemical_system2qc_mol import chemical_system2qc_mol
+from ..nwx2qcelemental.chemical_system_conversions import chemical_system2qc_mol
 from .pt2driver import pt2driver
 
 

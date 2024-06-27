@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from .nwx2nwchem import load_nwchem_modules
+from .nwx2qcelemental import load_qcelemental_modules
 
 
 def load_modules(mm):
@@ -20,8 +21,9 @@ def load_modules(mm):
     calls the various friend specific module loading functions, including:
 
     *  `load_nwchem_modules`
-    
+
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
     load_nwchem_modules(mm)
+    load_qcelemental_modules(mm)
