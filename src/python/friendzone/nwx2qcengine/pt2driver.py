@@ -29,7 +29,18 @@ def pt2driver(pt):
     :raises: Exception if ``pt`` is not a property type which has been
              registered with this function.
     """
-    if pt.type() == simde.TotalEnergy().type():
-        return 'energy'
 
+    # Set of Property Types that map to energy driver
+    energy_pts = {
+        simde.TotalEnergy().type(),
+    }
+    # Set of Property Types that map to gradient driver
+    gradient_pts = {
+        simde.EnergyNuclearGradientStdVectorD().type(),
+    }
+
+    if pt.type() in energy_pts:
+        return 'energy'
+    if pt.type() in gradient_pts:
+        return 'gradient'
     raise Exception('PropertyType is not registered')

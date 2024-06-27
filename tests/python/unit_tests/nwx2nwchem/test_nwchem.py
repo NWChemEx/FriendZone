@@ -15,6 +15,8 @@
 from pluginplay import ModuleManager
 from friendzone import friends, load_modules
 from simde import TotalEnergy
+from simde import EnergyNuclearGradientStdVectorD
+from chemist import PointSetD
 from molecules import make_h2
 import unittest
 
@@ -48,6 +50,16 @@ class TestNWChem(unittest.TestCase):
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.122251361965036, places=4)
+
+    def test_scf_gradient(self):
+        mol = make_h2()
+        key = 'NWChem : SCF Gradient'
+        self.mm.change_input(key, 'basis set', 'sto-3g')
+        grad = self.mm.run_as(EnergyNuclearGradientStdVectorD(), key, mol,
+                              PointSetD())
+        corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
+        for g, c in zip(grad, corr):
+            self.assertAlmostEqual(g, c, places=4)
 
     def setUp(self):
         if not friends.is_friend_enabled('nwchem'):

@@ -18,7 +18,7 @@ from ..nwx2qcelemental.chemical_system_conversions import chemical_system2qc_mol
 from .pt2driver import pt2driver
 
 
-def call_qcengine(pt, mol, program, **kwargs):
+def call_qcengine(pt, mol, program, MPIconfig, **kwargs):
     """ Wraps calling a program through the QCEngine API.
 
         .. note::
@@ -56,7 +56,7 @@ def call_qcengine(pt, mol, program, **kwargs):
                         backend?
         :type program: str
         :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                       ``AtomicInput`` class via the ``model`` key.
+                       ``AtomicInput`` class constructor.
 
         :return: The requested property.
         :rtype: Varies depending on the requested property
@@ -64,6 +64,10 @@ def call_qcengine(pt, mol, program, **kwargs):
 
     driver = pt2driver(pt)
     qc_mol = chemical_system2qc_mol(mol)
-    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, model=kwargs)
-    results = qcng.compute(inp, program)
-    return results.return_result
+    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
+    results = qcng.compute(inp, program, task_config=MPIconfig)
+    if (driver == "gradient" and "qcvars" in results.extras):
+        return float(
+            results.extras["qcvars"]["CURRENT ENERGY"]), results.return_result
+    else:
+        return results.return_result
