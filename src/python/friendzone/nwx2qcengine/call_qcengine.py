@@ -15,10 +15,9 @@
 import qcengine as qcng
 import qcelemental as qcel
 from ..nwx2qcelemental.chemical_system_conversions import chemical_system2qc_mol
-from .pt2driver import pt2driver
 
 
-def call_qcengine(pt, mol, program, **kwargs):
+def call_qcengine(driver, mol, program, runtime, **kwargs):
     """ Wraps calling a program through the QCEngine API.
 
         .. note::
@@ -34,8 +33,8 @@ def call_qcengine(pt, mol, program, **kwargs):
         objects to their QCElemental equivalents. Right now those mappings
         include:
 
-        - property_type -> driver type
         - ChemicalSystem -> qcel.models.Molecule
+        - RuntimeView -> ???
 
         While not supported at the moment, similar conversions for the AO basis
         set are possible.
@@ -56,14 +55,21 @@ def call_qcengine(pt, mol, program, **kwargs):
                         backend?
         :type program: str
         :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                       ``AtomicInput`` class via the ``model`` key.
+                       ``AtomicInput`` class as kwargs.
 
-        :return: The requested property.
+        :return: A dictionary containing the requested property and any other
+                 property of potential interest.
         :rtype: Varies depending on the requested property
     """
-
-    driver = pt2driver(pt)
     qc_mol = chemical_system2qc_mol(mol)
-    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, model=kwargs)
-    results = qcng.compute(inp, program)
-    return results.return_result
+    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
+    # TODO: figure out what task_config is supposed to be and get it from
+    #       runtime https://github.com/MolSSI/QCEngine/blob/3b9ed2aee662424df6be12d9e7e23f51b9c6b6eb/qcengine/config.py#L152
+    results = qcng.compute(inp, program, task_config=None)
+    if type(results) == qcel.models.common_models.FailedOperation:
+        print(results.error.error_message)
+
+    rv = {driver: results.return_result}
+    if (driver == "gradient" and "qcvars" in results.extras):
+        rv['energy'] = float(results.extras["qcvars"]["CURRENT ENERGY"])
+    return rv
