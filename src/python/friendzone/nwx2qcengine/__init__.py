@@ -23,9 +23,9 @@ class QCEngineEnergy(pp.ModuleBase):
     def __init__(self):
         pp.ModuleBase.__init__(self)
         self.satisfies_property_type(TotalEnergy())
-        self.description("Driver module for calling friends through QCEngine")
+        self.description('Driver module for calling friends through QCEngine')
 
-        ddesc = 'Implementation detail DO NOT MANUALLY CHANGE!'
+        ddesc = 'Implementation detail. DO NOT MANUALLY CHANGE!'
         self.add_input('_driver').set_description(ddesc).set_default('energy')
         self.add_input('program').set_description('Friend to call')
         self.add_input('method').set_description('Level of theory')
@@ -33,26 +33,30 @@ class QCEngineEnergy(pp.ModuleBase):
 
     def run_(self, inputs, submods):
         """
-        Our strategy here is to use the fact that the inputs to the energy pt
-        are a subset of those to the gradient
+        Our strategy here is to use the fact that the inputs to the TotalEnergy 
+        PT are a subset of those to other PTs
         """
-
+        # Step 0: Figure out the PT we're being run as
         egy_pt = TotalEnergy()
         grad_pt = EnergyNuclearGradientStdVectorD()
         _driver = inputs['_driver'].value()
 
+        # Step 1: Unwrap the inputs
         mol = None
         if _driver == 'energy':
             mol, = egy_pt.unwrap_inputs(inputs)
         elif _driver == 'gradient':
             mol, _ = grad_pt.unwrap_inputs(inputs)
-            #TODO verify points is equal to mol
+            #TODO: verify ignored second input (the point at which to take the
+            #derivative) is equal to the geometry of mol.
         else:
             raise RuntimeError('Unexpected driver type')
 
         program = inputs['program'].value()
         method = inputs['method'].value()
         basis = inputs['basis set'].value()
+
+        # Step 2: Call QCEngine
         model = {'method': method, 'basis': basis}
         keywords = {}
         outputs = call_qcengine(_driver,
@@ -62,6 +66,7 @@ class QCEngineEnergy(pp.ModuleBase):
                                 model=model,
                                 keywords=keywords)
 
+        # Step 3: Prepare results
         rv = self.results()
         if _driver == 'gradient':
             grad = outputs['gradient'].flatten().tolist()
@@ -71,6 +76,13 @@ class QCEngineEnergy(pp.ModuleBase):
 
 
 class QCEngineGradient(QCEngineEnergy):
+    """ This class is largely implemented by QCEngineEnergy. The only difference
+        is in the ctor. The differences are:
+
+        - Property type is set to EnergyNuclearGradientStdVectorD
+        - An internal implementation detail is modified to signal the modified
+          property type.
+    """
 
     def __init__(self):
         QCEngineEnergy.__init__(self)
@@ -79,17 +91,23 @@ class QCEngineGradient(QCEngineEnergy):
 
 
 def load_qcengine_modules(mm):
-    """Loads the collection of modules that wrap NWChem calls.
+    """Loads the collection of modules that wrap QCElemental calls.
 
-    Currently, the modules in this collection are:
-
-    #.  NWChem : SCF
-    #.  NWChem : B3LYP
-    #.  NWChem : MP2
-    #.  NWChem : CCSD
-    #.  NWChem : CCSD(T)
+    Currently, the friends exported by this function are:
     
-    (and their gradients)
+    #. NWChem
+
+    the levels of theory are: 
+
+    #. SCF
+    #. B3LYP
+    #. MP2
+    #. CCSD
+    #. CCSD(T)
+
+    and we have 0-th and 1-st derivatives.
+    
+    The final set of modules is the Cartesian product of all of the above.
 
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager

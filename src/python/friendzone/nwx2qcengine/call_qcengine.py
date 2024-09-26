@@ -34,7 +34,7 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
         include:
 
         - ChemicalSystem -> qcel.models.Molecule
-        - RuntimeView -> ???
+        - RuntimeView -> qcng.TaskConfig
 
         While not supported at the moment, similar conversions for the AO basis
         set are possible.
@@ -61,14 +61,24 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
                  property of potential interest.
         :rtype: Varies depending on the requested property
     """
+
+    # Step 1: Prepare the chemistry-related input
     qc_mol = chemical_system2qc_mol(mol)
     inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
+
+    # Step 2: Prepare the runtime-related input
     # TODO: figure out what task_config is supposed to be and get it from
     #       runtime https://github.com/MolSSI/QCEngine/blob/3b9ed2aee662424df6be12d9e7e23f51b9c6b6eb/qcengine/config.py#L152
-    results = qcng.compute(inp, program, task_config=None)
-    if type(results) == qcel.models.common_models.FailedOperation:
-        print(results.error.error_message)
+    task_config = None
 
+    # Step 3: Run QCEngine
+    results = qcng.compute(inp, program, task_config=task_config)
+
+    # Step 4: Verify the computation ran correctly
+    if type(results) == qcel.models.common_models.FailedOperation:
+        raise RuntimeError(results.error.error_message)
+
+    # Step 5: Prepare the results
     rv = {driver: results.return_result}
     if (driver == "gradient" and "qcvars" in results.extras):
         rv['energy'] = float(results.extras["qcvars"]["CURRENT ENERGY"])
