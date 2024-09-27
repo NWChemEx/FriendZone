@@ -61,7 +61,10 @@ def _run_impl(driver, inputs, rv, runtime):
 
 
 class QCEngineEnergy(pp.ModuleBase):
-    """ Driver module for computing energies with QCEngine"""
+    """ Driver module for computing energies with QCEngine.
+    
+        This class relies on _run_impl to actually implement run_.
+    """
 
     def __init__(self):
         pp.ModuleBase.__init__(self)
@@ -76,12 +79,14 @@ class QCEngineEnergy(pp.ModuleBase):
 
 
 class QCEngineGradient(QCEngineEnergy):
-    """ This class is largely implemented by QCEngineEnergy. The only difference
-        is in the ctor. The differences are:
+    """ Driver module for computing gradients with QCEngine.
+    
+        This class extends QCEngineEnergy (QCEngine always computes the energy
+        when computing the gradient thus this module will also compute the
+        energy). Relative to QCEngineEnergy the main differences are:
 
-        - Property type is set to EnergyNuclearGradientStdVectorD
-        - An internal implementation detail is modified to signal the modified
-          property type.
+        - Addition of gradient property type
+        - Invocation of _run_impl with 'gradient' instead of 'energy'
     """
 
     def __init__(self):

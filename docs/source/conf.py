@@ -176,7 +176,7 @@ autoapi_options = [
 
 
 # This skips classes that derived from ModuleBase, because those classes will
-# have Module API documentation producable by PluginPlay
+# have Module API documentation producible by PluginPlay
 def skip_pluginplay_modules(app, what, name, obj, skip, options):
     bases = obj.obj['bases'] if 'bases' in obj.obj.keys() else []
     if 'pluginplay.ModuleBase' in bases:
