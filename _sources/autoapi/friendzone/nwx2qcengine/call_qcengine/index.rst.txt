@@ -15,7 +15,7 @@ Functions
 Module Contents
 ---------------
 
-.. py:function:: call_qcengine(pt, mol, program, **kwargs)
+.. py:function:: call_qcengine(driver, mol, program, runtime, **kwargs)
 
    Wraps calling a program through the QCEngine API.
 
@@ -32,8 +32,8 @@ Module Contents
    objects to their QCElemental equivalents. Right now those mappings
    include:
 
-   - property_type -> driver type
    - ChemicalSystem -> qcel.models.Molecule
+   - RuntimeView -> qcng.TaskConfig
 
    While not supported at the moment, similar conversions for the AO basis
    set are possible.
@@ -54,9 +54,10 @@ Module Contents
                    backend?
    :type program: str
    :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                  ``AtomicInput`` class via the ``model`` key.
+                  ``AtomicInput`` class as kwargs.
 
-   :return: The requested property.
+   :return: A dictionary containing the requested property and any other
+            property of potential interest.
    :rtype: Varies depending on the requested property
 
 

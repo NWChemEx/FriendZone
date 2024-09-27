@@ -6,7 +6,13 @@ Modules API
    :maxdepth: 1
 
    ChemicalSystem_via_QCElemental
-   NWChem___CCSD
-   NWChem___CCSD(T)
-   NWChem___MP2
-   NWChem___SCF
+   nwchem___B3LYP
+   nwchem___B3LYP_Gradient
+   nwchem___CCSD
+   nwchem___CCSD_Gradient
+   nwchem___CCSD(T)
+   nwchem___CCSD(T)_Gradient
+   nwchem___MP2
+   nwchem___MP2_Gradient
+   nwchem___SCF
+   nwchem___SCF_Gradient

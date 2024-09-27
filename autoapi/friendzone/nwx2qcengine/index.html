@@ -57,10 +57,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">friendzone</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../nwx2nwchem/index.html">friendzone.nwx2nwchem</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nwx2qcelemental/index.html">friendzone.nwx2qcelemental</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">friendzone.nwx2qcengine</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#package-contents">Package Contents</a></li>
 </ul>
 </li>
 </ul>
@@ -106,9 +108,85 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="call_qcengine/index.html">friendzone.nwx2qcengine.call_qcengine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pt2driver/index.html">friendzone.nwx2qcengine.pt2driver</a></li>
 </ul>
 </div>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.nwx2qcengine.QCEngineGradient" title="friendzone.nwx2qcengine.QCEngineGradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QCEngineGradient</span></code></a></p></td>
+<td><p>Driver module for computing gradients with QCEngine.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.nwx2qcengine._run_impl" title="friendzone.nwx2qcengine._run_impl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_run_impl</span></code></a>(driver, inputs, rv, runtime)</p></td>
+<td><p>Our strategy here is to use the fact that the inputs to the TotalEnergy</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#friendzone.nwx2qcengine.load_qcengine_modules" title="friendzone.nwx2qcengine.load_qcengine_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_qcengine_modules</span></code></a>(mm)</p></td>
+<td><p>Loads the collection of modules that wrap QCElemental calls.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="friendzone.nwx2qcengine._run_impl">
+<span class="sig-prename descclassname"><span class="pre">friendzone.nwx2qcengine.</span></span><span class="sig-name descname"><span class="pre">_run_impl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runtime</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2qcengine._run_impl" title="Link to this definition"></a></dt>
+<dd><p>Our strategy here is to use the fact that the inputs to the TotalEnergy
+PT are a subset of those to other PTs</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="friendzone.nwx2qcengine.QCEngineGradient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">friendzone.nwx2qcengine.</span></span><span class="sig-name descname"><span class="pre">QCEngineGradient</span></span><a class="headerlink" href="#friendzone.nwx2qcengine.QCEngineGradient" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">QCEngineEnergy</span></code></p>
+<p>Driver module for computing gradients with QCEngine.</p>
+<p>This class extends QCEngineEnergy (QCEngine always computes the energy
+when computing the gradient thus this module will also compute the
+energy). Relative to QCEngineEnergy the main differences are:</p>
+<ul class="simple">
+<li><p>Addition of gradient property type</p></li>
+<li><p>Invocation of _run_impl with ‘gradient’ instead of ‘energy’</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="friendzone.nwx2qcengine.QCEngineGradient.run_">
+<span class="sig-name descname"><span class="pre">run_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submods</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2qcengine.QCEngineGradient.run_" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="friendzone.nwx2qcengine.load_qcengine_modules">
+<span class="sig-prename descclassname"><span class="pre">friendzone.nwx2qcengine.</span></span><span class="sig-name descname"><span class="pre">load_qcengine_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2qcengine.load_qcengine_modules" title="Link to this definition"></a></dt>
+<dd><p>Loads the collection of modules that wrap QCElemental calls.</p>
+<p>Currently, the friends exported by this function are:</p>
+<ol class="arabic simple">
+<li><p>NWChem</p></li>
+</ol>
+<p>the levels of theory are:</p>
+<ol class="arabic simple">
+<li><p>SCF</p></li>
+<li><p>B3LYP</p></li>
+<li><p>MP2</p></li>
+<li><p>CCSD</p></li>
+<li><p>CCSD(T)</p></li>
+</ol>
+<p>and we have 0-th and 1-st derivatives.</p>
+<p>The final set of modules is the Cartesian product of all of the above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mm</strong> (<em>pluginplay.ModuleManager</em>) – The ModuleManager that the NWChem Modules will be loaded into.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

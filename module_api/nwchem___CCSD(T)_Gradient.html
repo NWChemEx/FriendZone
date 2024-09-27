@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NWChem : CCSD &mdash; friendzone 1.0.0 documentation</title>
+  <title>nwchem : CCSD(T) Gradient &mdash; friendzone 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
@@ -22,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="NWChem : CCSD(T)" href="NWChem___CCSD%28T%29.html" />
-    <link rel="prev" title="ChemicalSystem via QCElemental" href="ChemicalSystem_via_QCElemental.html" /> 
+    <link rel="next" title="nwchem : MP2" href="nwchem___MP2.html" />
+    <link rel="prev" title="nwchem : CCSD(T)" href="nwchem___CCSD%28T%29.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,7 +58,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../autoapi/friendzone/index.html">friendzone</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Modules API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="ChemicalSystem_via_QCElemental.html">ChemicalSystem via QCElemental</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">NWChem : CCSD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___B3LYP.html">nwchem : B3LYP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___B3LYP_Gradient.html">nwchem : B3LYP Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD.html">nwchem : CCSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD_Gradient.html">nwchem : CCSD Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD%28T%29.html">nwchem : CCSD(T)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nwchem : CCSD(T) Gradient</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#please-cite">Please Cite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#property-types">Property Types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-inputs">Module Inputs</a><ul>
@@ -70,9 +75,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="NWChem___CCSD%28T%29.html">NWChem : CCSD(T)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NWChem___MP2.html">NWChem : MP2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="NWChem___SCF.html">NWChem : SCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___MP2.html">nwchem : MP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___MP2_Gradient.html">nwchem : MP2 Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___SCF.html">nwchem : SCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___SCF_Gradient.html">nwchem : SCF Gradient</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference external" href="https://nwchemex.github.io/FriendZone/friendzone_cxx_api/index.html">C++ API</a></li>
@@ -93,9 +99,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Modules API</a></li>
-      <li class="breadcrumb-item active">NWChem : CCSD</li>
+      <li class="breadcrumb-item active">nwchem : CCSD(T) Gradient</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/module_api/NWChem___CCSD.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/module_api/nwchem___CCSD(T)_Gradient.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -103,9 +109,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="nwchem-ccsd">
-<h1>NWChem : CCSD<a class="headerlink" href="#nwchem-ccsd" title="Link to this heading"></a></h1>
-<p>Calls NWChem via MolSSI’s QCEngine</p>
+  <section id="nwchem-ccsd-t-gradient">
+<h1>nwchem : CCSD(T) Gradient<a class="headerlink" href="#nwchem-ccsd-t-gradient" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>Driver module for computing energies with QCEngine.</p>
+<blockquote>
+<div><p>This class relies on _run_impl to actually implement <a href="#id1"><span class="problematic" id="id2">run_</span></a>.</p>
+</div></blockquote>
+</div></blockquote>
 <section id="please-cite">
 <h2>Please Cite<a class="headerlink" href="#please-cite" title="Link to this heading"></a></h2>
 <p>No citations</p>
@@ -114,6 +125,7 @@
 <h2>Property Types<a class="headerlink" href="#property-types" title="Link to this heading"></a></h2>
 <p>The following is a list of property types that this module satisfies.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">simde::Derivative&lt;simde::TotalEnergy,</span> <span class="pre">chemist::PointSet&lt;double&gt;,</span> <span class="pre">std::vector&lt;double,</span> <span class="pre">std::allocator&lt;double&gt;&gt;&gt;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">simde::TotalEnergy</span></code></p></li>
 </ul>
 </section>
@@ -140,17 +152,25 @@ module. The columns are:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>basis set</p></td>
+<tr class="row-even"><td><p>Arg 1</p></td>
 <td><p>N/A</p></td>
 <td><p>N/A</p></td>
 </tr>
-<tr class="row-odd"><td><p>Chemical System</p></td>
+<tr class="row-odd"><td><p>basis set</p></td>
+<td><p>N/A</p></td>
+<td><p>Name of AO basis set</p></td>
+</tr>
+<tr class="row-even"><td><p>Chemical System</p></td>
 <td><p>N/A</p></td>
 <td><p>The chemical system</p></td>
 </tr>
-<tr class="row-even"><td><p>method</p></td>
+<tr class="row-odd"><td><p>method</p></td>
 <td><p>Pybind11 Object</p></td>
-<td><p>N/A</p></td>
+<td><p>Level of theory</p></td>
+</tr>
+<tr class="row-even"><td><p>program</p></td>
+<td><p>Pybind11 Object</p></td>
+<td><p>Friend to call</p></td>
 </tr>
 </tbody>
 </table>
@@ -167,10 +187,24 @@ subsection we list:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">Opaque?</span></code> : Does the value of the input influence memoization?.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Domain</span> <span class="pre">Restrictions</span></code> : Criteria a value must obey to be deemed valid.</p></li>
 </ul>
+<section id="arg-1">
+<h4>Arg 1<a class="headerlink" href="#arg-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Description : N/A</p></li>
+<li><p>Default Value : N/A</p></li>
+<li><p>Optional? : False</p></li>
+<li><p>Opaque? : True</p></li>
+<li><p>Domain Restrictions :</p>
+<ul>
+<li><p>Type == chemist::PointSet&lt;double&gt;</p></li>
+</ul>
+</li>
+</ul>
+</section>
 <section id="basis-set">
 <h4>basis set<a class="headerlink" href="#basis-set" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Description : N/A</p></li>
+<li><p>Description : Name of AO basis set</p></li>
 <li><p>Default Value : N/A</p></li>
 <li><p>Optional? : False</p></li>
 <li><p>Opaque? : True</p></li>
@@ -198,7 +232,21 @@ subsection we list:</p>
 <section id="method">
 <h4>method<a class="headerlink" href="#method" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Description : N/A</p></li>
+<li><p>Description : Level of theory</p></li>
+<li><p>Default Value : Pybind11 Object</p></li>
+<li><p>Optional? : False</p></li>
+<li><p>Opaque? : True</p></li>
+<li><p>Domain Restrictions :</p>
+<ul>
+<li><p>Type == pluginplay::python::PythonWrapper</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="program">
+<h4>program<a class="headerlink" href="#program" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Description : Friend to call</p></li>
 <li><p>Default Value : Pybind11 Object</p></li>
 <li><p>Optional? : False</p></li>
 <li><p>Opaque? : True</p></li>
@@ -234,7 +282,11 @@ the Module class’s advanced API.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Energy</p></td>
+<tr class="row-even"><td><p>Derivative</p></td>
+<td><p>std::vector&lt;double, std::allocator&lt;double&gt;&gt;</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy</p></td>
 <td><p>double</p></td>
 <td><p>The computed energy</p></td>
 </tr>
@@ -251,8 +303,8 @@ the Module class’s advanced API.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="ChemicalSystem_via_QCElemental.html" class="btn btn-neutral float-left" title="ChemicalSystem via QCElemental" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="NWChem___CCSD%28T%29.html" class="btn btn-neutral float-right" title="NWChem : CCSD(T)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nwchem___CCSD%28T%29.html" class="btn btn-neutral float-left" title="nwchem : CCSD(T)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nwchem___MP2.html" class="btn btn-neutral float-right" title="nwchem : MP2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
