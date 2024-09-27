@@ -15,10 +15,10 @@
 import qcengine as qcng
 import qcelemental as qcel
 from ..nwx2qcelemental.chemical_system_conversions import chemical_system2qc_mol
-from .pt2driver import pt2driver
+from qcengine.config import TaskConfig
 
 
-def call_qcengine(pt, mol, program, **kwargs):
+def call_qcengine(driver, mol, program, runtime, **kwargs):
     """ Wraps calling a program through the QCEngine API.
 
         .. note::
@@ -34,8 +34,8 @@ def call_qcengine(pt, mol, program, **kwargs):
         objects to their QCElemental equivalents. Right now those mappings
         include:
 
-        - property_type -> driver type
         - ChemicalSystem -> qcel.models.Molecule
+        - RuntimeView -> qcng.TaskConfig
 
         While not supported at the moment, similar conversions for the AO basis
         set are possible.
@@ -56,14 +56,30 @@ def call_qcengine(pt, mol, program, **kwargs):
                         backend?
         :type program: str
         :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                       ``AtomicInput`` class via the ``model`` key.
+                       ``AtomicInput`` class as kwargs.
 
-        :return: The requested property.
+        :return: A dictionary containing the requested property and any other
+                 property of potential interest.
         :rtype: Varies depending on the requested property
     """
 
-    driver = pt2driver(pt)
+    # Step 1: Prepare the chemistry-related input
     qc_mol = chemical_system2qc_mol(mol)
-    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, model=kwargs)
-    results = qcng.compute(inp, program)
-    return results.return_result
+    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
+
+    # Step 2: Prepare the runtime-related input
+    # I *think* ncores is supposed to be the number of threads per MPI rank
+    task_config = {'nnodes': runtime.size(), 'ncores': 1, 'retries': 0}
+
+    # Step 3: Run QCEngine
+    results = qcng.compute(inp, program, task_config=task_config)
+
+    # Step 4: Verify the computation ran correctly
+    if type(results) == qcel.models.common_models.FailedOperation:
+        raise RuntimeError(results.error.error_message)
+
+    # Step 5: Prepare the results
+    rv = {driver: results.return_result}
+    if (driver == "gradient" and "qcvars" in results.extras):
+        rv['energy'] = float(results.extras["qcvars"]["CURRENT ENERGY"])
+    return rv

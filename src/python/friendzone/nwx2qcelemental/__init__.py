@@ -19,14 +19,14 @@ import qcelemental
 
 
 class SystemViaMolSSI(pp.ModuleBase):
+    """Creates an NWChemEx ChemicalSystem by going through MolSSI's string 
+       parser.
+    """
 
     def __init__(self):
         pp.ModuleBase.__init__(self)
         self.satisfies_property_type(MoleculeFromString())
-        self.description("""
-            Creates an NWChemEx ChemicalSystem by going through MolSSI's
-            string parser.
-            """)
+        self.description(SystemViaMolSSI.__doc__)
 
     def run_(self, inputs, submods):
         pt = MoleculeFromString()

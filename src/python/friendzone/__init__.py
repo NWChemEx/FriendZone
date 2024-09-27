@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .nwx2nwchem import load_nwchem_modules
+from .nwx2qcengine import load_qcengine_modules
 from .nwx2qcelemental import load_qcelemental_modules
 
 
@@ -25,5 +25,5 @@ def load_modules(mm):
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
-    load_nwchem_modules(mm)
+    load_qcengine_modules(mm)
     load_qcelemental_modules(mm)
