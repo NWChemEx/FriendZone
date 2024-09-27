@@ -47,6 +47,7 @@ cmaize_option_list(
     BUILD_PYBIND11_PYBINDINGS ON "Use Pybind11 to build Python bindings?"
     ENABLE_EXPERIMENTAL_FEATURES OFF "Build features which are not 1.0-ed yet?"
     ENABLE_NWCHEM ON "Should we build support for friend: NWChem ?"
+    ENABLE_ASE ON "Build support for the Atomic Simulation Environment?"
 )
 
 ## Build FriendZone's dependencies ##
@@ -68,6 +69,7 @@ set(
 )
 
 ## Find friends ##
+include(ase)
 include(nwchem)
 
 ## Configure file with enabled friends ##
@@ -79,7 +81,7 @@ configure_file(
 
 #TOOD: Replace cmaize_add_library when it supports Python
 add_library(${PROJECT_NAME} INTERFACE)
-target_link_libraries(${PROJECT_NAME} INTERFACE simde nwchem)
+target_link_libraries(${PROJECT_NAME} INTERFACE simde ase nwchem)
 
 if("${BUILD_TESTING}")
     include(CTest)
