@@ -15,6 +15,7 @@
 import qcengine as qcng
 import qcelemental as qcel
 from ..nwx2qcelemental.chemical_system_conversions import chemical_system2qc_mol
+from qcengine.config import TaskConfig
 
 
 def call_qcengine(driver, mol, program, runtime, **kwargs):
@@ -67,9 +68,8 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
     inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
 
     # Step 2: Prepare the runtime-related input
-    # TODO: figure out what task_config is supposed to be and get it from
-    #       runtime https://github.com/MolSSI/QCEngine/blob/3b9ed2aee662424df6be12d9e7e23f51b9c6b6eb/qcengine/config.py#L152
-    task_config = None
+    # I *think* ncores is supposed to be the number of threads per MPI rank
+    task_config = {'nnodes': runtime.size(), 'ncores': 1, 'retries': 0}
 
     # Step 3: Run QCEngine
     results = qcng.compute(inp, program, task_config=task_config)

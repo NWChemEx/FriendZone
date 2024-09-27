@@ -18,61 +18,61 @@ from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
 from .call_qcengine import call_qcengine
 
 
+def _run_impl(driver, inputs, rv, runtime):
+    """
+    Our strategy here is to use the fact that the inputs to the TotalEnergy 
+    PT are a subset of those to other PTs
+    """
+    # Step 0: Figure out the PT we're being run as
+    egy_pt = TotalEnergy()
+    grad_pt = EnergyNuclearGradientStdVectorD()
+
+    # Step 1: Unwrap the inputs
+    mol = None
+    if driver == 'energy':
+        mol, = egy_pt.unwrap_inputs(inputs)
+    elif driver == 'gradient':
+        mol, _ = grad_pt.unwrap_inputs(inputs)
+        #TODO: verify ignored second input (the point at which to take the
+        #derivative) is equal to the geometry of mol.
+    else:
+        raise RuntimeError('Unexpected driver type')
+
+    program = inputs['program'].value()
+    method = inputs['method'].value()
+    basis = inputs['basis set'].value()
+
+    # Step 2: Call QCEngine
+    model = {'method': method, 'basis': basis}
+    keywords = {}
+    outputs = call_qcengine(driver,
+                            mol,
+                            program,
+                            runtime,
+                            model=model,
+                            keywords=keywords)
+
+    # Step 3: Prepare results
+    if driver == 'gradient':
+        grad = outputs['gradient'].flatten().tolist()
+        rv = grad_pt.wrap_results(rv, grad)
+
+    return egy_pt.wrap_results(rv, outputs['energy'])
+
+
 class QCEngineEnergy(pp.ModuleBase):
+    """ Driver module for computing energies with QCEngine"""
 
     def __init__(self):
         pp.ModuleBase.__init__(self)
         self.satisfies_property_type(TotalEnergy())
-        self.description('Driver module for calling friends through QCEngine')
-
-        ddesc = 'Implementation detail. DO NOT MANUALLY CHANGE!'
-        self.add_input('_driver').set_description(ddesc).set_default('energy')
+        self.description(QCEngineEnergy.__doc__)
         self.add_input('program').set_description('Friend to call')
         self.add_input('method').set_description('Level of theory')
         self.add_input('basis set').set_description('Name of AO basis set')
 
     def run_(self, inputs, submods):
-        """
-        Our strategy here is to use the fact that the inputs to the TotalEnergy 
-        PT are a subset of those to other PTs
-        """
-        # Step 0: Figure out the PT we're being run as
-        egy_pt = TotalEnergy()
-        grad_pt = EnergyNuclearGradientStdVectorD()
-        _driver = inputs['_driver'].value()
-
-        # Step 1: Unwrap the inputs
-        mol = None
-        if _driver == 'energy':
-            mol, = egy_pt.unwrap_inputs(inputs)
-        elif _driver == 'gradient':
-            mol, _ = grad_pt.unwrap_inputs(inputs)
-            #TODO: verify ignored second input (the point at which to take the
-            #derivative) is equal to the geometry of mol.
-        else:
-            raise RuntimeError('Unexpected driver type')
-
-        program = inputs['program'].value()
-        method = inputs['method'].value()
-        basis = inputs['basis set'].value()
-
-        # Step 2: Call QCEngine
-        model = {'method': method, 'basis': basis}
-        keywords = {}
-        outputs = call_qcengine(_driver,
-                                mol,
-                                program,
-                                self.get_runtime(),
-                                model=model,
-                                keywords=keywords)
-
-        # Step 3: Prepare results
-        rv = self.results()
-        if _driver == 'gradient':
-            grad = outputs['gradient'].flatten().tolist()
-            rv = grad_pt.wrap_results(rv, grad)
-
-        return egy_pt.wrap_results(rv, outputs['energy'])
+        return _run_impl('energy', inputs, self.results(), self.get_runtime())
 
 
 class QCEngineGradient(QCEngineEnergy):
@@ -87,7 +87,10 @@ class QCEngineGradient(QCEngineEnergy):
     def __init__(self):
         QCEngineEnergy.__init__(self)
         self.satisfies_property_type(EnergyNuclearGradientStdVectorD())
-        self.add_input('_driver').change('gradient')
+
+    def run_(self, inputs, submods):
+        return _run_impl('gradient', inputs, self.results(),
+                         self.get_runtime())
 
 
 def load_qcengine_modules(mm):
