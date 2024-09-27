@@ -5,3 +5,5 @@ py:class chemist.ChemicalSystem
 py:class Varies depending on the requested property
 
 py:class qcelemental.models.Molecule
+
+py:obj QCEngineEnergy
