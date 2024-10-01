@@ -13,16 +13,15 @@
 # limitations under the License.
 
 from ..friends import is_friend_enabled
-import pluginplay as pp
-from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
+from .nwchem_via_ase import NWChemEnergyViaASE, NWChemGradientViaASE
 
 
-class ASEEnergy(pp.ModuleBase):
-    """Driver module for computing energies with ASE."""
-
-    def __init__(self):
-        pp.ModuleBase._init__(self)
-        self.description(ASEEnergy.__doc__)
-
-    def run_(self, inputs, submods):
-        pass
+def load_ase_modules(mm):
+    if is_friend_enabled('nwchem'):
+        for method in ['SCF', 'MP2', 'CCSD', 'CCSD(T)']:
+            egy_key = 'ASE(NWChem) : ' + method
+            grad_key = egy_key + ' gradient'
+            mm.add_module(egy_key, NWChemEnergyViaASE())
+            mm.add_module(grad_key, NWChemGradientViaASE())
+            for key in [egy_key, grad_key]:
+                mm.change_input(key, 'method', method)
