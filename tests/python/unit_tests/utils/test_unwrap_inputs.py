@@ -44,9 +44,6 @@ class TestUnwrapInputs(unittest.TestCase):
 
     def setUp(self):
         self.h2 = make_h2()
-        self.points = PointSetD()
-        for i in range(self.h2.molecule.size()):
-            atom_i = self.h2.molecule.at(i)
-            self.points.push_back(PointD(atom_i.x, atom_i.y, atom_i.z))
+        self.points = self.h2.molecule.nuclei.charges
         self.egy_pt = TotalEnergy()
         self.grad_pt = EnergyNuclearGradientStdVectorD()
