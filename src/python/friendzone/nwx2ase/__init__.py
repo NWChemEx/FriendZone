@@ -17,6 +17,9 @@ from .nwchem_via_ase import NWChemEnergyViaASE, NWChemGradientViaASE
 
 
 def load_ase_modules(mm):
+    if not is_friend_enabled('ase'):
+        return
+
     if is_friend_enabled('nwchem'):
         for method in ['SCF', 'MP2', 'CCSD', 'CCSD(T)']:
             egy_key = 'ASE(NWChem) : ' + method
