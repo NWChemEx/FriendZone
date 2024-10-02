@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from simde import TotalEnergy, EnergyNuclearGradientStdVectorD, MoleculeFromString
-from chemist import PointSetD, PointD
+from chemist import PointSetD
 from friendzone.utils.unwrap_inputs import unwrap_inputs
 from molecules import make_h2
 import unittest
@@ -32,11 +32,10 @@ class TestUnwrapInputs(unittest.TestCase):
         mol = unwrap_inputs(self.grad_pt, inputs)
         self.assertEqual(self.h2, mol)
 
-    # TODO: Enable when easier to get the PointSet piece of mol
-    # def test_gradient_bad_point(self):
-    #     inputs = self.grad_pt.inputs()
-    #     inputs = self.grad_pt.wrap_inputs(inputs, self.h2, PointSetD())
-    #     self.assertRaises(RuntimeError, unwrap_inputs, self.grad_pt, inputs)
+    def test_gradient_bad_point(self):
+        inputs = self.grad_pt.inputs()
+        inputs = self.grad_pt.wrap_inputs(inputs, self.h2, PointSetD())
+        self.assertRaises(RuntimeError, unwrap_inputs, self.grad_pt, inputs)
 
     def test_bad_property_type(self):
         bad_pt = MoleculeFromString()
@@ -44,6 +43,7 @@ class TestUnwrapInputs(unittest.TestCase):
 
     def setUp(self):
         self.h2 = make_h2()
-        self.points = self.h2.molecule.nuclei.charges
+        nuclei = self.h2.molecule.nuclei.as_nuclei()
+        self.points = nuclei.charges.point_set.as_point_set()
         self.egy_pt = TotalEnergy()
         self.grad_pt = EnergyNuclearGradientStdVectorD()

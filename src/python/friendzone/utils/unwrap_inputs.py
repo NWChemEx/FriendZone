@@ -16,18 +16,19 @@ from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
 
 
 def _compare_mol_and_point(mol, points):
+    """This function is essentially a work around for the comparisons not being
+    exposed to Python.
+    """
     if mol.size() != points.size():
         return False
 
     for i in range(mol.size()):
         atom_i = mol.at(i)
         point_i = points.at(i)
-        if atom_i.x != point_i.x:
-            return False
-        if atom_i.y != point_i.y:
-            return False
-        if atom_i.z != point_i.z:
-            return False
+
+        for j in range(3):
+            if atom_i.coord(j) != point_i.coord(j):
+                return False
 
     return True
 
@@ -49,11 +50,10 @@ def unwrap_inputs(pt, inputs):
         mol, = pt.unwrap_inputs(inputs)
     elif pt.type() == EnergyNuclearGradientStdVectorD().type():
         mol, point = pt.unwrap_inputs(inputs)
-        # TODO: enable when easier to get the PointSet piece of mol
 
-        #if not _compare_mol_and_point(mol.molecule, point):
-        #    raise RuntimeError(
-        #        'Derivative must be computed at molecular geometry')
+        if not _compare_mol_and_point(mol.molecule, point):
+            raise RuntimeError(
+                'Derivative must be computed at molecular geometry')
     else:
         raise RuntimeError('Property type: ' + str(pt.type()) +
                            ' is not registered')

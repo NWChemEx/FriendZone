@@ -15,7 +15,6 @@
 from pluginplay import ModuleManager
 from friendzone import friends, load_modules
 from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
-from chemist import PointSetD
 from molecules import make_h2
 import unittest
 
@@ -33,8 +32,10 @@ class TestNWChemViaASE(unittest.TestCase):
         mol = make_h2()
         key = 'ASE(NWChem) : SCF Gradient'
         self.mm.change_input(key, 'basis set', 'sto-3g')
+        nuclei = mol.molecule.nuclei.as_nuclei()
+        points = nuclei.charges.point_set
         grad = self.mm.run_as(EnergyNuclearGradientStdVectorD(), key, mol,
-                              PointSetD())
+                              points.as_point_set())
 
         corr = [0.0, 0.0, -0.11827177600466043, 0.0, 0.0, 0.11827177600466043]
         for g, c in zip(grad, corr):
