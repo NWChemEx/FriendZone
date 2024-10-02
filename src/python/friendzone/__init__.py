@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from .nwx2ase import load_ase_modules
 from .nwx2qcengine import load_qcengine_modules
 from .nwx2qcelemental import load_qcelemental_modules
 
@@ -20,10 +21,16 @@ def load_modules(mm):
     """Loads the collection of all modules provided by Friendzone. This function
     calls the various friend specific module loading functions, including:
 
-    *  `load_nwchem_modules`
+    *  `load_ase_modules`
+    *  `load_qcengine_modules`
+    *  `load_qcelemental_modules`
+
+    Note some and/or all of these may be no-ops depending on what friends were
+    enabled.
 
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
+    load_ase_modules(mm)
     load_qcengine_modules(mm)
     load_qcelemental_modules(mm)

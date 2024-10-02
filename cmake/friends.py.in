@@ -22,7 +22,8 @@ def friends():
        :return: Key-value pairs where the key is the name of a potential
                 friend and the value is whether that friend was enabled or not
    """
-   return {'nwchem' : '@ENABLE_NWCHEM@'}
+   return {'nwchem' : '@ENABLE_NWCHEM@',
+           'ase' : '@ENABLE_ASE@'  }
 
 
 def is_friend_enabled(friend):

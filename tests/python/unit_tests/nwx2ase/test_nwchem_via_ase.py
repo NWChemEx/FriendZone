@@ -19,18 +19,18 @@ from molecules import make_h2
 import unittest
 
 
-class TestNWChem(unittest.TestCase):
+class TestNWChemViaASE(unittest.TestCase):
 
     def test_scf(self):
         mol = make_h2()
-        key = 'NWChem : SCF'
+        key = 'ASE(NWChem) : SCF'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.094184522864, places=5)
 
     def test_scf_gradient(self):
         mol = make_h2()
-        key = 'NWChem : SCF Gradient'
+        key = 'ASE(NWChem) : SCF Gradient'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         nuclei = mol.molecule.nuclei.as_nuclei()
         points = nuclei.charges.point_set
@@ -43,28 +43,28 @@ class TestNWChem(unittest.TestCase):
 
     def test_mp2(self):
         mol = make_h2()
-        key = 'NWChem : MP2'
+        key = 'ASE(NWChem) : MP2'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.111247857166, places=5)
 
     def test_ccsd(self):
         mol = make_h2()
-        key = 'NWChem : CCSD'
+        key = 'ASE(NWChem) : CCSD'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.122251361965036, places=4)
 
     def test_ccsd_t(self):
         mol = make_h2()
-        key = 'NWChem : CCSD(T)'
+        key = 'ASE(NWChem) : CCSD(T)'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
         self.assertAlmostEqual(egy, -1.122251361965036, places=4)
 
     def setUp(self):
         if not friends.is_friend_enabled('nwchem'):
-            self.skipTest("NWChem backend is not enabled!")
+            self.skipTest('NWChem backend is not enabled!')
 
         self.mm = ModuleManager()
         load_modules(self.mm)

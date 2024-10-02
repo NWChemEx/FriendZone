@@ -16,6 +16,7 @@ from ..friends import is_friend_enabled
 import pluginplay as pp
 from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
 from .call_qcengine import call_qcengine
+from ..utils.unwrap_inputs import unwrap_inputs
 
 
 def _run_impl(driver, inputs, rv, runtime):
@@ -24,19 +25,13 @@ def _run_impl(driver, inputs, rv, runtime):
     PT are a subset of those to other PTs
     """
     # Step 0: Figure out the PT we're being run as
-    egy_pt = TotalEnergy()
-    grad_pt = EnergyNuclearGradientStdVectorD()
+    pts = {
+        'energy': TotalEnergy(),
+        'gradient': EnergyNuclearGradientStdVectorD()
+    }
 
     # Step 1: Unwrap the inputs
-    mol = None
-    if driver == 'energy':
-        mol, = egy_pt.unwrap_inputs(inputs)
-    elif driver == 'gradient':
-        mol, _ = grad_pt.unwrap_inputs(inputs)
-        #TODO: verify ignored second input (the point at which to take the
-        #derivative) is equal to the geometry of mol.
-    else:
-        raise RuntimeError('Unexpected driver type')
+    mol = unwrap_inputs(pts[driver], inputs)
 
     program = inputs['program'].value()
     method = inputs['method'].value()
@@ -55,9 +50,9 @@ def _run_impl(driver, inputs, rv, runtime):
     # Step 3: Prepare results
     if driver == 'gradient':
         grad = outputs['gradient'].flatten().tolist()
-        rv = grad_pt.wrap_results(rv, grad)
+        rv = pts[driver].wrap_results(rv, grad)
 
-    return egy_pt.wrap_results(rv, outputs['energy'])
+    return pts['energy'].wrap_results(rv, outputs['energy'])
 
 
 class QCEngineEnergy(pp.ModuleBase):

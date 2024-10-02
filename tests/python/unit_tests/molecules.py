@@ -21,3 +21,12 @@ def make_h2():
     mol.push_back(Atom('H', 1, 1837.15264648179, 0.0, 0.0, 1.68185))
 
     return ChemicalSystem(mol)
+
+
+def make_h2o():
+    mol = Molecule()
+    mol.push_back(Atom('H', 1, 1837.1526468179, 0.0, 1.419470, -0.879257))
+    mol.push_back(Atom('H', 1, 1837.1526468179, 0.0, -1.419470, -0.879257))
+    mol.push_back(Atom('O', 8, 29164.3928768326, 0.0, 0.0, 0.219814))
+
+    return ChemicalSystem(mol)
