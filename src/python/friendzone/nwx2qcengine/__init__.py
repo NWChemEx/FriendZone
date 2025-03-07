@@ -17,6 +17,8 @@ import pluginplay as pp
 from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
 from .call_qcengine import call_qcengine
 from ..utils.unwrap_inputs import unwrap_inputs
+import numpy as np
+import tensorwrapper as tw
 
 
 def _run_impl(driver, inputs, rv, runtime):
@@ -52,7 +54,8 @@ def _run_impl(driver, inputs, rv, runtime):
         grad = outputs['gradient'].flatten().tolist()
         rv = pts[driver].wrap_results(rv, grad)
 
-    return pts['energy'].wrap_results(rv, outputs['energy'])
+    egy = tw.Tensor(np.array(outputs['energy']))
+    return pts['energy'].wrap_results(rv, egy)
 
 
 class QCEngineEnergy(pp.ModuleBase):

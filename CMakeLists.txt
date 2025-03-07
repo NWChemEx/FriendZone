@@ -91,7 +91,7 @@ if("${BUILD_TESTING}")
     nwx_pybind11_tests(
         py_${PROJECT_NAME}
         "${PYTHON_TEST_DIR}/unit_tests/test_friendzone.py"
-        SUBMODULES simde chemist pluginplay parallelzone
+        SUBMODULES simde chemist pluginplay parallelzone tensorwrapper
     )
 endif()
 
