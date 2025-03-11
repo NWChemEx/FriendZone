@@ -19,6 +19,8 @@ from .chemical_system_conversions import chemical_system2atoms
 from ase.calculators.nwchem import NWChem
 from ase import units
 import uuid
+import numpy as np
+import tensorwrapper as tw
 
 
 class NWChemEnergyViaASE(pp.ModuleBase):
@@ -44,9 +46,10 @@ class NWChemEnergyViaASE(pp.ModuleBase):
                             task='Energy',
                             label=str(uuid.uuid4()))
         egy = atoms.get_potential_energy()
+        egy = tw.Tensor(np.array(egy / units.Hartree))
 
         rv = self.results()
-        return pt.wrap_results(rv, egy / units.Hartree)
+        return pt.wrap_results(rv, egy)
 
 
 class NWChemGradientViaASE(pp.ModuleBase):
@@ -79,6 +82,7 @@ class NWChemGradientViaASE(pp.ModuleBase):
         au2eV = units.Hartree  # Hartree to eV conversion
         au2ang = units.Bohr  # Bohr to Angstrom conversion
         # We get the FORCE back NOT the gradient (i.e., need to multiply by -1)
+        egy = tw.Tensor(np.array(egy / au2eV))
         augrad = [-1.0 * x / (au2eV / au2ang) for x in grad]
-        rv = TotalEnergy().wrap_results(rv, egy / au2eV)
+        rv = TotalEnergy().wrap_results(rv, egy)
         return pt.wrap_results(rv, augrad)

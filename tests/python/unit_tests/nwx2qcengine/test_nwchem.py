@@ -17,6 +17,7 @@ from friendzone import friends, load_modules
 from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
 from molecules import make_h2
 import unittest
+import numpy as np
 
 
 class TestNWChem(unittest.TestCase):
@@ -26,7 +27,7 @@ class TestNWChem(unittest.TestCase):
         key = 'NWChem : SCF'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
-        self.assertAlmostEqual(egy, -1.094184522864, places=5)
+        self.assertAlmostEqual(np.array(egy), -1.094184522864, places=5)
 
     def test_scf_gradient(self):
         mol = make_h2()
@@ -46,21 +47,21 @@ class TestNWChem(unittest.TestCase):
         key = 'NWChem : MP2'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
-        self.assertAlmostEqual(egy, -1.111247857166, places=5)
+        self.assertAlmostEqual(np.array(egy), -1.111247857166, places=5)
 
     def test_ccsd(self):
         mol = make_h2()
         key = 'NWChem : CCSD'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
-        self.assertAlmostEqual(egy, -1.122251361965036, places=4)
+        self.assertAlmostEqual(np.array(egy), -1.122251361965036, places=4)
 
     def test_ccsd_t(self):
         mol = make_h2()
         key = 'NWChem : CCSD(T)'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
-        self.assertAlmostEqual(egy, -1.122251361965036, places=4)
+        self.assertAlmostEqual(np.array(egy), -1.122251361965036, places=4)
 
     def setUp(self):
         if not friends.is_friend_enabled('nwchem'):
