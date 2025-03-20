@@ -27,7 +27,13 @@ class TestNWChem(unittest.TestCase):
         key = 'NWChem : SCF'
         self.mm.change_input(key, 'basis set', 'sto-3g')
         egy = self.mm.run_as(TotalEnergy(), key, mol)
-        self.assertAlmostEqual(np.array(egy), -1.094184522864, places=5)
+        print(type(egy))
+        egy_np = np.array(egy)
+        print(egy_np)
+        print(type(egy_np))
+        print(egy_np.item())
+        print(type(egy_np.item()))
+        self.assertAlmostEqual(egy_np.item(), -1.094184522864, places=5)
 
     def test_scf_gradient(self):
         mol = make_h2()
