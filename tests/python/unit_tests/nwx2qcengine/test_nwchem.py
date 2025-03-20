@@ -31,9 +31,9 @@ class TestNWChem(unittest.TestCase):
         egy_np = np.array(egy)
         print(egy_np)
         print(type(egy_np))
-        print(egy_np.item())
-        print(type(egy_np.item()))
-        self.assertAlmostEqual(egy_np.item(), -1.094184522864, places=5)
+        print(egy_np[()])
+        print(type(egy_np[()]))
+        self.assertAlmostEqual(egy_np[()], -1.094184522864, places=5)
 
     def test_scf_gradient(self):
         mol = make_h2()
