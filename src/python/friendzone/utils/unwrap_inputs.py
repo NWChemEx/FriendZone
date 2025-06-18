@@ -27,7 +27,7 @@ def _compare_mol_and_point(mol, points):
         point_i = points.at(i)
 
         for j in range(3):
-            if atom_i.coord(j) != point_i.coord(j):
+            if round(atom_i.coord(j),16) != round(point_i.coord(j),16):
                 return False
 
     return True
