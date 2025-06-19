@@ -17,6 +17,7 @@ import numpy as np
 
 import numpy as np
 
+
 def _compare_mol_and_point(mol, points, atol=1e-12, rtol=0.0):
     """
     Compare the 3D nuclear coordinates of a Molecule and a PointSet.
@@ -75,7 +76,7 @@ def _compare_mol_and_point(mol, points, atol=1e-12, rtol=0.0):
     return True
 
 
-def unwrap_inputs(pt, inputs,atol=1e-12,rtol=0.0  ):
+def unwrap_inputs(pt, inputs, atol=1e-12, rtol=0.0):
     """ Code factorization for unwrapping a module's inputs.
     
     Many of our friends expose interfaces which are analogous to high-level
