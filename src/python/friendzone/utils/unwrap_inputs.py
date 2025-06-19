@@ -69,7 +69,7 @@ def _compare_mol_and_point(mol, points, atol=1e-12, rtol=0.0):
                     return False
             else:
                 # Use np.isclose to allow for floating-point tolerance
-                if not np.isclose(a, b, rtol=rtol, atol=atol):
+                if not np.isclose(a, b, atol=atol, rtol=rtol):
                     return False
 
     return True
