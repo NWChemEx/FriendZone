@@ -16,7 +16,6 @@ from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
 import numpy as np
 
 
-
 def _compare_mol_and_point(mol, points, atol=1e-12, rtol=0.0):
     """
     Compare the 3D nuclear coordinates of a Molecule and a PointSet.
