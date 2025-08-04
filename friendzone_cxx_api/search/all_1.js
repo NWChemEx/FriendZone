@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['systemviamolssi_2',['SystemViaMolSSI',['../classfriendzone_1_1nwx2qcelemental_1_1SystemViaMolSSI.html',1,'friendzone::nwx2qcelemental']]]
+  ['qcengineenergy_2',['QCEngineEnergy',['../classfriendzone_1_1nwx2qcengine_1_1QCEngineEnergy.html',1,'friendzone::nwx2qcengine']]],
+  ['qcenginegradient_3',['QCEngineGradient',['../classfriendzone_1_1nwx2qcengine_1_1QCEngineGradient.html',1,'friendzone::nwx2qcengine']]]
 ];

@@ -1,0 +1,6 @@
+friendzone.nwx2ase.nwchem_via_ase
+=================================
+
+.. py:module:: friendzone.nwx2ase.nwchem_via_ase
+
+

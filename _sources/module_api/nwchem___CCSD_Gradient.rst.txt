@@ -150,7 +150,7 @@ columns respectively are:
 +============+=============================================+=====================+
 | Derivative | std::vector<double, std::allocator<double>> | N/A                 |
 +------------+---------------------------------------------+---------------------+
-| Energy     | double                                      | The computed energy |
+| Energy     | tensorwrapper::Tensor                       | The computed energy |
 +------------+---------------------------------------------+---------------------+
 
 

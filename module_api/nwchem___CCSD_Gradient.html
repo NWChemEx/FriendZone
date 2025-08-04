@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -5,20 +7,16 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>nwchem : CCSD Gradient &mdash; friendzone 1.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=8d563738"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,9 +35,6 @@
           <a href="../index.html" class="icon icon-home">
             friendzone
           </a>
-              <div class="version">
-                1.0.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -57,6 +52,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../autoapi/friendzone/index.html">friendzone</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Modules API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD.html">ASE(NWChem) : CCSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD_gradient.html">ASE(NWChem) : CCSD gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD%28T%29.html">ASE(NWChem) : CCSD(T)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD%28T%29_gradient.html">ASE(NWChem) : CCSD(T) gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___MP2.html">ASE(NWChem) : MP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___MP2_gradient.html">ASE(NWChem) : MP2 gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___SCF.html">ASE(NWChem) : SCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___SCF_gradient.html">ASE(NWChem) : SCF gradient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ChemicalSystem_via_QCElemental.html">ChemicalSystem via QCElemental</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nwchem___B3LYP.html">nwchem : B3LYP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nwchem___B3LYP_Gradient.html">nwchem : B3LYP Gradient</a></li>
@@ -287,7 +290,7 @@ the Module class’s advanced API.</p>
 <td><p>N/A</p></td>
 </tr>
 <tr class="row-odd"><td><p>Energy</p></td>
-<td><p>double</p></td>
+<td><p>tensorwrapper::Tensor</p></td>
 <td><p>The computed energy</p></td>
 </tr>
 </tbody>

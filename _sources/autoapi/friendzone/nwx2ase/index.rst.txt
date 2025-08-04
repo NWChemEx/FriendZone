@@ -1,0 +1,29 @@
+friendzone.nwx2ase
+==================
+
+.. py:module:: friendzone.nwx2ase
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/friendzone/nwx2ase/chemical_system_conversions/index
+   /autoapi/friendzone/nwx2ase/nwchem_via_ase/index
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2ase.load_ase_modules
+
+
+Package Contents
+----------------
+
+.. py:function:: load_ase_modules(mm)
+

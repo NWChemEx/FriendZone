@@ -4,16 +4,6 @@ friendzone
 .. py:module:: friendzone
 
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 1
-
-   /autoapi/friendzone/nwx2qcelemental/index
-   /autoapi/friendzone/nwx2qcengine/index
-
-
 Submodules
 ----------
 
@@ -21,6 +11,10 @@ Submodules
    :maxdepth: 1
 
    /autoapi/friendzone/friends/index
+   /autoapi/friendzone/nwx2ase/index
+   /autoapi/friendzone/nwx2qcelemental/index
+   /autoapi/friendzone/nwx2qcengine/index
+   /autoapi/friendzone/utils/index
 
 
 Functions
@@ -39,7 +33,12 @@ Package Contents
    Loads the collection of all modules provided by Friendzone. This function
    calls the various friend specific module loading functions, including:
 
-   *  `load_nwchem_modules`
+   *  `load_ase_modules`
+   *  `load_qcengine_modules`
+   *  `load_qcelemental_modules`
+
+   Note some and/or all of these may be no-ops depending on what friends were
+   enabled.
 
    :param mm: The ModuleManager that the all Modules will be loaded into.
    :type mm: pluginplay.ModuleManager

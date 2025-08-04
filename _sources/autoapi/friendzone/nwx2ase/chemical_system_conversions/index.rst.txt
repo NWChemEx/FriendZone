@@ -1,0 +1,22 @@
+friendzone.nwx2ase.chemical_system_conversions
+==============================================
+
+.. py:module:: friendzone.nwx2ase.chemical_system_conversions
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2ase.chemical_system_conversions.chemical_system2atoms
+
+
+Module Contents
+---------------
+
+.. py:function:: chemical_system2atoms(chem_sys)
+
+   Converts a chemist.ChemicalSystem object into an ASE Atoms object.
+
+

@@ -47,3 +47,9 @@ with backends which support QCSchema). This decision stems from:
 - Ease of optional support. If down the road we want to make support for a
   specific backend optional it is easier to do this at a Python package
   level than by picking and choosing individual Python modules.
+
+Notes on adding ASE:
+
+- ASE requires you to setup a calculator for the backend. The calculator's API
+  is backend-specific. We have thus opted to treat each calculator as one
+  module since the setup of the calculator will be the guts of the module.

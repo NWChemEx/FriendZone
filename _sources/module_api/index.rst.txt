@@ -5,6 +5,14 @@ Modules API
 .. toctree::
    :maxdepth: 1
 
+   ASE(NWChem)___CCSD
+   ASE(NWChem)___CCSD_gradient
+   ASE(NWChem)___CCSD(T)
+   ASE(NWChem)___CCSD(T)_gradient
+   ASE(NWChem)___MP2
+   ASE(NWChem)___MP2_gradient
+   ASE(NWChem)___SCF
+   ASE(NWChem)___SCF_gradient
    ChemicalSystem_via_QCElemental
    nwchem___B3LYP
    nwchem___B3LYP_Gradient

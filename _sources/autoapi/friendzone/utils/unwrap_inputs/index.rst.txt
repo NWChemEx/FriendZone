@@ -1,0 +1,37 @@
+friendzone.utils.unwrap_inputs
+==============================
+
+.. py:module:: friendzone.utils.unwrap_inputs
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.utils.unwrap_inputs._compare_mol_and_point
+   friendzone.utils.unwrap_inputs.unwrap_inputs
+
+
+Module Contents
+---------------
+
+.. py:function:: _compare_mol_and_point(mol, points)
+
+   This function is essentially a work around for the comparisons not being
+   exposed to Python.
+
+
+.. py:function:: unwrap_inputs(pt, inputs)
+
+   Code factorization for unwrapping a module's inputs.
+
+   Many of our friends expose interfaces which are analogous to high-level
+   property types like TotalEnergy, AOEnergy, and EnergyNuclearGradient.
+   Furthermore, most of our friends expose all of these calculations through
+   a single interface. The result is that many of our modules start by having
+   dispatch logic akin to "if we're doing an energy calculation, unwrap this
+   way." Or "if we're doing a gradient, unwrap this other way." This function
+   factors that logic out into a single function.
+
+

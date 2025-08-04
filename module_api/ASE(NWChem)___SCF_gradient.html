@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASE(NWChem) : SCF gradient &mdash; friendzone 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ChemicalSystem via QCElemental" href="ChemicalSystem_via_QCElemental.html" />
+    <link rel="prev" title="ASE(NWChem) : SCF" href="ASE%28NWChem%29___SCF.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            friendzone
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design.html">FriendZone Design</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">APIs:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/friendzone/index.html">friendzone</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Modules API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD.html">ASE(NWChem) : CCSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD_gradient.html">ASE(NWChem) : CCSD gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD%28T%29.html">ASE(NWChem) : CCSD(T)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___CCSD%28T%29_gradient.html">ASE(NWChem) : CCSD(T) gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___MP2.html">ASE(NWChem) : MP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___MP2_gradient.html">ASE(NWChem) : MP2 gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ASE%28NWChem%29___SCF.html">ASE(NWChem) : SCF</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ASE(NWChem) : SCF gradient</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#please-cite">Please Cite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#property-types">Property Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-inputs">Module Inputs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quick-reference">Quick Reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detailed-descriptions">Detailed Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-results">Module Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ChemicalSystem_via_QCElemental.html">ChemicalSystem via QCElemental</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___B3LYP.html">nwchem : B3LYP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___B3LYP_Gradient.html">nwchem : B3LYP Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD.html">nwchem : CCSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD_Gradient.html">nwchem : CCSD Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD%28T%29.html">nwchem : CCSD(T)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___CCSD%28T%29_Gradient.html">nwchem : CCSD(T) Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___MP2.html">nwchem : MP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___MP2_Gradient.html">nwchem : MP2 Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___SCF.html">nwchem : SCF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nwchem___SCF_Gradient.html">nwchem : SCF Gradient</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://nwchemex.github.io/FriendZone/friendzone_cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">friendzone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Modules API</a></li>
+      <li class="breadcrumb-item active">ASE(NWChem) : SCF gradient</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module_api/ASE(NWChem)___SCF_gradient.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ase-nwchem-scf-gradient">
+<h1>ASE(NWChem) : SCF gradient<a class="headerlink" href="#ase-nwchem-scf-gradient" title="Link to this heading"></a></h1>
+<p>Driver module for computing energy gradients with ASE.</p>
+<section id="please-cite">
+<h2>Please Cite<a class="headerlink" href="#please-cite" title="Link to this heading"></a></h2>
+<p>No citations</p>
+</section>
+<section id="property-types">
+<h2>Property Types<a class="headerlink" href="#property-types" title="Link to this heading"></a></h2>
+<p>The following is a list of property types that this module satisfies.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">simde::Derivative&lt;simde::TotalEnergy,</span> <span class="pre">chemist::PointSet&lt;double&gt;,</span> <span class="pre">std::vector&lt;double,</span> <span class="pre">std::allocator&lt;double&gt;&gt;&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simde::TotalEnergy</span></code></p></li>
+</ul>
+</section>
+<section id="module-inputs">
+<h2>Module Inputs<a class="headerlink" href="#module-inputs" title="Link to this heading"></a></h2>
+<p>This section details the full list of inputs that the module accepts. Inputs
+that are not listed as optional must have their value set before the module can
+be run. Inputs can be set manually by calling the module’s <code class="docutils literal notranslate"><span class="pre">change_input</span></code>
+function or by passing arguments to a property type.</p>
+<section id="quick-reference">
+<h3>Quick Reference<a class="headerlink" href="#quick-reference" title="Link to this heading"></a></h3>
+<p>The following table provides a quick summary of the inputs available to this
+module. The columns are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Key</span></code>: The key used to retrieve the option,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Default</span></code> : The initial value, if one exists, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Description</span></code> : A human readable description of what the option is used for.</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Arg 1</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>basis set</p></td>
+<td><p>N/A</p></td>
+<td><p>The atomic basis set to use.</p></td>
+</tr>
+<tr class="row-even"><td><p>Chemical System</p></td>
+<td><p>N/A</p></td>
+<td><p>The chemical system</p></td>
+</tr>
+<tr class="row-odd"><td><p>method</p></td>
+<td><p>Pybind11 Object</p></td>
+<td><p>The level of theory to use.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="detailed-descriptions">
+<h3>Detailed Descriptions<a class="headerlink" href="#detailed-descriptions" title="Link to this heading"></a></h3>
+<p>The following subsections provide detailed descriptions of each input recognized
+by this module. The subsection headings are the name of the input. Within each
+subsection we list:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Description</span></code> : A human readable description of what the option is used for.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">Value</span></code> : The initial value, if one exists.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Optional?</span></code> : Whether the value must be set inorder for the module to run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Opaque?</span></code> : Does the value of the input influence memoization?.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Domain</span> <span class="pre">Restrictions</span></code> : Criteria a value must obey to be deemed valid.</p></li>
+</ul>
+<section id="arg-1">
+<h4>Arg 1<a class="headerlink" href="#arg-1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Description : N/A</p></li>
+<li><p>Default Value : N/A</p></li>
+<li><p>Optional? : False</p></li>
+<li><p>Opaque? : True</p></li>
+<li><p>Domain Restrictions :</p>
+<ul>
+<li><p>Type == chemist::PointSet&lt;double&gt;</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="basis-set">
+<h4>basis set<a class="headerlink" href="#basis-set" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Description : The atomic basis set to use.</p></li>
+<li><p>Default Value : N/A</p></li>
+<li><p>Optional? : False</p></li>
+<li><p>Opaque? : True</p></li>
+<li><p>Domain Restrictions :</p>
+<ul>
+<li><p>Type == pluginplay::python::PythonWrapper</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="chemical-system">
+<h4>Chemical System<a class="headerlink" href="#chemical-system" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Description : The chemical system</p></li>
+<li><p>Default Value : N/A</p></li>
+<li><p>Optional? : False</p></li>
+<li><p>Opaque? : True</p></li>
+<li><p>Domain Restrictions :</p>
+<ul>
+<li><p>Type == chemist::ChemicalSystem</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="method">
+<h4>method<a class="headerlink" href="#method" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Description : The level of theory to use.</p></li>
+<li><p>Default Value : Pybind11 Object</p></li>
+<li><p>Optional? : False</p></li>
+<li><p>Opaque? : True</p></li>
+<li><p>Domain Restrictions :</p>
+<ul>
+<li><p>Type == pluginplay::python::PythonWrapper</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="module-results">
+<h2>Module Results<a class="headerlink" href="#module-results" title="Link to this heading"></a></h2>
+<p>This section tabulates the full list of results that the module returns. The
+columns respectively are:</p>
+<ul class="simple">
+<li><p>Key: What the result is called</p></li>
+<li><p>Type: The C++ type of the result</p></li>
+<li><p>Description: What the result is/how it was computed.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A given property type will only return a subset of the available results.
+Additional results can be accessed by using other property types or by using
+the Module class’s advanced API.</p>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Derivative</p></td>
+<td><p>std::vector&lt;double, std::allocator&lt;double&gt;&gt;</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>Energy</p></td>
+<td><p>tensorwrapper::Tensor</p></td>
+<td><p>The computed energy</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<p>The module defines no submodules.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ASE%28NWChem%29___SCF.html" class="btn btn-neutral float-left" title="ASE(NWChem) : SCF" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ChemicalSystem_via_QCElemental.html" class="btn btn-neutral float-right" title="ChemicalSystem via QCElemental" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
