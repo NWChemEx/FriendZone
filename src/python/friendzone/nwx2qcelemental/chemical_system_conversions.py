@@ -17,7 +17,7 @@ from chemist import Molecule, Nuclei, Nucleus
 
 
 def chemical_system2qc_mol(chem_sys):
-    """ Converts a chemist.ChemicalSystem object into a QCElemental.Molecule
+    """Converts a chemist.ChemicalSystem object into a QCElemental.Molecule
 
     At present there is far more information in the input chemical system
     then in the output object. In particular, our implementation only
@@ -43,14 +43,13 @@ def chemical_system2qc_mol(chem_sys):
         y = str(atom_i.y * au2ang)
         z = str(atom_i.z * au2ang)
         out += symbol + " " + x + " " + y + " " + z + "\n"
-    return qcel.models.Molecule.from_data(out,
-                                          fix_com=True,
-                                          fix_orientation=True,
-                                          fix_symmetry="C1")
+    return qcel.models.Molecule.from_data(
+        out, fix_com=True, fix_orientation=True, fix_symmetry="C1"
+    )
 
 
 def qc_mol2molecule(qc_mol):
-    """ Converts a QCElemental.Molecule object to a Chemist.Molecule object.
+    """Converts a QCElemental.Molecule object to a Chemist.Molecule object.
 
 
     .. note::

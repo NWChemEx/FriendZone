@@ -19,7 +19,7 @@ FriendZone
 
 [Documentation](https://nwchemex.github.io/FriendZone)
 
-Provides SimDE compatible APIs so that NWChemEx can play nicely with its 
+Provides SimDE compatible APIs so that NWChemEx can play nicely with its
 friends, *i.e.*, this repo wraps existing electronic structure packages in
 modules so they can be called as submodules in NWChemEx.
 
@@ -29,20 +29,20 @@ Packages supported through FriendZone include:
 - NWChem
 
 # Warnings
-Existing packages come with a lot of different licenses. At the moment we only 
-consider interfaces to packages that have licenses compatible with 
-[SimDE](https://github.com/NWChemEx/SimDE) (and 
+Existing packages come with a lot of different licenses. At the moment we only
+consider interfaces to packages that have licenses compatible with
+[SimDE](https://github.com/NWChemEx/SimDE) (and
 [NWChemEx](https://github.com/NWChemEx/NWChemEx)).
 
-Many of the other packages are by default configured/called suboptimally and 
-thus the modules in this repo should **NOT** be used for direct timing 
-comparisons unless otherwise noted. Performance contributions are greatly 
+Many of the other packages are by default configured/called suboptimally and
+thus the modules in this repo should **NOT** be used for direct timing
+comparisons unless otherwise noted. Performance contributions are greatly
 appreciated.
 
 # Installation
 
-As with the majority of the NWChemEx stack, FriendZone uses CMake and the 
-[CMaize](https://github.com/CMakePP/CMaize) library for configuration and 
+As with the majority of the NWChemEx stack, FriendZone uses CMake and the
+[CMaize](https://github.com/CMakePP/CMaize) library for configuration and
 building. This means that installation is usually achieved via a variation on:
 
 ```.sh
@@ -63,6 +63,6 @@ More detailed install instructions can be found
 
 # Acknowledgments
 
-This research was supported by the Exascale Computing Project (17-SC-20-SC), a 
-collaborative effort of the U.S. Department of Energy Office of Science and the 
+This research was supported by the Exascale Computing Project (17-SC-20-SC), a
+collaborative effort of the U.S. Department of Energy Office of Science and the
 National Nuclear Security Administration.

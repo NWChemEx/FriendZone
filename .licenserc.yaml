@@ -26,5 +26,6 @@ header:
     - docs/source/nitpick_exceptions
     - version.txt
     - cmake/friends.py.in
+    - build/
 
   comment: never

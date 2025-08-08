@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from .nwx2ase import load_ase_modules
-from .nwx2qcengine import load_qcengine_modules
 from .nwx2qcelemental import load_qcelemental_modules
+from .nwx2qcengine import load_qcengine_modules
 
 
 def load_modules(mm):

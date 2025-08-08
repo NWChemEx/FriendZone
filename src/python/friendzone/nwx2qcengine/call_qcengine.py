@@ -12,55 +12,57 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import qcengine as qcng
 import qcelemental as qcel
-from ..nwx2qcelemental.chemical_system_conversions import chemical_system2qc_mol
-from qcengine.config import TaskConfig
+import qcengine as qcng
+
+from ..nwx2qcelemental.chemical_system_conversions import (
+    chemical_system2qc_mol,
+)
 
 
 def call_qcengine(driver, mol, program, runtime, **kwargs):
-    """ Wraps calling a program through the QCEngine API.
+    """Wraps calling a program through the QCEngine API.
 
-        .. note::
+    .. note::
 
-           QCEngine only supports high-level modularity (modularity roughly at
-           the granularity of a call to an electronic structure package). We
-           thus have assumed that the molecular system will always be an input
-           to whatever QCEngine call we are running.
+       QCEngine only supports high-level modularity (modularity roughly at
+       the granularity of a call to an electronic structure package). We
+       thus have assumed that the molecular system will always be an input
+       to whatever QCEngine call we are running.
 
-        This function is the main API for calling QCEngine from NWChemEx. The
-        idea is to more or less feed the inputs from a ``run_as`` call directly
-        into this function and then have this function convert the NWChemEx
-        objects to their QCElemental equivalents. Right now those mappings
-        include:
+    This function is the main API for calling QCEngine from NWChemEx. The
+    idea is to more or less feed the inputs from a ``run_as`` call directly
+    into this function and then have this function convert the NWChemEx
+    objects to their QCElemental equivalents. Right now those mappings
+    include:
 
-        - ChemicalSystem -> qcel.models.Molecule
-        - RuntimeView -> qcng.TaskConfig
+    - ChemicalSystem -> qcel.models.Molecule
+    - RuntimeView -> qcng.TaskConfig
 
-        While not supported at the moment, similar conversions for the AO basis
-        set are possible.
+    While not supported at the moment, similar conversions for the AO basis
+    set are possible.
 
-        Because of the difference in philosophy between QCEngine and NWChemEx,
-        there are some inputs which can not easily be mapped automatically, for
-        example the electronic structure method (in NWChemEx methods correspond
-        to module instances, whereas QCEngine requires strings). It is the
-        responsibility of the module wrapping the call to ``call_qcengine`` to
-        pass these additional inputs in as kwargs that can be forwarded to a
-        QCElemental.models.AtomicInput object via the ``model`` keyword.
+    Because of the difference in philosophy between QCEngine and NWChemEx,
+    there are some inputs which can not easily be mapped automatically, for
+    example the electronic structure method (in NWChemEx methods correspond
+    to module instances, whereas QCEngine requires strings). It is the
+    responsibility of the module wrapping the call to ``call_qcengine`` to
+    pass these additional inputs in as kwargs that can be forwarded to a
+    QCElemental.models.AtomicInput object via the ``model`` keyword.
 
-        :param pt: The property type we are computing.
-        :type pt: pluginplay.PropertyType
-        :param mol: The molecular system we are computing the properties of.
-        :type mol: chemist.ChemicalSystem
-        :param program: Which electronic structure package is being used as the
-                        backend?
-        :type program: str
-        :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                       ``AtomicInput`` class as kwargs.
+    :param pt: The property type we are computing.
+    :type pt: pluginplay.PropertyType
+    :param mol: The molecular system we are computing the properties of.
+    :type mol: chemist.ChemicalSystem
+    :param program: Which electronic structure package is being used as the
+                    backend?
+    :type program: str
+    :param kwargs: Key-value pairs which will be forwarded to QCElemental's
+                   ``AtomicInput`` class as kwargs.
 
-        :return: A dictionary containing the requested property and any other
-                 property of potential interest.
-        :rtype: Varies depending on the requested property
+    :return: A dictionary containing the requested property and any other
+             property of potential interest.
+    :rtype: Varies depending on the requested property
     """
 
     # Step 1: Prepare the chemistry-related input
@@ -69,17 +71,17 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
 
     # Step 2: Prepare the runtime-related input
     # I *think* ncores is supposed to be the number of threads per MPI rank
-    task_config = {'nnodes': runtime.size(), 'ncores': 1, 'retries': 0}
+    task_config = {"nnodes": runtime.size(), "ncores": 1, "retries": 0}
 
     # Step 3: Run QCEngine
     results = qcng.compute(inp, program, task_config=task_config)
 
     # Step 4: Verify the computation ran correctly
-    if type(results) == qcel.models.common_models.FailedOperation:
+    if isinstance(results, qcel.models.common_models.FailedOperation):
         raise RuntimeError(results.error.error_message)
 
     # Step 5: Prepare the results
     rv = {driver: results.return_result}
-    if (driver == "gradient" and "qcvars" in results.extras):
-        rv['energy'] = float(results.extras["qcvars"]["CURRENT ENERGY"])
+    if driver == "gradient" and "qcvars" in results.extras:
+        rv["energy"] = float(results.extras["qcvars"]["CURRENT ENERGY"])
     return rv

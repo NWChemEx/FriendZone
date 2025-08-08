@@ -17,14 +17,14 @@ from .nwchem_via_ase import NWChemEnergyViaASE, NWChemGradientViaASE
 
 
 def load_ase_modules(mm):
-    if not is_friend_enabled('ase'):
+    if not is_friend_enabled("ase"):
         return
 
-    if is_friend_enabled('nwchem'):
-        for method in ['SCF', 'MP2', 'CCSD', 'CCSD(T)']:
-            egy_key = 'ASE(NWChem) : ' + method
-            grad_key = egy_key + ' gradient'
+    if is_friend_enabled("nwchem"):
+        for method in ["SCF", "MP2", "CCSD", "CCSD(T)"]:
+            egy_key = "ASE(NWChem) : " + method
+            grad_key = egy_key + " gradient"
             mm.add_module(egy_key, NWChemEnergyViaASE())
             mm.add_module(grad_key, NWChemGradientViaASE())
             for key in [egy_key, grad_key]:
-                mm.change_input(key, 'method', method)
+                mm.change_input(key, "method", method)
