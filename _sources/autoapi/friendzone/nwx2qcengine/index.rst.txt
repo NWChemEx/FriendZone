@@ -35,7 +35,7 @@ Package Contents
 
 .. py:function:: _run_impl(driver, inputs, rv, runtime)
 
-   Our strategy here is to use the fact that the inputs to the TotalEnergy 
+   Our strategy here is to use the fact that the inputs to the TotalEnergy
    PT are a subset of those to other PTs
 
 
@@ -65,7 +65,7 @@ Package Contents
 
    #. NWChem
 
-   the levels of theory are: 
+   the levels of theory are:
 
    #. SCF
    #. B3LYP

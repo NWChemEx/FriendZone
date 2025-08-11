@@ -5,9 +5,9 @@
 nwchem : SCF Gradient
 #####################
 
- Driver module for computing energies with QCEngine.
-    
-        This class relies on _run_impl to actually implement run_.
+Driver module for computing energies with QCEngine.
+
+    This class relies on _run_impl to actually implement run_.
     
 
 ***********
