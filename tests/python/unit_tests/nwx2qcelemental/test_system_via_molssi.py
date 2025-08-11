@@ -12,21 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pluginplay import ModuleManager
-from friendzone import load_modules
-from simde import MoleculeFromString
-from molecules import make_h2
-from compare_molecules import compare_molecules
 import unittest
+
+from compare_molecules import compare_molecules
+from friendzone import load_modules
+from molecules import make_h2
+from pluginplay import ModuleManager
+from simde import MoleculeFromString
 
 
 class TestSystemViaMolSSI(unittest.TestCase):
-
     def test_h2(self):
         corr = make_h2()
-        mol_str = 'units a.u.\nH 0.0 0.0 0.0\nH 0.0 0.0 1.68185'
-        mol = self.mm.run_as(self.pt, 'ChemicalSystem via QCElemental',
-                             mol_str)
+        mol_str = "units a.u.\nH 0.0 0.0 0.0\nH 0.0 0.0 1.68185"
+        mol = self.mm.run_as(
+            self.pt, "ChemicalSystem via QCElemental", mol_str
+        )
         compare_molecules(self, corr.molecule, mol)
 
     def setUp(self):

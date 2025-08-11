@@ -12,15 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import uuid
+
+import numpy as np
 import pluginplay as pp
-from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
+import tensorwrapper as tw
+from ase import units
+from ase.calculators.nwchem import NWChem
+from simde import EnergyNuclearGradientStdVectorD, TotalEnergy
+
 from ..utils.unwrap_inputs import unwrap_inputs
 from .chemical_system_conversions import chemical_system2atoms
-from ase.calculators.nwchem import NWChem
-from ase import units
-import uuid
-import numpy as np
-import tensorwrapper as tw
 
 
 class NWChemEnergyViaASE(pp.ModuleBase):
@@ -30,21 +32,21 @@ class NWChemEnergyViaASE(pp.ModuleBase):
         pp.ModuleBase.__init__(self)
         self.description(NWChemEnergyViaASE.__doc__)
         self.satisfies_property_type(TotalEnergy())
-        self.add_input('method').set_description('The level of theory to use.')
-        self.add_input('basis set').set_description(
-            'The atomic basis set to use.')
+        self.add_input("method").set_description("The level of theory to use.")
+        self.add_input("basis set").set_description(
+            "The atomic basis set to use."
+        )
 
     def run_(self, inputs, submods):
         pt = TotalEnergy()
-        method = inputs['method'].value()
-        basis = inputs['basis set'].value()
+        method = inputs["method"].value()
+        basis = inputs["basis set"].value()
         mol = unwrap_inputs(pt, inputs)
         atoms = chemical_system2atoms(mol)
 
-        atoms.calc = NWChem(theory=method,
-                            basis=basis,
-                            task='Energy',
-                            label=str(uuid.uuid4()))
+        atoms.calc = NWChem(
+            theory=method, basis=basis, task="Energy", label=str(uuid.uuid4())
+        )
         egy = atoms.get_potential_energy()
         egy = tw.Tensor(np.array(egy / units.Hartree))
 
@@ -60,21 +62,24 @@ class NWChemGradientViaASE(pp.ModuleBase):
         self.description(NWChemGradientViaASE.__doc__)
         self.satisfies_property_type(TotalEnergy())
         self.satisfies_property_type(EnergyNuclearGradientStdVectorD())
-        self.add_input('method').set_description('The level of theory to use.')
-        self.add_input('basis set').set_description(
-            'The atomic basis set to use.')
+        self.add_input("method").set_description("The level of theory to use.")
+        self.add_input("basis set").set_description(
+            "The atomic basis set to use."
+        )
 
     def run_(self, inputs, submods):
         pt = EnergyNuclearGradientStdVectorD()
-        method = inputs['method'].value()
-        basis = inputs['basis set'].value()
+        method = inputs["method"].value()
+        basis = inputs["basis set"].value()
         mol = unwrap_inputs(pt, inputs)
         atoms = chemical_system2atoms(mol)
 
-        atoms.calc = NWChem(theory=method,
-                            basis=basis,
-                            task='Gradient',
-                            label=str(uuid.uuid4()))
+        atoms.calc = NWChem(
+            theory=method,
+            basis=basis,
+            task="Gradient",
+            label=str(uuid.uuid4()),
+        )
         egy = atoms.get_potential_energy()  # units are eV
         grad = atoms.get_forces().flatten().tolist()  # units are ev / Ang
 

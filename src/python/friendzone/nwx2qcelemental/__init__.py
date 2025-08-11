@@ -13,14 +13,15 @@
 # limitations under the License.
 
 import pluginplay as pp
-from simde import MoleculeFromString
-from ..nwx2qcelemental.chemical_system_conversions import qc_mol2molecule
 import qcelemental
+from simde import MoleculeFromString
+
+from ..nwx2qcelemental.chemical_system_conversions import qc_mol2molecule
 
 
 class SystemViaMolSSI(pp.ModuleBase):
-    """Creates an NWChemEx ChemicalSystem by going through MolSSI's string 
-       parser.
+    """Creates an NWChemEx ChemicalSystem by going through MolSSI's string
+    parser.
     """
 
     def __init__(self):
@@ -30,7 +31,7 @@ class SystemViaMolSSI(pp.ModuleBase):
 
     def run_(self, inputs, submods):
         pt = MoleculeFromString()
-        mol_str, = pt.unwrap_inputs(inputs)
+        (mol_str,) = pt.unwrap_inputs(inputs)
         mol = qc_mol2molecule(qcelemental.models.Molecule.from_data(mol_str))
 
         rv = self.results()
@@ -44,4 +45,4 @@ def load_qcelemental_modules(mm):
     :type mm: pluginplay.ModuleManager
     """
 
-    mm.add_module('ChemicalSystem via QCElemental', SystemViaMolSSI())
+    mm.add_module("ChemicalSystem via QCElemental", SystemViaMolSSI())

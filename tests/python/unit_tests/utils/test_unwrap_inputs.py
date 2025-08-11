@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from simde import TotalEnergy, EnergyNuclearGradientStdVectorD, MoleculeFromString
+import unittest
+
 from chemist import PointSetD
 from friendzone.utils.unwrap_inputs import unwrap_inputs
 from molecules import make_h2
-import unittest
+from simde import (
+    EnergyNuclearGradientStdVectorD,
+    MoleculeFromString,
+    TotalEnergy,
+)
 
 
 class TestUnwrapInputs(unittest.TestCase):
-
     def test_energy(self):
         inputs = self.egy_pt.wrap_inputs(self.egy_pt.inputs(), self.h2)
         mol = unwrap_inputs(self.egy_pt, inputs)

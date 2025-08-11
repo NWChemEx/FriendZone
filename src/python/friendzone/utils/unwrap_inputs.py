@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from simde import TotalEnergy, EnergyNuclearGradientStdVectorD
+from simde import EnergyNuclearGradientStdVectorD, TotalEnergy
 
 
 def _compare_mol_and_point(mol, points):
@@ -34,8 +34,8 @@ def _compare_mol_and_point(mol, points):
 
 
 def unwrap_inputs(pt, inputs):
-    """ Code factorization for unwrapping a module's inputs.
-    
+    """Code factorization for unwrapping a module's inputs.
+
     Many of our friends expose interfaces which are analogous to high-level
     property types like TotalEnergy, AOEnergy, and EnergyNuclearGradient.
     Furthermore, most of our friends expose all of these calculations through
@@ -47,15 +47,17 @@ def unwrap_inputs(pt, inputs):
 
     mol = None
     if pt.type() == TotalEnergy().type():
-        mol, = pt.unwrap_inputs(inputs)
+        (mol,) = pt.unwrap_inputs(inputs)
     elif pt.type() == EnergyNuclearGradientStdVectorD().type():
         mol, point = pt.unwrap_inputs(inputs)
 
         if not _compare_mol_and_point(mol.molecule, point):
             raise RuntimeError(
-                'Derivative must be computed at molecular geometry')
+                "Derivative must be computed at molecular geometry"
+            )
     else:
-        raise RuntimeError('Property type: ' + str(pt.type()) +
-                           ' is not registered')
+        raise RuntimeError(
+            "Property type: " + str(pt.type()) + " is not registered"
+        )
 
     return mol

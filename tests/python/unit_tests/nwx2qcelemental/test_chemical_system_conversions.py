@@ -12,15 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from friendzone.nwx2qcelemental.chemical_system_conversions import *
-from molecules import make_h2
-import qcelemental as qcel
 import unittest
+
+import qcelemental as qcel
 from compare_molecules import compare_molecules
+from friendzone.nwx2qcelemental.chemical_system_conversions import (
+    chemical_system2qc_mol,
+    qc_mol2molecule,
+)
+from molecules import make_h2
 
 
 class TestChemicalSystem2QC(unittest.TestCase):
-
     def test_h2(self):
         mol = make_h2()
         qcel_mol = chemical_system2qc_mol(mol)
@@ -31,7 +34,6 @@ class TestChemicalSystem2QC(unittest.TestCase):
 
 
 class TestQCMol2Molecule(unittest.TestCase):
-
     def test_h2(self):
         corr = make_h2().molecule
         h2_as_str = "H 0.0 0.0 0.0\nH 0.0 0.0 0.8899966917653396"
