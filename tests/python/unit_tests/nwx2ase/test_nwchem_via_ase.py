@@ -65,7 +65,10 @@ class TestNWChemViaASE(unittest.TestCase):
         self.assertAlmostEqual(np.array(egy), -1.122251361965036, places=4)
 
     def setUp(self):
-        if not friends.is_friend_enabled("nwchem"):
+        nwchem_enabled = friends.is_friend_enabled("nwchem")
+        ase_enabled = friends.is_friend_enabled("ase")
+
+        if not nwchem_enabled or not ase_enabled:
             self.skipTest("NWChem backend is not enabled!")
 
         self.mm = ModuleManager()

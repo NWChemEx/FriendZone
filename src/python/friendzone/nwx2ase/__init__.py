@@ -13,7 +13,9 @@
 # limitations under the License.
 
 from ..friends import is_friend_enabled
-from .nwchem_via_ase import NWChemEnergyViaASE, NWChemGradientViaASE
+
+if is_friend_enabled("ase"):
+    from .nwchem_via_ase import NWChemEnergyViaASE, NWChemGradientViaASE
 
 
 def load_ase_modules(mm):

@@ -13,19 +13,22 @@
 # limitations under the License.
 
 include_guard()
-include(python/python)
 
-#[[[ Determines if ASE is installed.
-#
-#  At present FriendZone can not install
-#]]
-function(find_ase)
-    assert_python_module("ase")
-    message("Found ASE: ${ASE_FOUND}")
-endfunction()
+if("${BUILD_PYBIND11_PYBINDINGS}")
+    include(python/python)
 
-if("${ENABLE_ASE}")
-    find_ase()
+    #[[[ Determines if ASE is installed.
+    #
+    #  At present FriendZone can not install
+    #]]
+    function(find_ase)
+        assert_python_module("ase")
+        message("Found ASE: ${ASE_FOUND}")
+    endfunction()
+
+    if("${ENABLE_ASE}")
+        find_ase()
+    endif()
 endif()
 
 add_library(ase INTERFACE)
