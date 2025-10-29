@@ -22,6 +22,7 @@ def friends() -> dict[str, bool]:
 
     :return: Key-value pairs where the key is the name of a potential
              friend and the value is whether that friend was enabled or not
+    :rtype: dict[str, bool]
     """
     friends_list = {"ase": False, "nwchem": False}
 
@@ -46,6 +47,9 @@ def friends() -> dict[str, bool]:
 
 def is_friend_enabled(friend: str) -> bool:
     """Wraps the process of determining if a particular friend was enabled.
+
+    :param friend: Name of friend to check
+    :type friend: str
 
     :return: True if FriendZone was configured with support for ``friend``
              and false otherwise.
