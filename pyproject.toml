@@ -23,7 +23,7 @@ version_scheme = "no-guess-dev"
 name = "friendzone"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-description = "A minimal example package (with pybind11)"
+description = "Provides SimDE compatible APIs so that NWChemEx can play nicely with its friends."
 readme = "README.md"
 authors = [{ name = "zachcran", email = "zachcran@iastate.edu" }]
 requires-python = ">=3.10"
