@@ -42,10 +42,14 @@ classifiers = [
 # Set the project version dynamically according to git tags.
 # Git tag version info: https://github.com/pypa/setuptools-scm/blob/fb261332d9b46aa5a258042d85baa5aa7b9f4fa2/README.rst#default-versioning-scheme
 dynamic = ["version"]
+# NOTE: Invisible dependency for now until Python bindings at SimDE are
+# packaged properly and available here
+# dependencies = ["simde"]
 
 
 [tool.setuptools]
-package-dir = {"" = "src/python"}
+# Cannot automatically find the friendzone namespace so we set it here
+package-dir = { "" = "src/python" }
 
 # Optional dependencies represent optional features that can be enabled
 # during installation
