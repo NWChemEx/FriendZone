@@ -45,7 +45,6 @@ nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/
 cmaize_option_list(
     BUILD_TESTING OFF "Should we build the tests?"
     BUILD_PYBIND11_PYBINDINGS ON "Use Pybind11 to build Python bindings?"
-    ENABLE_EXPERIMENTAL_FEATURES OFF "Build features which are not 1.0-ed yet?"
     ENABLE_NWCHEM ON "Should we build support for friend: NWChem ?"
     ENABLE_ASE ON "Build support for the Atomic Simulation Environment?"
 )
@@ -59,7 +58,6 @@ cmaize_find_or_build_dependency(
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
                BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
-               ENABLE_EXPERIMENTAL_FEATURES=${ENABLE_EXPERIMENTAL_FEATURES}
 )
 
 ## Get the CMake utilities for this project ##
