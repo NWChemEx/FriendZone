@@ -38,6 +38,4 @@ def is_friend_enabled(friend: str) -> bool:
              and false otherwise.
     :rtype: bool
     """
-    if friend in friends() and find_spec(friend) is not None:
-        return True
-    return False
+    return friend in friends() and find_spec(friend) is not None
