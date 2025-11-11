@@ -39,7 +39,10 @@ license = "Apache-2.0"
 license-files = ["LICENSE"]
 description = "Provides SimDE compatible APIs so that NWChemEx can play nicely with its friends."
 readme = "README.md"
-authors = [{ name = "zachcran", email = "zachcran@iastate.edu" }]
+authors = [
+    { name = "zachcran", email = "zachcran@iastate.edu" },
+    { name = "jwaldrop107", email = "jwaldrop@ameslab.gov" },
+]
 requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",
