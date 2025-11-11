@@ -12,36 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
-
-logger = logging.getLogger(__name__)
+from importlib.util import find_spec
 
 
-def friends() -> dict[str, bool]:
-    """Returns a dictionary of potential friends and whether they were enabled.
+def friends() -> list[str]:
+    """Returns a list of potentially supported friends.
 
-    :return: Key-value pairs where the key is the name of a potential
-             friend and the value is whether that friend was enabled or not
-    :rtype: dict[str, bool]
+    :return: A list of names of potentially supported friends.
+    :rtype: list[str]
     """
-    friends_list = {"ase": False, "nwchem": False}
-
-    try:
-        import ase
-
-        friends_list["ase"] = True
-    except ImportError:
-        logger.warning("Module not enabled: ase")
-
-    try:
-        import networkx
-        import qcelemental
-        import qcengine
-
-        friends_list["nwchem"] = True
-    except ImportError:
-        logger.warning("Module not enabled: nwchem")
-
+    friends_list = [
+        "ase",
+        "nwchem",
+    ]
     return friends_list
 
 
@@ -55,9 +38,6 @@ def is_friend_enabled(friend: str) -> bool:
              and false otherwise.
     :rtype: bool
     """
-    all_friends = friends()
-
-    if friend in all_friends:
-        return all_friends[friend]
-
+    if friend in friends() and find_spec(friend) is not None:
+        return True
     return False
