@@ -26,5 +26,6 @@ header:
     - docs/source/nitpick_exceptions
     - version.txt
     - build/
+    - venv/
 
   comment: never
