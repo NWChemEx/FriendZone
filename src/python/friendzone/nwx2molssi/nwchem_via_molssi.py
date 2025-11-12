@@ -57,7 +57,7 @@ def _run_impl(driver, inputs, rv, runtime):
     return pts["energy"].wrap_results(rv, egy)
 
 
-class _QCEngineEnergy(pp.ModuleBase):
+class QCEngineEnergy(pp.ModuleBase):
     """Driver module for computing energies with QCEngine.
 
     This class relies on _run_impl to actually implement run_.
@@ -66,7 +66,7 @@ class _QCEngineEnergy(pp.ModuleBase):
     def __init__(self):
         pp.ModuleBase.__init__(self)
         self.satisfies_property_type(TotalEnergy())
-        self.description(_QCEngineEnergy.__doc__)
+        self.description(QCEngineEnergy.__doc__)
         self.add_input("program").set_description("Friend to call")
         self.add_input("method").set_description("Level of theory")
         self.add_input("basis set").set_description("Name of AO basis set")
@@ -75,7 +75,7 @@ class _QCEngineEnergy(pp.ModuleBase):
         return _run_impl("energy", inputs, self.results(), self.get_runtime())
 
 
-class _QCEngineGradient(_QCEngineEnergy):
+class QCEngineGradient(QCEngineEnergy):
     """Driver module for computing gradients with QCEngine.
 
     This class extends QCEngineEnergy (QCEngine always computes the energy
@@ -87,7 +87,7 @@ class _QCEngineGradient(_QCEngineEnergy):
     """
 
     def __init__(self):
-        _QCEngineEnergy.__init__(self)
+        QCEngineEnergy.__init__(self)
         self.satisfies_property_type(EnergyNuclearGradientStdVectorD())
 
     def run_(self, inputs, submods):
@@ -124,8 +124,8 @@ def load_nwchem_via_molssi_modules(mm):
         for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
             egy_key = "nwchem" + " : " + method
             grad_key = egy_key + " Gradient"
-            mm.add_module(egy_key, _QCEngineEnergy())
-            mm.add_module(grad_key, _QCEngineGradient())
+            mm.add_module(egy_key, QCEngineEnergy())
+            mm.add_module(grad_key, QCEngineGradient())
 
             for key in [egy_key, grad_key]:
                 mm.change_input(key, "program", "nwchem")
