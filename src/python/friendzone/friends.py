@@ -13,29 +13,37 @@
 # limitations under the License.
 
 from importlib.util import find_spec
+from shutil import which
 
 
-def friends() -> list[str]:
-    """Returns a list of potentially supported friends.
+def is_ase_enabled():
+    """Checks whether the ASE friend is enabled by verifying that the `ase`
+    package is installed.
 
-    :return: A list of names of potentially supported friends.
-    :rtype: list[str]
-    """
-    friends_list = [
-        "ase",
-        "nwchem",
-    ]
-    return friends_list
-
-
-def is_friend_enabled(friend: str) -> bool:
-    """Wraps the process of determining if a particular friend was enabled.
-
-    :param friend: Name of friend to check
-    :type friend: str
-
-    :return: True if FriendZone was configured with support for ``friend``
-             and false otherwise.
+    :return: True if the ASE friend is enabled, False otherwise.
     :rtype: bool
     """
-    return friend in friends() and find_spec(friend) is not None
+    return find_spec("ase") is not None
+
+
+def is_molssi_enabled():
+    """Checks whether the MolSSI friend is enabled by verifying that the
+    `qcelemental`, `qcengine`, and `networkx` packages are installed.
+
+    :return: True if the MolSSI friend is enabled, False otherwise.
+    :rtype: bool
+    """
+    for req in ["qcelemental", "qcengine", "networkx"]:
+        if find_spec(req) is None:
+            return False
+    return True
+
+
+def is_nwchem_enabled():
+    """Checks whether the NWChem friend is enabled by verifying that the
+    `nwchem` executable is available on the system PATH.
+
+    :return: True if the NWChem friend is enabled, False otherwise.
+    :rtype: bool
+    """
+    return which("nwchem") is not None

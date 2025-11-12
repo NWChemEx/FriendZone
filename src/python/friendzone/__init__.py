@@ -13,8 +13,7 @@
 # limitations under the License.
 
 from .nwx2ase import load_ase_modules
-from .nwx2qcelemental import load_qcelemental_modules
-from .nwx2qcengine import load_qcengine_modules
+from .nwx2molssi import load_molssi_modules
 
 
 def load_modules(mm):
@@ -22,8 +21,7 @@ def load_modules(mm):
     calls the various friend specific module loading functions, including:
 
     *  `load_ase_modules`
-    *  `load_qcengine_modules`
-    *  `load_qcelemental_modules`
+    *  `load_molssi_modules`
 
     Note some and/or all of these may be no-ops depending on what friends were
     enabled.
@@ -32,5 +30,4 @@ def load_modules(mm):
     :type mm: pluginplay.ModuleManager
     """
     load_ase_modules(mm)
-    load_qcengine_modules(mm)
-    load_qcelemental_modules(mm)
+    load_molssi_modules(mm)

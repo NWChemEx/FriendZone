@@ -14,21 +14,27 @@
 
 import unittest
 from importlib.util import find_spec
+from shutil import which
 
-from friendzone.friends import friends, is_friend_enabled
+from friendzone import friends
 
 
 class TestFriends(unittest.TestCase):
-    def test_friends_list(self):
-        expected_friends = ["ase", "nwchem"]
-        actual_friends = friends()
-        self.assertCountEqual(actual_friends, expected_friends)
+    def test_is_ase_enabled(self):
+        expected = find_spec("ase") is not None
+        actual = friends.is_ase_enabled()
+        self.assertEqual(expected, actual)
 
-    def test_is_friend_enabled(self):
-        # For known friends, the result should match the system state
-        for friend in friends():
-            enabled = is_friend_enabled(friend)
-            module_found = find_spec(friend) is not None
-            self.assertEqual(enabled, module_found)
-        # For unknown friends, the result should be False
-        self.assertFalse(is_friend_enabled("non_existent_friend"))
+    def test_is_molssi_enabled(self):
+        expected = True
+        for req in ["qcelemental", "qcengine", "networkx"]:
+            if find_spec(req) is None:
+                expected = False
+                break
+        actual = friends.is_molssi_enabled()
+        self.assertEqual(expected, actual)
+
+    def test_is_nwchem_enabled(self):
+        expected = which("nwchem") is not None
+        actual = friends.is_nwchem_enabled()
+        self.assertEqual(expected, actual)

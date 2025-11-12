@@ -1,4 +1,4 @@
-# Copyright 2024 NWChemEx-Project
+# Copyright 2025 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import numpy as np
 import pluginplay as pp
 import tensorwrapper as tw
 from simde import EnergyNuclearGradientStdVectorD, TotalEnergy
 
-from ..friends import is_friend_enabled
+from ..friends import is_nwchem_enabled
 from ..utils.unwrap_inputs import unwrap_inputs
 from .call_qcengine import call_qcengine
 
@@ -56,7 +57,7 @@ def _run_impl(driver, inputs, rv, runtime):
     return pts["energy"].wrap_results(rv, egy)
 
 
-class QCEngineEnergy(pp.ModuleBase):
+class _QCEngineEnergy(pp.ModuleBase):
     """Driver module for computing energies with QCEngine.
 
     This class relies on _run_impl to actually implement run_.
@@ -65,7 +66,7 @@ class QCEngineEnergy(pp.ModuleBase):
     def __init__(self):
         pp.ModuleBase.__init__(self)
         self.satisfies_property_type(TotalEnergy())
-        self.description(QCEngineEnergy.__doc__)
+        self.description(_QCEngineEnergy.__doc__)
         self.add_input("program").set_description("Friend to call")
         self.add_input("method").set_description("Level of theory")
         self.add_input("basis set").set_description("Name of AO basis set")
@@ -74,7 +75,7 @@ class QCEngineEnergy(pp.ModuleBase):
         return _run_impl("energy", inputs, self.results(), self.get_runtime())
 
 
-class QCEngineGradient(QCEngineEnergy):
+class _QCEngineGradient(_QCEngineEnergy):
     """Driver module for computing gradients with QCEngine.
 
     This class extends QCEngineEnergy (QCEngine always computes the energy
@@ -86,7 +87,7 @@ class QCEngineGradient(QCEngineEnergy):
     """
 
     def __init__(self):
-        QCEngineEnergy.__init__(self)
+        _QCEngineEnergy.__init__(self)
         self.satisfies_property_type(EnergyNuclearGradientStdVectorD())
 
     def run_(self, inputs, submods):
@@ -95,7 +96,7 @@ class QCEngineGradient(QCEngineEnergy):
         )
 
 
-def load_qcengine_modules(mm):
+def load_nwchem_via_molssi_modules(mm):
     """Loads the collection of modules that wrap QCElemental calls.
 
     Currently, the friends exported by this function are:
@@ -114,18 +115,18 @@ def load_qcengine_modules(mm):
 
     The final set of modules is the Cartesian product of all of the above.
 
+    This function is a no-op if NWChem is not installed.
+
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
+    if is_nwchem_enabled():
+        for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
+            egy_key = "nwchem" + " : " + method
+            grad_key = egy_key + " Gradient"
+            mm.add_module(egy_key, _QCEngineEnergy())
+            mm.add_module(grad_key, _QCEngineGradient())
 
-    for program in ["nwchem"]:
-        if is_friend_enabled(program):
-            for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
-                egy_key = program + " : " + method
-                grad_key = egy_key + " Gradient"
-                mm.add_module(egy_key, QCEngineEnergy())
-                mm.add_module(grad_key, QCEngineGradient())
-
-                for key in [egy_key, grad_key]:
-                    mm.change_input(key, "program", program)
-                    mm.change_input(key, "method", method)
+            for key in [egy_key, grad_key]:
+                mm.change_input(key, "program", "nwchem")
+                mm.change_input(key, "method", method)

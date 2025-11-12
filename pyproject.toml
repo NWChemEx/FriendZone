@@ -73,7 +73,7 @@ package-dir = { "" = "src/python" }
 # Example: pip install friendzone[ase]
 [project.optional-dependencies]
 ase = ["ase"]
-nwchem = ["qcengine", "qcelemental", "networkx"]
+molssi = ["qcengine", "qcelemental", "networkx"]
 
 # Dependency groups are optional dependencies that are not intented to appear
 # after packaging, usually used to help with testing or development

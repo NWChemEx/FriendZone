@@ -38,6 +38,7 @@ cmaize_option_list(
     BUILD_PYBIND11_PYBINDINGS ON "Use Pybind11 to build Python bindings?"
     ENABLE_EXPERIMENTAL_FEATURES OFF "Build features which are not 1.0-ed yet?"
     ENABLE_NWCHEM ON "Should we build support for friend: NWChem ?"
+    ENABLE_MOLSSI ON "Build support for the MolSSI interface?"
     ENABLE_ASE ON "Build support for the Atomic Simulation Environment?"
 )
 
@@ -61,11 +62,12 @@ set(
 
 ## Find friends ##
 include(ase)
+include(molssi)
 include(nwchem)
 
 #TOOD: Replace cmaize_add_library when it supports Python
 add_library(${PROJECT_NAME} INTERFACE)
-target_link_libraries(${PROJECT_NAME} INTERFACE simde ase nwchem)
+target_link_libraries(${PROJECT_NAME} INTERFACE simde ase molssi nwchem)
 
 if("${BUILD_TESTING}")
     include(CTest)
