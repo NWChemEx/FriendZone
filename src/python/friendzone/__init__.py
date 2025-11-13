@@ -17,14 +17,18 @@ from .nwx2molssi import load_molssi_modules
 
 
 def load_modules(mm):
-    """Loads the collection of all modules provided by Friendzone. This function
-    calls the various friend specific module loading functions, including:
+    """Loads the collection of all modules provided by Friendzone.
 
-    *  `load_ase_modules`
-    *  `load_molssi_modules`
+    This function calls the various friend specific module loading functions,
+    including:
 
-    Note some and/or all of these may be no-ops depending on what friends were
-    enabled.
+    *  ``load_ase_modules``
+    *  ``load_molssi_modules``
+
+    .. note::
+
+        Some and/or all of these may be no-ops depending on what friends were
+        enabled.
 
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager

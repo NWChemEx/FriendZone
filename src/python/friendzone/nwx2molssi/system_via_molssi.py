@@ -20,9 +20,7 @@ from .chemical_system_conversions import qc_mol2molecule
 
 
 class SystemViaMolSSI(pp.ModuleBase):
-    """Creates an NWChemEx ChemicalSystem by going through MolSSI's string
-    parser.
-    """
+    """Creates an NWChemEx ChemicalSystem by using MolSSI's string parser."""
 
     def __init__(self):
         pp.ModuleBase.__init__(self)

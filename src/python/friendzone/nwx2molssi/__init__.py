@@ -20,19 +20,23 @@ if is_molssi_enabled():
 
 
 def load_molssi_modules(mm):
-    """Loads the collection of all MolSSI modules. This function calls the
-    various submodule specific loading functions, including:
+    """Loads the collection of all MolSSI modules.
 
-    *  `load_system_via_molssi_modules`
-    *  `load_nwchem_via_molssi_modules`
+    This function calls the various submodule specific loading functions,
+    including:
 
-    Note some and/or all of these may be no-ops depending on what friends were
-    enabled. This entire function is a no-op if the following dependencies are
-    not installed:
+    *  ``load_system_via_molssi_modules``
+    *  ``load_nwchem_via_molssi_modules``
 
-    *  `qcelemental`
-    *  `qcengine`
-    *  `networkx`
+    .. note::
+
+        Some and/or all of these may be no-ops depending on what friends were
+        enabled. This entire function is a no-op if the following dependencies
+        are not installed:
+
+        *  ``qcelemental``
+        *  ``qcengine``
+        *  ``networkx``
 
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager

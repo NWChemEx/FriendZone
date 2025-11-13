@@ -115,7 +115,9 @@ def load_nwchem_via_molssi_modules(mm):
 
     The final set of modules is the Cartesian product of all of the above.
 
-    This function is a no-op if NWChem is not installed.
+    .. note::
+
+        This function is a no-op if NWChem is not installed.
 
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager

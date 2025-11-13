@@ -21,12 +21,10 @@ if("${BUILD_PYBIND11_PYBINDINGS}")
     #]]
     function(find_nwchem)
         find_program(NWCHEM_FOUND nwchem REQUIRED)
-        message("Found nwchem: ${NWCHEM_FOUND}")
+        message(STATUS "Found nwchem: ${NWCHEM_FOUND}")
     endfunction()
 
     if("${ENABLE_NWCHEM}")
         find_nwchem()
     endif()
 endif()
-
-add_library(nwchem INTERFACE)

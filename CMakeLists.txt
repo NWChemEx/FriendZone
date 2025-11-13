@@ -67,7 +67,7 @@ include(nwchem)
 
 #TOOD: Replace cmaize_add_library when it supports Python
 add_library(${PROJECT_NAME} INTERFACE)
-target_link_libraries(${PROJECT_NAME} INTERFACE simde ase molssi nwchem)
+target_link_libraries(${PROJECT_NAME} INTERFACE simde)
 
 if("${BUILD_TESTING}")
     include(CTest)

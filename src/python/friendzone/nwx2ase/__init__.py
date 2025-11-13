@@ -19,13 +19,17 @@ if is_ase_enabled():
 
 
 def load_ase_modules(mm):
-    """Loads the collection of all ASE modules. This function calls the various
-    submodule specific loading functions, including:
+    """Loads the collection of all ASE modules.
 
-    *  `load_nwchem_via_ase_modules`
+    This function calls the various submodule specific loading functions,
+    including:
 
-    Note some and/or all of these may be no-ops depending on what friends were
-    enabled. This function is a no-op if ASE is not installed.
+    *  ``load_nwchem_via_ase_modules``
+
+    .. note::
+
+        Some and/or all of these may be no-ops depending on what friends were
+        enabled. This function is a no-op if ASE is not installed.
 
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager

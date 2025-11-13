@@ -17,8 +17,7 @@ from shutil import which
 
 
 def is_ase_enabled():
-    """Checks whether the ASE friend is enabled by verifying that the `ase`
-    package is installed.
+    """Checks whether the ASE friend is enabled.
 
     :return: True if the ASE friend is enabled, False otherwise.
     :rtype: bool
@@ -27,8 +26,7 @@ def is_ase_enabled():
 
 
 def is_molssi_enabled():
-    """Checks whether the MolSSI friend is enabled by verifying that the
-    `qcelemental`, `qcengine`, and `networkx` packages are installed.
+    """Checks whether the MolSSI friend is enabled.
 
     :return: True if the MolSSI friend is enabled, False otherwise.
     :rtype: bool
@@ -40,8 +38,7 @@ def is_molssi_enabled():
 
 
 def is_nwchem_enabled():
-    """Checks whether the NWChem friend is enabled by verifying that the
-    `nwchem` executable is available on the system PATH.
+    """Checks whether the NWChem friend is enabled.
 
     :return: True if the NWChem friend is enabled, False otherwise.
     :rtype: bool

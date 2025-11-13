@@ -77,10 +77,10 @@ molssi = ["qcengine", "qcelemental", "networkx"]
 
 # Dependency groups are optional dependencies that are not intented to appear
 # after packaging, usually used to help with testing or development
-# Example: pip install . --group dev
+# Example: pip install --group dev
 [dependency-groups]
 test = ["pytest"]
-dev = [{ include-group = "test" }]
+dev = [{ include-group = "test" }, "tox", "pre-commit"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"
