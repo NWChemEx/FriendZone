@@ -15,7 +15,8 @@
 import unittest
 
 import numpy as np
-from friendzone import friends, load_modules
+from friendzone import load_modules
+from friendzone.friends import is_ase_enabled, is_nwchem_enabled
 from molecules import make_h2
 from pluginplay import ModuleManager
 from simde import EnergyNuclearGradientStdVectorD, TotalEnergy
@@ -65,10 +66,9 @@ class TestNWChemViaASE(unittest.TestCase):
         self.assertAlmostEqual(np.array(egy), -1.122251361965036, places=4)
 
     def setUp(self):
-        nwchem_enabled = friends.is_friend_enabled("nwchem")
-        ase_enabled = friends.is_friend_enabled("ase")
-
-        if not nwchem_enabled or not ase_enabled:
+        if not is_ase_enabled():
+            self.skipTest("ASE is not enabled!")
+        elif not is_nwchem_enabled():
             self.skipTest("NWChem backend is not enabled!")
 
         self.mm = ModuleManager()

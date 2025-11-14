@@ -15,9 +15,7 @@
 import qcelemental as qcel
 import qcengine as qcng
 
-from ..nwx2qcelemental.chemical_system_conversions import (
-    chemical_system2qc_mol,
-)
+from .chemical_system_conversions import chemical_system2qc_mol
 
 
 def call_qcengine(driver, mol, program, runtime, **kwargs):

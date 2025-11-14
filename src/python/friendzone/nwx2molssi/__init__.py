@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2024 NWChemEx
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,26 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .nwx2ase import load_ase_modules
-from .nwx2molssi import load_molssi_modules
+from ..friends import is_molssi_enabled
+
+if is_molssi_enabled():
+    from .nwchem_via_molssi import load_nwchem_via_molssi_modules
+    from .system_via_molssi import load_system_via_molssi_modules
 
 
-def load_modules(mm):
-    """Loads the collection of all modules provided by Friendzone.
+def load_molssi_modules(mm):
+    """Loads the collection of all MolSSI modules.
 
-    This function calls the various friend specific module loading functions,
+    This function calls the various submodule specific loading functions,
     including:
 
-    *  ``load_ase_modules``
-    *  ``load_molssi_modules``
+    *  ``load_system_via_molssi_modules``
+    *  ``load_nwchem_via_molssi_modules``
 
     .. note::
 
         Some and/or all of these may be no-ops depending on what friends were
-        enabled.
+        enabled. This entire function is a no-op if the following dependencies
+        are not installed:
+
+        *  ``qcelemental``
+        *  ``qcengine``
+        *  ``networkx``
 
     :param mm: The ModuleManager that the all Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
-    load_ase_modules(mm)
-    load_molssi_modules(mm)
+    if is_molssi_enabled():
+        load_system_via_molssi_modules(mm)
+        load_nwchem_via_molssi_modules(mm)

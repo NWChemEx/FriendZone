@@ -15,13 +15,14 @@
 import unittest
 
 import numpy as np
-from friendzone import friends, load_modules
+from friendzone import load_modules
+from friendzone.friends import is_molssi_enabled, is_nwchem_enabled
 from molecules import make_h2
 from pluginplay import ModuleManager
 from simde import EnergyNuclearGradientStdVectorD, TotalEnergy
 
 
-class TestNWChem(unittest.TestCase):
+class TestNWChemViaMolSSI(unittest.TestCase):
     def test_scf(self):
         mol = make_h2()
         key = "NWChem : SCF"
@@ -65,7 +66,9 @@ class TestNWChem(unittest.TestCase):
         self.assertAlmostEqual(np.array(egy), -1.122251361965036, places=4)
 
     def setUp(self):
-        if not friends.is_friend_enabled("nwchem"):
+        if not is_molssi_enabled():
+            self.skipTest("MolSSI is not enabled!")
+        elif not is_nwchem_enabled():
             self.skipTest("NWChem backend is not enabled!")
 
         self.mm = ModuleManager()

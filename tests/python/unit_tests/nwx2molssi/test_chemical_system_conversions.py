@@ -14,13 +14,16 @@
 
 import unittest
 
-import qcelemental as qcel
 from compare_molecules import compare_molecules
-from friendzone.nwx2qcelemental.chemical_system_conversions import (
-    chemical_system2qc_mol,
-    qc_mol2molecule,
-)
+from friendzone.friends import is_molssi_enabled
 from molecules import make_h2
+
+if is_molssi_enabled():
+    import qcelemental as qcel
+    from friendzone.nwx2molssi.chemical_system_conversions import (
+        chemical_system2qc_mol,
+        qc_mol2molecule,
+    )
 
 
 class TestChemicalSystem2QC(unittest.TestCase):
@@ -32,6 +35,10 @@ class TestChemicalSystem2QC(unittest.TestCase):
         corr = qcel.models.Molecule.from_data(h2_as_str)
         self.assertEqual(qcel_mol, corr)
 
+    def setUp(self):
+        if not is_molssi_enabled():
+            self.skipTest("MolSSI is not enabled!")
+
 
 class TestQCMol2Molecule(unittest.TestCase):
     def test_h2(self):
@@ -40,3 +47,7 @@ class TestQCMol2Molecule(unittest.TestCase):
         mol = qcel.models.Molecule.from_data(h2_as_str)
         result = qc_mol2molecule(mol)
         compare_molecules(self, result, corr)
+
+    def setUp(self):
+        if not is_molssi_enabled():
+            self.skipTest("MolSSI friend is not enabled!")

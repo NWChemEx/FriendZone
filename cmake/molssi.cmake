@@ -15,16 +15,22 @@
 include_guard()
 
 if("${BUILD_PYBIND11_PYBINDINGS}")
-    #[[[ Determines if NWChem and the necessary Python interface are installed.
+    include(python/python)
+
+    #[[[ Determines if the MolSSI Python interface are installed.
     #
     #  At present FriendZone can not install
     #]]
-    function(find_nwchem)
-        find_program(NWCHEM_FOUND nwchem REQUIRED)
-        message(STATUS "Found nwchem: ${NWCHEM_FOUND}")
+    function(find_molssi)
+        assert_python_module("qcelemental")
+        message(STATUS "Found qcelemental: ${QCELEMENTAL_FOUND}")
+        assert_python_module("qcengine")
+        message(STATUS "Found qcengine: ${QCENGINE_FOUND}")
+        assert_python_module("networkx")
+        message(STATUS "Found networkx: ${NETWORKX_FOUND}")
     endfunction()
 
-    if("${ENABLE_NWCHEM}")
-        find_nwchem()
+    if("${ENABLE_MOLSSI}")
+        find_molssi()
     endif()
 endif()

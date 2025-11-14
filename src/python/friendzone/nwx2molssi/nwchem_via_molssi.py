@@ -1,4 +1,4 @@
-# Copyright 2024 NWChemEx-Project
+# Copyright 2025 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import numpy as np
 import pluginplay as pp
 import tensorwrapper as tw
 from simde import EnergyNuclearGradientStdVectorD, TotalEnergy
 
-from ..friends import is_friend_enabled
+from ..friends import is_nwchem_enabled
 from ..utils.unwrap_inputs import unwrap_inputs
 from .call_qcengine import call_qcengine
 
@@ -95,7 +96,7 @@ class QCEngineGradient(QCEngineEnergy):
         )
 
 
-def load_qcengine_modules(mm):
+def load_nwchem_via_molssi_modules(mm):
     """Loads the collection of modules that wrap QCElemental calls.
 
     Currently, the friends exported by this function are:
@@ -114,18 +115,20 @@ def load_qcengine_modules(mm):
 
     The final set of modules is the Cartesian product of all of the above.
 
+    .. note::
+
+        This function is a no-op if NWChem is not installed.
+
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
+    if is_nwchem_enabled():
+        for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
+            egy_key = "nwchem" + " : " + method
+            grad_key = egy_key + " Gradient"
+            mm.add_module(egy_key, QCEngineEnergy())
+            mm.add_module(grad_key, QCEngineGradient())
 
-    for program in ["nwchem"]:
-        if is_friend_enabled(program):
-            for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
-                egy_key = program + " : " + method
-                grad_key = egy_key + " Gradient"
-                mm.add_module(egy_key, QCEngineEnergy())
-                mm.add_module(grad_key, QCEngineGradient())
-
-                for key in [egy_key, grad_key]:
-                    mm.change_input(key, "program", program)
-                    mm.change_input(key, "method", method)
+            for key in [egy_key, grad_key]:
+                mm.change_input(key, "program", "nwchem")
+                mm.change_input(key, "method", method)

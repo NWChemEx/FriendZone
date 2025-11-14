@@ -1,4 +1,4 @@
-# Copyright 2024 NWChemEx
+# Copyright 2025 NWChemEx
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,11 @@ import pluginplay as pp
 import qcelemental
 from simde import MoleculeFromString
 
-from ..nwx2qcelemental.chemical_system_conversions import qc_mol2molecule
+from .chemical_system_conversions import qc_mol2molecule
 
 
 class SystemViaMolSSI(pp.ModuleBase):
-    """Creates an NWChemEx ChemicalSystem by going through MolSSI's string
-    parser.
-    """
+    """Creates an NWChemEx ChemicalSystem by using MolSSI's string parser."""
 
     def __init__(self):
         pp.ModuleBase.__init__(self)
@@ -38,11 +36,10 @@ class SystemViaMolSSI(pp.ModuleBase):
         return pt.wrap_results(rv, mol)
 
 
-def load_qcelemental_modules(mm):
+def load_system_via_molssi_modules(mm):
     """Loads the collection of modules that wrap QCElemental calls.
 
     :param mm: The ModuleManager that the NWChem Modules will be loaded into.
     :type mm: pluginplay.ModuleManager
     """
-
     mm.add_module("ChemicalSystem via QCElemental", SystemViaMolSSI())

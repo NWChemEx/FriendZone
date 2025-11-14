@@ -23,12 +23,10 @@ if("${BUILD_PYBIND11_PYBINDINGS}")
     #]]
     function(find_ase)
         assert_python_module("ase")
-        message("Found ASE: ${ASE_FOUND}")
+        message(STATUS "Found ASE: ${ASE_FOUND}")
     endfunction()
 
     if("${ENABLE_ASE}")
         find_ase()
     endif()
 endif()
-
-add_library(ase INTERFACE)

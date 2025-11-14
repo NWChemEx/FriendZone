@@ -14,10 +14,10 @@
 
 import unittest
 
-from friendzone.friends import is_friend_enabled
+from friendzone.friends import is_ase_enabled
 from molecules import make_h2, make_h2o
 
-if is_friend_enabled("ase"):
+if is_ase_enabled():
     from ase import Atoms
     from friendzone.nwx2ase.chemical_system_conversions import (
         chemical_system2atoms,
@@ -68,5 +68,5 @@ class TestChemicalSystemConversions(unittest.TestCase):
         compare_ase(self, ase_mol, corr)
 
     def setUp(self):
-        if not is_friend_enabled("ase"):
+        if not is_ase_enabled():
             self.skipTest("ASE is not enabled!")

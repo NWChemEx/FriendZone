@@ -12,21 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ..friends import is_friend_enabled
+from ..friends import is_ase_enabled
 
-if is_friend_enabled("ase"):
-    from .nwchem_via_ase import NWChemEnergyViaASE, NWChemGradientViaASE
+if is_ase_enabled():
+    from .nwchem_via_ase import load_nwchem_via_ase_modules
 
 
 def load_ase_modules(mm):
-    if not is_friend_enabled("ase"):
-        return
+    """Loads the collection of all ASE modules.
 
-    if is_friend_enabled("nwchem"):
-        for method in ["SCF", "MP2", "CCSD", "CCSD(T)"]:
-            egy_key = "ASE(NWChem) : " + method
-            grad_key = egy_key + " gradient"
-            mm.add_module(egy_key, NWChemEnergyViaASE())
-            mm.add_module(grad_key, NWChemGradientViaASE())
-            for key in [egy_key, grad_key]:
-                mm.change_input(key, "method", method)
+    This function calls the various submodule specific loading functions,
+    including:
+
+    *  ``load_nwchem_via_ase_modules``
+
+    .. note::
+
+        Some and/or all of these may be no-ops depending on what friends were
+        enabled. This function is a no-op if ASE is not installed.
+
+    :param mm: The ModuleManager that the all Modules will be loaded into.
+    :type mm: pluginplay.ModuleManager
+    """
+    if is_ase_enabled():
+        load_nwchem_via_ase_modules(mm)
