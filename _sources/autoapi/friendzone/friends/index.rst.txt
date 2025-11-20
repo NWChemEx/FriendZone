@@ -9,27 +9,35 @@ Functions
 
 .. autoapisummary::
 
-   friendzone.friends.friends
-   friendzone.friends.is_friend_enabled
+   friendzone.friends.is_ase_enabled
+   friendzone.friends.is_molssi_enabled
+   friendzone.friends.is_nwchem_enabled
 
 
 Module Contents
 ---------------
 
-.. py:function:: friends()
+.. py:function:: is_ase_enabled()
 
-   Returns a dictionary of potential friends and whether they were enabled.
+   Checks whether the ASE friend is enabled.
 
-   :return: Key-value pairs where the key is the name of a potential
-            friend and the value is whether that friend was enabled or not
+   :return: True if the ASE friend is enabled, False otherwise.
+   :rtype: bool
 
 
-.. py:function:: is_friend_enabled(friend)
+.. py:function:: is_molssi_enabled()
 
-   Wraps the process of determining if a particular friend was enabled.
+   Checks whether the MolSSI friend is enabled.
 
-   :return: True if FriendZone was configured with support for ``friend``
-            and false otherwise.
+   :return: True if the MolSSI friend is enabled, False otherwise.
+   :rtype: bool
+
+
+.. py:function:: is_nwchem_enabled()
+
+   Checks whether the NWChem friend is enabled.
+
+   :return: True if the NWChem friend is enabled, False otherwise.
    :rtype: bool
 
 

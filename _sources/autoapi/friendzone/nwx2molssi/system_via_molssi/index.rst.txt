@@ -1,0 +1,25 @@
+friendzone.nwx2molssi.system_via_molssi
+=======================================
+
+.. py:module:: friendzone.nwx2molssi.system_via_molssi
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2molssi.system_via_molssi.load_system_via_molssi_modules
+
+
+Module Contents
+---------------
+
+.. py:function:: load_system_via_molssi_modules(mm)
+
+   Loads the collection of modules that wrap QCElemental calls.
+
+   :param mm: The ModuleManager that the NWChem Modules will be loaded into.
+   :type mm: pluginplay.ModuleManager
+
+

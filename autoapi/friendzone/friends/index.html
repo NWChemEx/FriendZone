@@ -58,8 +58,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../nwx2ase/index.html">friendzone.nwx2ase</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../nwx2qcelemental/index.html">friendzone.nwx2qcelemental</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../nwx2qcengine/index.html">friendzone.nwx2qcengine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nwx2molssi/index.html">friendzone.nwx2molssi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/index.html">friendzone.utils</a></li>
 </ul>
 </li>
@@ -102,11 +101,14 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.friends.friends" title="friendzone.friends.friends"><code class="xref py py-obj docutils literal notranslate"><span class="pre">friends</span></code></a>()</p></td>
-<td><p>Returns a dictionary of potential friends and whether they were enabled.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.friends.is_ase_enabled" title="friendzone.friends.is_ase_enabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_ase_enabled</span></code></a>()</p></td>
+<td><p>Checks whether the ASE friend is enabled.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#friendzone.friends.is_friend_enabled" title="friendzone.friends.is_friend_enabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_friend_enabled</span></code></a>(friend)</p></td>
-<td><p>Wraps the process of determining if a particular friend was enabled.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#friendzone.friends.is_molssi_enabled" title="friendzone.friends.is_molssi_enabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_molssi_enabled</span></code></a>()</p></td>
+<td><p>Checks whether the MolSSI friend is enabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.friends.is_nwchem_enabled" title="friendzone.friends.is_nwchem_enabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_nwchem_enabled</span></code></a>()</p></td>
+<td><p>Checks whether the NWChem friend is enabled.</p></td>
 </tr>
 </tbody>
 </table>
@@ -114,25 +116,40 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="friendzone.friends.friends">
-<span class="sig-prename descclassname"><span class="pre">friendzone.friends.</span></span><span class="sig-name descname"><span class="pre">friends</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.friends.friends" title="Link to this definition"></a></dt>
-<dd><p>Returns a dictionary of potential friends and whether they were enabled.</p>
+<dt class="sig sig-object py" id="friendzone.friends.is_ase_enabled">
+<span class="sig-prename descclassname"><span class="pre">friendzone.friends.</span></span><span class="sig-name descname"><span class="pre">is_ase_enabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.friends.is_ase_enabled" title="Link to this definition"></a></dt>
+<dd><p>Checks whether the ASE friend is enabled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Key-value pairs where the key is the name of a potential
-friend and the value is whether that friend was enabled or not</p>
+<dd class="field-odd"><p>True if the ASE friend is enabled, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="friendzone.friends.is_friend_enabled">
-<span class="sig-prename descclassname"><span class="pre">friendzone.friends.</span></span><span class="sig-name descname"><span class="pre">is_friend_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">friend</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.friends.is_friend_enabled" title="Link to this definition"></a></dt>
-<dd><p>Wraps the process of determining if a particular friend was enabled.</p>
+<dt class="sig sig-object py" id="friendzone.friends.is_molssi_enabled">
+<span class="sig-prename descclassname"><span class="pre">friendzone.friends.</span></span><span class="sig-name descname"><span class="pre">is_molssi_enabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.friends.is_molssi_enabled" title="Link to this definition"></a></dt>
+<dd><p>Checks whether the MolSSI friend is enabled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if FriendZone was configured with support for <code class="docutils literal notranslate"><span class="pre">friend</span></code>
-and false otherwise.</p>
+<dd class="field-odd"><p>True if the MolSSI friend is enabled, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="friendzone.friends.is_nwchem_enabled">
+<span class="sig-prename descclassname"><span class="pre">friendzone.friends.</span></span><span class="sig-name descname"><span class="pre">is_nwchem_enabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.friends.is_nwchem_enabled" title="Link to this definition"></a></dt>
+<dd><p>Checks whether the NWChem friend is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the NWChem friend is enabled, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>

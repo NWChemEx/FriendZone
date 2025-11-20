@@ -1,0 +1,78 @@
+friendzone.nwx2molssi.nwchem_via_molssi
+=======================================
+
+.. py:module:: friendzone.nwx2molssi.nwchem_via_molssi
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   friendzone.nwx2molssi.nwchem_via_molssi.QCEngineGradient
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2molssi.nwchem_via_molssi._run_impl
+   friendzone.nwx2molssi.nwchem_via_molssi.load_nwchem_via_molssi_modules
+
+
+Module Contents
+---------------
+
+.. py:function:: _run_impl(driver, inputs, rv, runtime)
+
+   Our strategy here is to use the fact that the inputs to the TotalEnergy
+   PT are a subset of those to other PTs
+
+
+.. py:class:: QCEngineGradient
+
+   Bases: :py:obj:`QCEngineEnergy`
+
+
+   Driver module for computing gradients with QCEngine.
+
+   This class extends QCEngineEnergy (QCEngine always computes the energy
+   when computing the gradient thus this module will also compute the
+   energy). Relative to QCEngineEnergy the main differences are:
+
+   - Addition of gradient property type
+   - Invocation of _run_impl with 'gradient' instead of 'energy'
+
+
+   .. py:method:: run_(inputs, submods)
+
+
+.. py:function:: load_nwchem_via_molssi_modules(mm)
+
+   Loads the collection of modules that wrap QCElemental calls.
+
+   Currently, the friends exported by this function are:
+
+   #. NWChem
+
+   the levels of theory are:
+
+   #. SCF
+   #. B3LYP
+   #. MP2
+   #. CCSD
+   #. CCSD(T)
+
+   and we have 0-th and 1-st derivatives.
+
+   The final set of modules is the Cartesian product of all of the above.
+
+   .. note::
+
+       This function is a no-op if NWChem is not installed.
+
+   :param mm: The ModuleManager that the NWChem Modules will be loaded into.
+   :type mm: pluginplay.ModuleManager
+
+

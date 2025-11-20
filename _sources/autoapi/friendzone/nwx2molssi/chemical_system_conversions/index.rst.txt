@@ -1,0 +1,49 @@
+friendzone.nwx2molssi.chemical_system_conversions
+=================================================
+
+.. py:module:: friendzone.nwx2molssi.chemical_system_conversions
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2molssi.chemical_system_conversions.chemical_system2qc_mol
+   friendzone.nwx2molssi.chemical_system_conversions.qc_mol2molecule
+
+
+Module Contents
+---------------
+
+.. py:function:: chemical_system2qc_mol(chem_sys)
+
+   Converts a chemist.ChemicalSystem object into a QCElemental.Molecule
+
+   At present there is far more information in the input chemical system
+   then in the output object. In particular, our implementation only
+   worries about:
+
+   - Chemical symbols
+   - Cartesian coordinates (including the Bohr to angstrom conversion)
+
+   :param chem_sys: The NWChemEx description of the chemical system we want to
+                    convert.
+   :type chem_sys: chemist.ChemicalSystem
+   :return: The QCElemental representation of ``chem_sys``
+   :rtype: qcelemental.models.Molecule
+
+
+.. py:function:: qc_mol2molecule(qc_mol)
+
+   Converts a QCElemental.Molecule object to a Chemist.Molecule object.
+
+
+   .. note::
+
+      QCElemental's Molecule class contains extra information that
+      Chemist's Molecule class does not. At present this function ignores all
+      extra information.
+
+
+

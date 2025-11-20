@@ -1,8 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,111,128,138"/>
-<area shape="rect" id="node2" href="$classfriendzone_1_1nwx2ase_1_1nwchem__via__ase_1_1NWChemEnergyViaASE.html" title=" " alt="" coords="182,5,417,47"/>
-<area shape="rect" id="node3" href="$classfriendzone_1_1nwx2ase_1_1nwchem__via__ase_1_1NWChemGradientViaASE.html" title=" " alt="" coords="176,71,423,112"/>
-<area shape="rect" id="node4" href="$classfriendzone_1_1nwx2qcelemental_1_1SystemViaMolSSI.html" title=" " alt="" coords="192,136,407,177"/>
-<area shape="rect" id="node5" href="$classfriendzone_1_1nwx2qcengine_1_1QCEngineEnergy.html" title=" " alt="" coords="203,201,396,243"/>
-<area shape="rect" id="node6" href="$classfriendzone_1_1nwx2qcengine_1_1QCEngineGradient.html" title=" " alt="" coords="471,201,664,243"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,109,128,134"/>
+<area shape="rect" id="Node000001" href="$classfriendzone_1_1nwx2ase_1_1nwchem__via__ase_1_1NWChemEnergyViaASE.html" title=" " alt="" coords="182,5,417,45"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="96,99,133,76,175,55,209,43,211,48,177,60,135,81,99,103"/>
+<area shape="rect" id="Node000002" href="$classfriendzone_1_1nwx2ase_1_1nwchem__via__ase_1_1NWChemGradientViaASE.html" title=" " alt="" coords="176,69,423,109"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="141,108,175,104,176,109,142,114"/>
+<area shape="rect" id="Node000003" href="$classfriendzone_1_1nwx2molssi_1_1nwchem__via__molssi_1_1QCEngineEnergy.html" title=" " alt="" coords="183,133,415,173"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="142,129,184,135,183,140,142,134"/>
+<area shape="rect" id="Node000005" href="$classfriendzone_1_1nwx2molssi_1_1system__via__molssi_1_1SystemViaMolSSI.html" title=" " alt="" coords="187,197,412,237"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="99,139,135,162,177,183,211,195,209,200,175,188,133,167,96,144"/>
+<area shape="rect" id="Node000004" href="$classfriendzone_1_1nwx2molssi_1_1nwchem__via__molssi_1_1QCEngineGradient.html" title=" " alt="" coords="471,133,703,173"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="429,151,470,151,470,156,429,156"/>
 </map>

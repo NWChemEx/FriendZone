@@ -5,9 +5,7 @@
 ChemicalSystem via QCElemental
 ##############################
 
-Creates an NWChemEx ChemicalSystem by going through MolSSI's string
-    parser.
-    
+Creates an NWChemEx ChemicalSystem by using MolSSI's string parser.
 
 ***********
 Please Cite

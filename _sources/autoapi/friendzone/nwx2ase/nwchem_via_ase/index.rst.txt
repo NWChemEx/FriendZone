@@ -4,3 +4,26 @@ friendzone.nwx2ase.nwchem_via_ase
 .. py:module:: friendzone.nwx2ase.nwchem_via_ase
 
 
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2ase.nwchem_via_ase.load_nwchem_via_ase_modules
+
+
+Module Contents
+---------------
+
+.. py:function:: load_nwchem_via_ase_modules(mm)
+
+   Loads the collection of all ASE(NWChem) modules.
+
+   .. note::
+
+       This function is a no-op if NWChem is not installed.
+
+   :param mm: The ModuleManager that the all Modules will be loaded into.
+   :type mm: pluginplay.ModuleManager
+
+
