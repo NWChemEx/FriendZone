@@ -17,6 +17,8 @@
 FriendZone
 ==========
 
+[![Nightly Workflow](https://github.com/NWChemEx/FriendZone/actions/workflows/nightly.yaml/badge.svg)](https://github.com/NWChemEx/FriendZone/actions/workflows/nightly.yaml)
+
 [Documentation](https://nwchemex.github.io/FriendZone)
 
 Provides SimDE compatible APIs so that NWChemEx can play nicely with its
