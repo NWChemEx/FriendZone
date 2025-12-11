@@ -23,7 +23,6 @@ get_version_from_git(friendzone_version "${CMAKE_CURRENT_LIST_DIR}")
 project(friendzone VERSION "${friendzone_version}" LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 
-include(nwx_versions)
 include(get_cmaize)
 include(nwx_cxx_api_docs)
 
@@ -46,7 +45,6 @@ cmaize_option_list(
 cmaize_find_or_build_dependency(
     simde
     URL github.com/NWChemEx/SimDE
-    VERSION ${NWX_SIMDE_VERSION}
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
