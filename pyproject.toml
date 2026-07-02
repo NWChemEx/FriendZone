@@ -38,8 +38,7 @@ classifiers = [
     "Private :: Do Not Upload",
 ]
 dynamic = ["version"]
-# NOTE: nwchemex-simde is not yet pip-installable; enable once it is.
-# dependencies = ["nwchemex-simde"]
+dependencies = ["nwchemex-simde"]
 
 [project.optional-dependencies]
 ase    = ["ase"]
