@@ -42,7 +42,7 @@ dependencies = ["nwchemex-simde"]
 [project.optional-dependencies]
 ase    = ["ase"]
 molssi = ["qcengine", "qcelemental", "networkx"]
-test   = ["pytest"]
+test   = ["pytest", "numpy"]
 dev    = ["nwchemex-friendzone[test]", "tox", "pre-commit"]
 
 # Python source lives under python/ (analogous to cxx/ in C++ repos).
