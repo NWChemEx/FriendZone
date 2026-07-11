@@ -18,18 +18,56 @@ name: Pull Request Workflow
 on:
   pull_request:
     branches:
-      - master
+      - build_overhaul
 
 jobs:
   check_formatting:
-    uses: NWChemEx/.github/.github/workflows/check_formatting.yaml@master
+    uses: ryanmrichard/.github/.github/workflows/check_formatting.yaml@master
 
   test_nwx_docs:
-    uses: NWChemEx/.github/.github/workflows/test_nwx_docs.yaml@master
+    uses: ryanmrichard/.github/.github/workflows/test_nwx_docs.yaml@master
     with:
-      doc_target: "friendzone_cxx_api"
+      doc_target: "Sphinx"
 
-  test_library:
-    uses: NWChemEx/.github/.github/workflows/test_nwx_library.yaml@master
-    with:
-      compilers: '["gcc-14", "clang-18"]'
+  # FriendZone is pure Python (no CMakeLists.txt), so there's nothing to
+  # compile and the compiler axis of the shared dev matrix is meaningless
+  # here -- just a lean OS-only matrix. setup_nwx_dev_env still runs (via its
+  # unconditional MPI/Boost install) because nwchemex-simde's prebuilt wheel
+  # dynamically links against libmpi at import time, and bare GitHub runners
+  # have no MPI by default.
+  test_python:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Setup NWX Dev Environment
+        uses: ryanmrichard/.github/.github/actions/setup_nwx_dev_env@master
+        with:
+          compiler: gcc-14
+      - name: Install
+        shell: bash
+        run: |
+          pip install -e ".[dev]" --extra-index-url https://test.pypi.org/simple/
+      - name: Test Python
+        shell: bash
+        run: |
+          set +e
+          pytest -v
+          pytest_exit=$?
+          set -e
+
+          if [ "$pytest_exit" -eq 5 ]; then
+              echo "::error::zero pytest tests were found."
+              exit 1
+          fi
+          exit "$pytest_exit"
