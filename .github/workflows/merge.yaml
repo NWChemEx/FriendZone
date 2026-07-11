@@ -43,6 +43,8 @@ jobs:
     steps:
       - name: Build PyPI Distribution
         uses: ryanmrichard/.github/.github/actions/build_pypi_dist@master
+        with:
+          extra_index_url: https://test.pypi.org/simple/
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

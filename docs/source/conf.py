@@ -173,7 +173,7 @@ texinfo_documents = [
 
 # -- Extension configuration -------------------------------------------------
 autoapi_dirs = [
-    "../../src",
+    "../../python",
     # '../../tests',
 ]
 autoapi_add_toctree_entry = False

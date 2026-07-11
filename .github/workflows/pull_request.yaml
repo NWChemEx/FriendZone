@@ -24,6 +24,17 @@ jobs:
   check_formatting:
     uses: ryanmrichard/.github/.github/workflows/check_formatting.yaml@master
 
+  # Dry-run of the actual sdist/wheel build (not just an editable install via
+  # test_python below) -- catches e.g. files missing from the sdist manifest
+  # that an editable install wouldn't. Matches NWXCMake's own pull_request.yaml.
+  test_pypi_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build PyPI Distribution
+        uses: ryanmrichard/.github/.github/actions/build_pypi_dist@master
+        with:
+          extra_index_url: https://test.pypi.org/simple/
+
   test_nwx_docs:
     uses: ryanmrichard/.github/.github/workflows/test_nwx_docs.yaml@master
     with:
