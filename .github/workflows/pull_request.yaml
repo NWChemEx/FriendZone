@@ -99,9 +99,45 @@ jobs:
           ls /tmp/opal-prefix/share/openmpi/ | head -20
           export OPAL_PREFIX=/tmp/opal-prefix
 
+          echo "-- installed nwchemex packages --"
+          pip list | grep -i nwchemex
+
+          echo "-- site-packages .libs dirs --"
+          SITE_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
+          for d in "$SITE_DIR"/*.libs; do
+            echo "== $d =="
+            ls -la "$d" || true
+          done
+
+          echo "-- ldd of parallelzone extension --"
+          PZ_EXT=$(python -c "import parallelzone, os; print(os.path.dirname(parallelzone.__file__))")
+          find "$PZ_EXT" -name "*.so*" -exec ldd {} \;
+
+          echo "-- bundled libmpi: hash, symbol count, size --"
+          LIBMPI=$(find "$SITE_DIR" -path "*.libs/libmpi*" | head -1)
+          echo "libmpi path: $LIBMPI"
+          ls -la "$LIBMPI"
+          nm -D "$LIBMPI" | grep -ci shmem || true
+
           echo "-- importing parallelzone --"
           python -u -c "import parallelzone; print('import OK')"
-          echo "-- constructing RuntimeView (with OPAL_PREFIX set) --"
+
+          echo "-- constructing RuntimeView (with OPAL_PREFIX set, verbose shmem/opal) --"
+          OMPI_MCA_shmem_base_verbose=100 \
+          OMPI_MCA_opal_base_verbose=100 \
+          OMPI_MCA_opal_base_help_aggregate=0 \
+          python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK')" || true
+
+          echo "-- forcing shmem=posix --"
+          OMPI_MCA_shmem=posix python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK (posix)')" || true
+
+          echo "-- forcing shmem=mmap --"
+          OMPI_MCA_shmem=mmap python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK (mmap)')" || true
+
+          echo "-- forcing shmem=sysv --"
+          OMPI_MCA_shmem=sysv python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK (sysv)')" || true
+
+          echo "-- final: real (non-forced) attempt, must succeed for step to pass --"
           python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK')"
 
       - name: Test Python
