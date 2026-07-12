@@ -84,12 +84,24 @@ jobs:
       - name: Debug RuntimeView Construction
         shell: bash
         run: |
-          echo "-- ldd on the parallelzone extension --"
-          site_pkg=$(python -c "import parallelzone, os; print(os.path.dirname(parallelzone.__file__))")
-          find "$site_pkg" -name "*.so" -exec ldd {} \;
+          echo "-- fetching OpenMPI 4.1.6 help text only, to unmask the real error --"
+          # The wheel's bundled libmpi looks for its runtime data/help text at
+          # a hardcoded /usr/local/openmpi/... path that doesn't exist here,
+          # so MPI_Init's *actual* failure reason gets swallowed by a
+          # secondary "couldn't open the help file" message. OPAL_PREFIX lets
+          # us point it at a real (if minimal) share/openmpi/ directory so
+          # the real underlying message prints instead.
+          curl -fsSL https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz -o /tmp/openmpi.tar.gz
+          mkdir -p /tmp/openmpi-src
+          tar -xzf /tmp/openmpi.tar.gz -C /tmp/openmpi-src --strip-components=1
+          mkdir -p /tmp/opal-prefix/share/openmpi
+          find /tmp/openmpi-src -iname "help-*" -type f -exec cp {} /tmp/opal-prefix/share/openmpi/ \;
+          ls /tmp/opal-prefix/share/openmpi/ | head -20
+          export OPAL_PREFIX=/tmp/opal-prefix
+
           echo "-- importing parallelzone --"
           python -u -c "import parallelzone; print('import OK')"
-          echo "-- constructing RuntimeView --"
+          echo "-- constructing RuntimeView (with OPAL_PREFIX set) --"
           python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK')"
 
       - name: Test Python
