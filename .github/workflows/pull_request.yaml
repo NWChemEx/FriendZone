@@ -77,6 +77,21 @@ jobs:
         shell: bash
         run: |
           pip install -e ".[dev]" --extra-index-url https://test.pypi.org/simple/
+      # TEMPORARY diagnostic step: isolate whether the crash happens at
+      # RuntimeView() construction itself (outside pytest's output
+      # capturing/buffering, so any native crash message is unambiguous)
+      # before falling back to guessing from pytest's own captured output.
+      - name: Debug RuntimeView Construction
+        shell: bash
+        run: |
+          echo "-- ldd on the parallelzone extension --"
+          site_pkg=$(python -c "import parallelzone, os; print(os.path.dirname(parallelzone.__file__))")
+          find "$site_pkg" -name "*.so" -exec ldd {} \;
+          echo "-- importing parallelzone --"
+          python -u -c "import parallelzone; print('import OK')"
+          echo "-- constructing RuntimeView --"
+          python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK')"
+
       - name: Test Python
         shell: bash
         run: |
