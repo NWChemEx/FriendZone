@@ -89,6 +89,17 @@ jobs:
           echo "-- ldconfig resolution of libmpi --"
           ldconfig -p | grep libmpi || true
           which orted || true
+          echo "-- does system libmpi itself contain the /usr/local/openmpi string? --"
+          strings /lib/x86_64-linux-gnu/libmpi.so.40 | grep -i "usr/local/openmpi\|prefix" | head -10 || true
+          echo "-- site-packages content check: any leftover libmpi anywhere? --"
+          SITE_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
+          find "$SITE_DIR" -iname "*libmpi*" 2>/dev/null || true
+          find "$SITE_DIR" -iname "*.libs" -type d 2>/dev/null || true
+          echo "-- pip show nwchemex-parallelzone --"
+          pip show -f nwchemex-parallelzone | head -30
+          echo "-- ldd + readelf RPATH/RUNPATH of parallelzone extension --"
+          PZ_EXT=$(python -c "import parallelzone, os; print(os.path.dirname(parallelzone.__file__))")
+          find "$PZ_EXT" -name "*.so*" -exec sh -c 'echo "== {} =="; ldd "{}"; readelf -d "{}" | grep -i "rpath\|runpath"' \;
           echo "-- importing parallelzone --"
           python -u -c "import parallelzone; print('import OK')"
           echo "-- constructing RuntimeView --"
