@@ -80,7 +80,13 @@ jobs:
       - name: Install
         shell: bash
         run: |
-          pip install -e ".[dev]" --extra-index-url https://test.pypi.org/simple/
+          # molssi/ase are optional friends (extra deps only needed if the
+          # corresponding external program is present); install them
+          # explicitly here since needs_nwchem above means this job now has
+          # a real NWChem to exercise both wrapper paths against, rather
+          # than everything just no-op'ing via is_molssi_enabled()/
+          # is_ase_enabled().
+          pip install -e ".[dev,molssi,ase]" --extra-index-url https://test.pypi.org/simple/
       - name: Test Python
         shell: bash
         run: |
