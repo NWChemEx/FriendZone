@@ -77,6 +77,25 @@ jobs:
         shell: bash
         run: |
           pip install -e ".[dev]" --extra-index-url https://test.pypi.org/simple/
+      # TEMPORARY diagnostic: test_python now excludes vendored MPI libs and
+      # links against system MPI, but pytest still dies with no traceback on
+      # the first test (which pulls in conftest.py's session RuntimeView
+      # fixture) -- isolate whether RuntimeView() itself is still the
+      # problem (now against system MPI, not the old vendored/orted issue)
+      # or something further downstream (chemist/tensorwrapper native code).
+      - name: Debug RuntimeView Construction
+        shell: bash
+        run: |
+          echo "-- ldconfig resolution of libmpi --"
+          ldconfig -p | grep libmpi || true
+          which orted || true
+          echo "-- importing parallelzone --"
+          python -u -c "import parallelzone; print('import OK')"
+          echo "-- constructing RuntimeView --"
+          python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK')"
+          echo "-- importing chemist/tensorwrapper --"
+          python -u -c "import chemist; print('chemist import OK')"
+          python -u -c "import tensorwrapper; print('tensorwrapper import OK')"
       - name: Test Python
         shell: bash
         run: |
