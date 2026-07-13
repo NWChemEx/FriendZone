@@ -77,44 +77,6 @@ jobs:
         shell: bash
         run: |
           pip install -e ".[dev]" --extra-index-url https://test.pypi.org/simple/
-      # TEMPORARY diagnostic: test_python now excludes vendored MPI libs and
-      # links against system MPI, but pytest still dies with no traceback on
-      # the first test (which pulls in conftest.py's session RuntimeView
-      # fixture) -- isolate whether RuntimeView() itself is still the
-      # problem (now against system MPI, not the old vendored/orted issue)
-      # or something further downstream (chemist/tensorwrapper native code).
-      - name: Debug RuntimeView Construction
-        if: matrix.os == 'ubuntu-latest'
-        shell: bash
-        run: |
-          echo "-- ldconfig resolution of libmpi --"
-          ldconfig -p | grep libmpi || true
-          which orted || true
-          echo "-- does system libmpi itself contain the /usr/local/openmpi string? --"
-          strings /lib/x86_64-linux-gnu/libmpi.so.40 | grep -i "usr/local/openmpi\|prefix" | head -10 || true
-          echo "-- site-packages content check: any leftover libmpi anywhere? --"
-          SITE_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
-          find "$SITE_DIR" -iname "*libmpi*" 2>/dev/null || true
-          find "$SITE_DIR" -iname "*.libs" -type d 2>/dev/null || true
-          echo "-- pip show nwchemex-parallelzone (no head, avoid broken pipe) --"
-          pip show -f nwchemex-parallelzone > /tmp/pip_show.txt 2>&1 || true
-          head -20 /tmp/pip_show.txt
-          echo "-- what prefix does the ambient ompi_info report? --"
-          ompi_info --path prefix || true
-          ompi_info --path sysconfdir || true
-          echo "-- ldd + readelf RPATH/RUNPATH of parallelzone extension --"
-          PZ_EXT=$(python -c "import parallelzone, os; print(os.path.dirname(parallelzone.__file__))")
-          find "$PZ_EXT" -name "*.so*" -exec sh -c 'echo "== {} =="; ldd "{}"; readelf -d "{}" | grep -i "rpath\|runpath"' \;
-          echo "-- readelf RPATH/RUNPATH of the shared lib/ dir (libparallelzone.so etc) --"
-          LIB_DIR=$(python -c "import site; print(site.getsitepackages()[0])")/lib
-          find "$LIB_DIR" -name "*.so*" -exec sh -c 'echo "== {} =="; readelf -d "{}" | grep -i "rpath\|runpath\|needed.*mpi"' \; 2>/dev/null || true
-          echo "-- importing parallelzone --"
-          python -u -c "import parallelzone; print('import OK')"
-          echo "-- constructing RuntimeView --"
-          python -u -c "import parallelzone as pz; rv = pz.runtime.RuntimeView(); print('RuntimeView OK')"
-          echo "-- importing chemist/tensorwrapper --"
-          python -u -c "import chemist; print('chemist import OK')"
-          python -u -c "import tensorwrapper; print('tensorwrapper import OK')"
       - name: Test Python
         shell: bash
         run: |
