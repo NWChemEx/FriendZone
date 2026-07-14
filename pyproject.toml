@@ -57,5 +57,14 @@ minversion = "8.0"
 addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
 xfail_strict = true
 log_cli_level = "INFO"
-filterwarnings = ["error", "ignore::pytest.PytestCacheWarning"]
+filterwarnings = [
+    "error",
+    "ignore::pytest.PytestCacheWarning",
+    # ase's own Atoms.new_array (ase/atoms.py) still does `a.shape = (-1,)
+    # + shape` on an empty array, which numpy >=2.5 deprecates in favor of
+    # np.reshape. Unrelated to anything NWChemEx-side; ase's own bug, not
+    # ours to fix -- ignore rather than let it hard-fail every ASE-backed
+    # friend test.
+    "ignore:Setting the shape on a NumPy array has been deprecated:DeprecationWarning:ase\\..*",
+]
 testpaths = ["tests"]
