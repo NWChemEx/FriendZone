@@ -37,7 +37,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 dynamic = ["version"]
-dependencies = ["nwchemex-simde"]
+dependencies = ["nwchemex-simde @ git+https://github.com/ryanmrichard/SimDE"]
 
 [project.optional-dependencies]
 ase    = ["ase"]
