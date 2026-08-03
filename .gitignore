@@ -80,3 +80,6 @@ uuid.db
 
 # This is a generated file
 # src/python/friendzone/friends.py
+
+# Automatically installed in dev mode
+.pre-commit-config.yaml
