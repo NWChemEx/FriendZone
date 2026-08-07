@@ -39,9 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build PyPI Distribution
-        uses: ryanmrichard/.github/.github/actions/build_pypi_dist@master
-        with:
-          extra_index_url: https://test.pypi.org/simple/
+        uses: NWChemEx/.github/.github/actions/build_pypi_dist@master
 
   # FriendZone is pure Python (no CMakeLists.txt), so there's nothing to
   # compile and the compiler axis of the shared dev matrix is meaningless
@@ -73,7 +71,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Setup NWX Dev Environment
-        uses: ryanmrichard/.github/.github/actions/setup_nwx_dev_env@master
+        uses: NWChemEx/.github/.github/actions/setup_nwx_dev_env@master
         with:
           compiler: gcc-14
           needs_nwchem: "true"
@@ -89,7 +87,7 @@ jobs:
           # a real NWChem to exercise both wrapper paths against, rather
           # than everything just no-op'ing via is_molssi_enabled()/
           # is_ase_enabled().
-          pip install -e ".[dev,molssi,ase]" --extra-index-url https://test.pypi.org/simple/
+          pip install -e ".[dev,molssi,ase]"
       - name: Test Python
         shell: bash
         run: |
