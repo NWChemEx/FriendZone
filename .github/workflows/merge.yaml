@@ -43,7 +43,6 @@ jobs:
     steps:
       - name: Build PyPI Distribution
         uses: NWChemEx/.github/.github/actions/build_pypi_dist@master
-        with:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
