@@ -124,7 +124,7 @@ def load_nwchem_via_molssi_modules(mm):
     """
     if is_nwchem_enabled():
         for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
-            egy_key = "nwchem" + " : " + method
+            egy_key = "NWChem" + " : " + method
             grad_key = egy_key + " Gradient"
             mm.add_module(egy_key, QCEngineEnergy())
             mm.add_module(grad_key, QCEngineGradient())
