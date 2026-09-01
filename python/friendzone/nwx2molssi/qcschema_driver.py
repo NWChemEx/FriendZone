@@ -23,30 +23,14 @@ from .chemical_system_conversions import qc_mol2molecule
 from .qcschema_api import QCSchemaAPI
 
 
-def _failure_sentinel(atomic_input):
-    # AtomicResult validates that return_result's size matches the shape
-    # implied by driver (3 * n_atoms for a gradient, its square for a
-    # Hessian), even on a failed computation, so the placeholder value must
-    # respect that shape.
-    n_atoms = len(atomic_input.molecule.symbols)
-    if atomic_input.driver == "gradient":
-        return np.zeros(3 * n_atoms)
-    if atomic_input.driver == "hessian":
-        return np.zeros((3 * n_atoms) ** 2)
-    return 0.0
-
-
 def _failed_result(atomic_input, error_type, error_message):
-    error = qcel.models.common_models.ComputeError(
+    # QCSchema v2 splits failures out of AtomicResult (whose ``success``
+    # field is now pinned to Literal[True]) and into a separate
+    # FailedOperation model.
+    error = qcel.models.v2.ComputeError(
         error_type=error_type, error_message=error_message
     )
-    return qcel.models.AtomicResult(
-        **atomic_input.dict(),
-        properties=qcel.models.results.AtomicResultProperties(),
-        return_result=_failure_sentinel(atomic_input),
-        success=False,
-        error=error,
-    )
+    return qcel.models.v2.FailedOperation(input_data=atomic_input, error=error)
 
 
 class QCSchemaDriver(pp.ModuleBase):
@@ -60,12 +44,12 @@ class QCSchemaDriver(pp.ModuleBase):
     .. note::
 
        Only ``driver == "energy"`` computations are supported, and the
-       AtomicInput's ``model.basis`` must be an inline
-       ``qcelemental.models.basis.BasisSet`` (as opposed to a basis-set name
+       AtomicInput's ``specification.model.basis`` must be an inline
+       ``qcelemental.models.v2.BasisSet`` (as opposed to a basis-set name
        string, which would require resolving against a basis-set library).
        Requests that do not meet these requirements fail gracefully, i.e.
-       they return an AtomicResult with ``success == False`` and a populated
-       ``error`` field, rather than raising.
+       they return a ``qcelemental.models.v2.FailedOperation`` with a
+       populated ``error`` field, rather than raising.
     """
 
     def __init__(self):
@@ -81,23 +65,23 @@ class QCSchemaDriver(pp.ModuleBase):
         pt = QCSchemaAPI()
         (atomic_input,) = pt.unwrap_inputs(inputs)
 
-        if atomic_input.driver != "energy":
+        if atomic_input.specification.driver != "energy":
             result = _failed_result(
                 atomic_input,
                 "input_error",
                 f"QCSchemaDriver only supports driver == 'energy', got "
-                f"'{atomic_input.driver}'",
+                f"'{atomic_input.specification.driver}'",
             )
             rv = self.results()
             return pt.wrap_results(rv, result)
 
-        basis = atomic_input.model.basis
-        if not isinstance(basis, qcel.models.basis.BasisSet):
+        basis = atomic_input.specification.model.basis
+        if not isinstance(basis, qcel.models.v2.BasisSet):
             result = _failed_result(
                 atomic_input,
                 "input_error",
                 "QCSchemaDriver requires an inline "
-                "qcelemental.models.basis.BasisSet for model.basis, not a "
+                "qcelemental.models.v2.BasisSet for model.basis, not a "
                 "basis-set name string",
             )
             rv = self.results()
@@ -110,14 +94,14 @@ class QCSchemaDriver(pp.ModuleBase):
         egy = submods["AOEnergy"].run_as(AOEnergy(), aos, chem_sys)
         e = float(np.array(egy))
 
-        properties = qcel.models.results.AtomicResultProperties(
-            return_energy=e
-        )
-        result = qcel.models.AtomicResult(
-            **atomic_input.dict(),
+        properties = qcel.models.v2.AtomicProperties(return_energy=e)
+        result = qcel.models.v2.AtomicResult(
+            input_data=atomic_input,
+            molecule=atomic_input.molecule,
             properties=properties,
             return_result=e,
             success=True,
+            provenance=qcel.models.v2.Provenance(creator="FriendZone"),
         )
 
         rv = self.results()

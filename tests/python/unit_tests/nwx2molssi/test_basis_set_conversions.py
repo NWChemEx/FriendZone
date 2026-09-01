@@ -39,14 +39,14 @@ class TestQCBasis2AOBasisSet(unittest.TestCase):
         self.assertEqual(result, corr)
 
     def test_general_contraction_expands_to_multiple_shells(self):
-        shell = qcel.models.basis.ElectronShell(
+        shell = qcel.models.v2.ElectronShell(
             angular_momentum=[0],
             harmonic_type="cartesian",
             exponents=[0.5],
             coefficients=[[1.0], [2.0]],
         )
-        center = qcel.models.basis.BasisCenter(electron_shells=[shell])
-        basis = qcel.models.basis.BasisSet(
+        center = qcel.models.v2.BasisCenter(electron_shells=[shell])
+        basis = qcel.models.v2.BasisSet(
             name="test-basis", center_data={"h": center}, atom_map=["h", "h"]
         )
 
@@ -54,14 +54,14 @@ class TestQCBasis2AOBasisSet(unittest.TestCase):
         self.assertEqual(result.n_shells(), 4)
 
     def test_multiple_angular_momenta_not_supported(self):
-        shell = qcel.models.basis.ElectronShell(
+        shell = qcel.models.v2.ElectronShell(
             angular_momentum=[0, 1],
             harmonic_type="cartesian",
             exponents=[0.5],
             coefficients=[[1.0], [1.0]],
         )
-        center = qcel.models.basis.BasisCenter(electron_shells=[shell])
-        basis = qcel.models.basis.BasisSet(
+        center = qcel.models.v2.BasisCenter(electron_shells=[shell])
+        basis = qcel.models.v2.BasisSet(
             name="test-basis", center_data={"h": center}, atom_map=["h", "h"]
         )
 
@@ -73,15 +73,15 @@ class TestQCBasis2AOBasisSet(unittest.TestCase):
             self.skipTest("MolSSI friend is not enabled!")
 
         h2_as_str = "units a.u.\nH 0.0 0.0 0.0\nH 0.0 0.0 1.68185"
-        self.qc_mol = qcel.models.Molecule.from_data(h2_as_str)
+        self.qc_mol = qcel.models.v2.Molecule.from_data(h2_as_str)
 
-        shell = qcel.models.basis.ElectronShell(
+        shell = qcel.models.v2.ElectronShell(
             angular_momentum=[0],
             harmonic_type="cartesian",
             exponents=[0.5],
             coefficients=[[1.0]],
         )
-        center = qcel.models.basis.BasisCenter(electron_shells=[shell])
-        self.qc_basis = qcel.models.basis.BasisSet(
+        center = qcel.models.v2.BasisCenter(electron_shells=[shell])
+        self.qc_basis = qcel.models.v2.BasisSet(
             name="test-basis", center_data={"h": center}, atom_map=["h", "h"]
         )

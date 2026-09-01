@@ -20,7 +20,7 @@ class QCSchemaAPI(pp.PythonOnlyPropertyType):
     AtomicInput.
 
     Both the input and the result are opaque Python objects (in practice
-    ``qcelemental.models.AtomicInput``/``AtomicResult`` instances), which is
+    ``qcelemental.models.v2.AtomicInput``/``AtomicResult`` instances), which is
     why this property type is defined purely in Python via
     ``pluginplay.PythonOnlyPropertyType`` rather than as a typed C++
     property type.
@@ -29,10 +29,10 @@ class QCSchemaAPI(pp.PythonOnlyPropertyType):
     def __init__(self):
         pp.PythonOnlyPropertyType.__init__(self, "QCSchemaAPI")
         self.declare_input("Atomic Input").set_description(
-            "A qcelemental.models.AtomicInput instance describing the "
+            "A qcelemental.models.v2.AtomicInput instance describing the "
             "computation to run"
         )
         self.declare_result("Atomic Result").set_description(
-            "A qcelemental.models.AtomicResult instance holding the "
+            "A qcelemental.models.v2.AtomicResult instance holding the "
             "results of the computation"
         )

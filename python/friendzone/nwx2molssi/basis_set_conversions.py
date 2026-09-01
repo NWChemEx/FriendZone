@@ -22,13 +22,13 @@ def qc_basis2ao_basis_set(qc_mol, qc_basis):
     :param qc_mol: The molecule the basis set is defined for. Used to map
                    each atom to its center data (via ``qc_basis.atom_map``)
                    and to its Cartesian coordinates.
-    :type qc_mol: qcelemental.models.Molecule
+    :type qc_mol: qcelemental.models.v2.Molecule
     :param qc_basis: The inline basis set description to convert. A basis
                      set specified only by name (a bare string) is not
                      supported by this function; resolve it to an inline
-                     ``qcelemental.models.basis.BasisSet`` first (e.g. via a
+                     ``qcelemental.models.v2.BasisSet`` first (e.g. via a
                      basis-set library) before calling this function.
-    :type qc_basis: qcelemental.models.basis.BasisSet
+    :type qc_basis: qcelemental.models.v2.BasisSet
 
     :return: The Chemist representation of ``qc_basis``.
     :rtype: chemist.basis_set.AOBasisSetD

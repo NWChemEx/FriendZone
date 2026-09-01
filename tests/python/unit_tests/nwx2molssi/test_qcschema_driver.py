@@ -44,27 +44,28 @@ def make_water_input(basis, driver="energy"):
         "H 0.0 1.419470 -0.879257\n"
         "H 0.0 -1.419470 -0.879257"
     )
-    mol = qcel.models.Molecule.from_data(water_str)
-    model = qcel.models.common_models.Model(method="hf", basis=basis)
-    return qcel.models.AtomicInput(molecule=mol, driver=driver, model=model)
+    mol = qcel.models.v2.Molecule.from_data(water_str)
+    model = qcel.models.v2.Model(method="hf", basis=basis)
+    spec = qcel.models.v2.AtomicSpecification(driver=driver, model=model)
+    return qcel.models.v2.AtomicInput(molecule=mol, specification=spec)
 
 
 def make_sto_3g_like_basis():
-    o_shell = qcel.models.basis.ElectronShell(
+    o_shell = qcel.models.v2.ElectronShell(
         angular_momentum=[0],
         harmonic_type="cartesian",
         exponents=[130.70932, 23.808861, 6.4436083],
         coefficients=[[0.15432897, 0.53532814, 0.44463454]],
     )
-    h_shell = qcel.models.basis.ElectronShell(
+    h_shell = qcel.models.v2.ElectronShell(
         angular_momentum=[0],
         harmonic_type="cartesian",
         exponents=[3.42525091, 0.62391373, 0.16885540],
         coefficients=[[0.15432897, 0.53532814, 0.44463454]],
     )
-    o_center = qcel.models.basis.BasisCenter(electron_shells=[o_shell])
-    h_center = qcel.models.basis.BasisCenter(electron_shells=[h_shell])
-    return qcel.models.basis.BasisSet(
+    o_center = qcel.models.v2.BasisCenter(electron_shells=[o_shell])
+    h_center = qcel.models.v2.BasisCenter(electron_shells=[h_shell])
+    return qcel.models.v2.BasisSet(
         name="sto-3g-like",
         center_data={"o": o_center, "h": h_center},
         atom_map=["o", "h", "h"],
@@ -77,7 +78,6 @@ class TestQCSchemaDriver(unittest.TestCase):
         result = self.mm.run_as(self.pt, "QCSchema Driver", atomic_input)
 
         self.assertTrue(result.success)
-        self.assertIsNone(result.error)
         self.assertAlmostEqual(result.return_result, -3.14, places=6)
         self.assertAlmostEqual(result.properties.return_energy, -3.14, places=6)
 

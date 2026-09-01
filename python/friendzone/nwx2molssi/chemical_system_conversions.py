@@ -30,7 +30,7 @@ def chemical_system2qc_mol(chem_sys):
                      convert.
     :type chem_sys: chemist.ChemicalSystem
     :return: The QCElemental representation of ``chem_sys``
-    :rtype: qcelemental.models.Molecule
+    :rtype: qcelemental.models.v2.Molecule
     """
 
     out = ""
@@ -43,7 +43,7 @@ def chemical_system2qc_mol(chem_sys):
         y = str(atom_i.y * au2ang)
         z = str(atom_i.z * au2ang)
         out += symbol + " " + x + " " + y + " " + z + "\n"
-    return qcel.models.Molecule.from_data(
+    return qcel.models.v2.Molecule.from_data(
         out, fix_com=True, fix_orientation=True, fix_symmetry="C1"
     )
 
