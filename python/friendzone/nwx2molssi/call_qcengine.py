@@ -34,7 +34,7 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
     objects to their QCElemental equivalents. Right now those mappings
     include:
 
-    - ChemicalSystem -> qcel.models.Molecule
+    - ChemicalSystem -> qcel.models.v2.Molecule
     - RuntimeView -> qcng.TaskConfig
 
     While not supported at the moment, similar conversions for the AO basis
@@ -46,7 +46,8 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
     to module instances, whereas QCEngine requires strings). It is the
     responsibility of the module wrapping the call to ``call_qcengine`` to
     pass these additional inputs in as kwargs that can be forwarded to a
-    QCElemental.models.AtomicInput object via the ``model`` keyword.
+    QCElemental.models.v2.AtomicSpecification object via the ``model``
+    keyword.
 
     :param pt: The property type we are computing.
     :type pt: pluginplay.PropertyType
@@ -56,7 +57,7 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
                     backend?
     :type program: str
     :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                   ``AtomicInput`` class as kwargs.
+                   ``AtomicSpecification`` class as kwargs.
 
     :return: A dictionary containing the requested property and any other
              property of potential interest.
@@ -65,7 +66,8 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
 
     # Step 1: Prepare the chemistry-related input
     qc_mol = chemical_system2qc_mol(mol)
-    inp = qcel.models.AtomicInput(molecule=qc_mol, driver=driver, **kwargs)
+    spec = qcel.models.v2.AtomicSpecification(driver=driver, **kwargs)
+    inp = qcel.models.v2.AtomicInput(molecule=qc_mol, specification=spec)
 
     # Step 2: Prepare the runtime-related input
     # I *think* ncores is supposed to be the number of threads per MPI rank
@@ -75,7 +77,7 @@ def call_qcengine(driver, mol, program, runtime, **kwargs):
     results = qcng.compute(inp, program, task_config=task_config)
 
     # Step 4: Verify the computation ran correctly
-    if isinstance(results, qcel.models.common_models.FailedOperation):
+    if isinstance(results, qcel.models.v2.FailedOperation):
         raise RuntimeError(results.error.error_message)
 
     # Step 5: Prepare the results

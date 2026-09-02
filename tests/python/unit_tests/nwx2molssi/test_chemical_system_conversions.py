@@ -32,7 +32,7 @@ class TestChemicalSystem2QC(unittest.TestCase):
         qcel_mol = chemical_system2qc_mol(mol)
 
         h2_as_str = "H 0.0 0.0 0.0\nH 0.0 0.0 0.8899966917653396"
-        corr = qcel.models.Molecule.from_data(h2_as_str)
+        corr = qcel.models.v2.Molecule.from_data(h2_as_str)
         self.assertEqual(qcel_mol, corr)
 
     def setUp(self):
@@ -44,7 +44,7 @@ class TestQCMol2Molecule(unittest.TestCase):
     def test_h2(self):
         corr = make_h2().molecule
         h2_as_str = "H 0.0 0.0 0.0\nH 0.0 0.0 0.8899966917653396"
-        mol = qcel.models.Molecule.from_data(h2_as_str)
+        mol = qcel.models.v2.Molecule.from_data(h2_as_str)
         result = qc_mol2molecule(mol)
         compare_molecules(self, result, corr)
 

@@ -16,6 +16,7 @@ from ..friends import is_molssi_enabled
 
 if is_molssi_enabled():
     from .nwchem_via_molssi import load_nwchem_via_molssi_modules
+    from .qcschema_driver import load_qcschema_driver_modules
     from .system_via_molssi import load_system_via_molssi_modules
 
 
@@ -27,6 +28,7 @@ def load_molssi_modules(mm):
 
     *  ``load_system_via_molssi_modules``
     *  ``load_nwchem_via_molssi_modules``
+    *  ``load_qcschema_driver_modules``
 
     .. note::
 
@@ -44,3 +46,4 @@ def load_molssi_modules(mm):
     if is_molssi_enabled():
         load_system_via_molssi_modules(mm)
         load_nwchem_via_molssi_modules(mm)
+        load_qcschema_driver_modules(mm)
