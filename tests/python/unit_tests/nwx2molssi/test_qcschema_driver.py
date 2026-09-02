@@ -21,10 +21,9 @@ if is_molssi_enabled():
     import numpy as np
     import qcelemental as qcel
     import tensorwrapper
+    from friendzone.nwx2molssi.qcschema_api import QCSchemaAPI
     from pluginplay import ModuleBase, ModuleManager
     from simde import AOEnergy
-
-    from friendzone.nwx2molssi.qcschema_api import QCSchemaAPI
 
     class DummyAOEnergyModule(ModuleBase):
         def __init__(self):
@@ -79,7 +78,9 @@ class TestQCSchemaDriver(unittest.TestCase):
 
         self.assertTrue(result.success)
         self.assertAlmostEqual(result.return_result, -3.14, places=6)
-        self.assertAlmostEqual(result.properties.return_energy, -3.14, places=6)
+        self.assertAlmostEqual(
+            result.properties.return_energy, -3.14, places=6
+        )
 
     def test_unsupported_driver_fails_gracefully(self):
         atomic_input = make_water_input(self.basis, driver="gradient")
@@ -102,9 +103,7 @@ class TestQCSchemaDriver(unittest.TestCase):
         self.mm = ModuleManager()
         load_modules(self.mm)
         self.mm.add_module("Dummy AOEnergy", DummyAOEnergyModule())
-        self.mm.change_submod(
-            "QCSchema Driver", "AOEnergy", "Dummy AOEnergy"
-        )
+        self.mm.change_submod("QCSchema Driver", "AOEnergy", "Dummy AOEnergy")
 
         self.pt = QCSchemaAPI()
         self.basis = make_sto_3g_like_basis()

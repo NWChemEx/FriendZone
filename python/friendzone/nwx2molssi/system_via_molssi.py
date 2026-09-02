@@ -30,7 +30,9 @@ class SystemViaMolSSI(pp.ModuleBase):
     def run_(self, inputs, submods):
         pt = MoleculeFromString()
         (mol_str,) = pt.unwrap_inputs(inputs)
-        mol = qc_mol2molecule(qcelemental.models.v2.Molecule.from_data(mol_str))
+        mol = qc_mol2molecule(
+            qcelemental.models.v2.Molecule.from_data(mol_str)
+        )
 
         rv = self.results()
         return pt.wrap_results(rv, mol)

@@ -49,7 +49,7 @@ def qc_basis2ao_basis_set(qc_mol, qc_basis):
                     "Shells sharing multiple angular momenta (e.g. SP "
                     "shells) are not supported"
                 )
-            l = electron_shell.angular_momentum[0]
+            ang_mom = electron_shell.angular_momentum[0]
             pure = (
                 ShellType.pure
                 if electron_shell.harmonic_type == "spherical"
@@ -61,7 +61,9 @@ def qc_basis2ao_basis_set(qc_mol, qc_basis):
             # holds a single set of coefficients, so a general contraction
             # becomes one Shell per row.
             for coefficients in electron_shell.coefficients:
-                shells.append(ShellD(pure, l, coefficients, exponents, x, y, z))
+                shells.append(
+                    ShellD(pure, ang_mom, coefficients, exponents, x, y, z)
+                )
 
         center = PointD(x, y, z)
         atomic_basis_set = AtomicBasisSetD(
