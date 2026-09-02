@@ -31,7 +31,7 @@ Module Contents
                     convert.
    :type chem_sys: chemist.ChemicalSystem
    :return: The QCElemental representation of ``chem_sys``
-   :rtype: qcelemental.models.Molecule
+   :rtype: qcelemental.models.v2.Molecule
 
 
 .. py:function:: qc_mol2molecule(qc_mol)

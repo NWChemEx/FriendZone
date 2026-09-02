@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>friendzone.nwx2molssi.call_qcengine &mdash; friendzone 1.0.0 documentation</title>
+  <title>friendzone.nwx2molssi.basis_set_conversions &mdash; friendzone 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
@@ -20,8 +20,8 @@
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="friendzone.nwx2molssi.chemical_system_conversions" href="../chemical_system_conversions/index.html" />
-    <link rel="prev" title="friendzone.nwx2molssi.basis_set_conversions" href="../basis_set_conversions/index.html" /> 
+    <link rel="next" title="friendzone.nwx2molssi.call_qcengine" href="../call_qcengine/index.html" />
+    <link rel="prev" title="friendzone.nwx2molssi" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -87,9 +87,9 @@
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">friendzone</a></li>
           <li class="breadcrumb-item"><a href="../index.html">friendzone.nwx2molssi</a></li>
-      <li class="breadcrumb-item active">friendzone.nwx2molssi.call_qcengine</li>
+      <li class="breadcrumb-item active">friendzone.nwx2molssi.basis_set_conversions</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../../_sources/autoapi/friendzone/nwx2molssi/call_qcengine/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../../_sources/autoapi/friendzone/nwx2molssi/basis_set_conversions/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -97,14 +97,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-friendzone.nwx2molssi.call_qcengine">
-<span id="friendzone-nwx2molssi-call-qcengine"></span><h1>friendzone.nwx2molssi.call_qcengine<a class="headerlink" href="#module-friendzone.nwx2molssi.call_qcengine" title="Link to this heading"></a></h1>
+  <section id="module-friendzone.nwx2molssi.basis_set_conversions">
+<span id="friendzone-nwx2molssi-basis-set-conversions"></span><h1>friendzone.nwx2molssi.basis_set_conversions<a class="headerlink" href="#module-friendzone.nwx2molssi.basis_set_conversions" title="Link to this heading"></a></h1>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.nwx2molssi.call_qcengine.call_qcengine" title="friendzone.nwx2molssi.call_qcengine.call_qcengine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_qcengine</span></code></a>(driver, mol, program, runtime, **kwargs)</p></td>
-<td><p>Wraps calling a program through the QCEngine API.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.nwx2molssi.basis_set_conversions.qc_basis2ao_basis_set" title="friendzone.nwx2molssi.basis_set_conversions.qc_basis2ao_basis_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qc_basis2ao_basis_set</span></code></a>(qc_mol, qc_basis)</p></td>
+<td><p>Converts a QCElemental inline BasisSet into a Chemist AOBasisSetD.</p></td>
 </tr>
 </tbody>
 </table>
@@ -112,52 +112,27 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="friendzone.nwx2molssi.call_qcengine.call_qcengine">
-<span class="sig-prename descclassname"><span class="pre">friendzone.nwx2molssi.call_qcengine.</span></span><span class="sig-name descname"><span class="pre">call_qcengine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">program</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runtime</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2molssi.call_qcengine.call_qcengine" title="Link to this definition"></a></dt>
-<dd><p>Wraps calling a program through the QCEngine API.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>QCEngine only supports high-level modularity (modularity roughly at
-the granularity of a call to an electronic structure package). We
-thus have assumed that the molecular system will always be an input
-to whatever QCEngine call we are running.</p>
-</div>
-<p>This function is the main API for calling QCEngine from NWChemEx. The
-idea is to more or less feed the inputs from a <code class="docutils literal notranslate"><span class="pre">run_as</span></code> call directly
-into this function and then have this function convert the NWChemEx
-objects to their QCElemental equivalents. Right now those mappings
-include:</p>
-<ul class="simple">
-<li><p>ChemicalSystem -&gt; qcel.models.v2.Molecule</p></li>
-<li><p>RuntimeView -&gt; qcng.TaskConfig</p></li>
-</ul>
-<p>While not supported at the moment, similar conversions for the AO basis
-set are possible.</p>
-<p>Because of the difference in philosophy between QCEngine and NWChemEx,
-there are some inputs which can not easily be mapped automatically, for
-example the electronic structure method (in NWChemEx methods correspond
-to module instances, whereas QCEngine requires strings). It is the
-responsibility of the module wrapping the call to <code class="docutils literal notranslate"><span class="pre">call_qcengine</span></code> to
-pass these additional inputs in as kwargs that can be forwarded to a
-QCElemental.models.v2.AtomicSpecification object via the <code class="docutils literal notranslate"><span class="pre">model</span></code>
-keyword.</p>
+<dt class="sig sig-object py" id="friendzone.nwx2molssi.basis_set_conversions.qc_basis2ao_basis_set">
+<span class="sig-prename descclassname"><span class="pre">friendzone.nwx2molssi.basis_set_conversions.</span></span><span class="sig-name descname"><span class="pre">qc_basis2ao_basis_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc_mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qc_basis</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2molssi.basis_set_conversions.qc_basis2ao_basis_set" title="Link to this definition"></a></dt>
+<dd><p>Converts a QCElemental inline BasisSet into a Chemist AOBasisSetD.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pt</strong> (<em>pluginplay.PropertyType</em>) – The property type we are computing.</p></li>
-<li><p><strong>mol</strong> (<em>chemist.ChemicalSystem</em>) – The molecular system we are computing the properties of.</p></li>
-<li><p><strong>program</strong> (<em>str</em>) – Which electronic structure package is being used as the
-backend?</p></li>
-<li><p><strong>kwargs</strong> – Key-value pairs which will be forwarded to QCElemental’s
-<code class="docutils literal notranslate"><span class="pre">AtomicSpecification</span></code> class as kwargs.</p></li>
+<li><p><strong>qc_mol</strong> (<em>qcelemental.models.v2.Molecule</em>) – The molecule the basis set is defined for. Used to map
+each atom to its center data (via <code class="docutils literal notranslate"><span class="pre">qc_basis.atom_map</span></code>)
+and to its Cartesian coordinates.</p></li>
+<li><p><strong>qc_basis</strong> (<em>qcelemental.models.v2.BasisSet</em>) – The inline basis set description to convert. A basis
+set specified only by name (a bare string) is not
+supported by this function; resolve it to an inline
+<code class="docutils literal notranslate"><span class="pre">qcelemental.models.v2.BasisSet</span></code> first (e.g. via a
+basis-set library) before calling this function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary containing the requested property and any other
-property of potential interest.</p>
+<dd class="field-even"><p>The Chemist representation of <code class="docutils literal notranslate"><span class="pre">qc_basis</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Varies depending on the requested property</p>
+<dd class="field-odd"><p>chemist.basis_set.AOBasisSetD</p>
 </dd>
 </dl>
 </dd></dl>
@@ -169,8 +144,8 @@ property of potential interest.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../basis_set_conversions/index.html" class="btn btn-neutral float-left" title="friendzone.nwx2molssi.basis_set_conversions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../chemical_system_conversions/index.html" class="btn btn-neutral float-right" title="friendzone.nwx2molssi.chemical_system_conversions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="friendzone.nwx2molssi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../call_qcengine/index.html" class="btn btn-neutral float-right" title="friendzone.nwx2molssi.call_qcengine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -32,7 +32,7 @@ Module Contents
    objects to their QCElemental equivalents. Right now those mappings
    include:
 
-   - ChemicalSystem -> qcel.models.Molecule
+   - ChemicalSystem -> qcel.models.v2.Molecule
    - RuntimeView -> qcng.TaskConfig
 
    While not supported at the moment, similar conversions for the AO basis
@@ -44,7 +44,8 @@ Module Contents
    to module instances, whereas QCEngine requires strings). It is the
    responsibility of the module wrapping the call to ``call_qcengine`` to
    pass these additional inputs in as kwargs that can be forwarded to a
-   QCElemental.models.AtomicInput object via the ``model`` keyword.
+   QCElemental.models.v2.AtomicSpecification object via the ``model``
+   keyword.
 
    :param pt: The property type we are computing.
    :type pt: pluginplay.PropertyType
@@ -54,7 +55,7 @@ Module Contents
                    backend?
    :type program: str
    :param kwargs: Key-value pairs which will be forwarded to QCElemental's
-                  ``AtomicInput`` class as kwargs.
+                  ``AtomicSpecification`` class as kwargs.
 
    :return: A dictionary containing the requested property and any other
             property of potential interest.

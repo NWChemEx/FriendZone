@@ -1,0 +1,32 @@
+friendzone.nwx2molssi.qcschema_api
+==================================
+
+.. py:module:: friendzone.nwx2molssi.qcschema_api
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   friendzone.nwx2molssi.qcschema_api.QCSchemaAPI
+
+
+Module Contents
+---------------
+
+.. py:class:: QCSchemaAPI
+
+   Bases: :py:obj:`pluginplay.PythonOnlyPropertyType`
+
+
+   The API for computing a MolSSI QCSchema AtomicResult from an
+   AtomicInput.
+
+   Both the input and the result are opaque Python objects (in practice
+   ``qcelemental.models.v2.AtomicInput``/``AtomicResult`` instances), which is
+   why this property type is defined purely in Python via
+   ``pluginplay.PythonOnlyPropertyType`` rather than as a typed C++
+   property type.
+
+

@@ -10,9 +10,12 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/friendzone/nwx2molssi/basis_set_conversions/index
    /autoapi/friendzone/nwx2molssi/call_qcengine/index
    /autoapi/friendzone/nwx2molssi/chemical_system_conversions/index
    /autoapi/friendzone/nwx2molssi/nwchem_via_molssi/index
+   /autoapi/friendzone/nwx2molssi/qcschema_api/index
+   /autoapi/friendzone/nwx2molssi/qcschema_driver/index
    /autoapi/friendzone/nwx2molssi/system_via_molssi/index
 
 
@@ -36,6 +39,7 @@ Package Contents
 
    *  ``load_system_via_molssi_modules``
    *  ``load_nwchem_via_molssi_modules``
+   *  ``load_qcschema_driver_modules``
 
    .. note::
 

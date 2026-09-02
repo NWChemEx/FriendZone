@@ -1,0 +1,29 @@
+friendzone.nwx2molssi.qcschema_driver
+=====================================
+
+.. py:module:: friendzone.nwx2molssi.qcschema_driver
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   friendzone.nwx2molssi.qcschema_driver._failed_result
+   friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules
+
+
+Module Contents
+---------------
+
+.. py:function:: _failed_result(atomic_input, error_type, error_message)
+
+.. py:function:: load_qcschema_driver_modules(mm)
+
+   Loads the QCSchemaDriver module.
+
+   :param mm: The ModuleManager that the QCSchemaDriver module will be
+              loaded into.
+   :type mm: pluginplay.ModuleManager
+
+
