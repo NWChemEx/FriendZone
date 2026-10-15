@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pluginplay
+
 from .nwx2ase import load_ase_modules
 from .nwx2molssi import load_molssi_modules
 
 
-def load_modules(mm):
-    """Loads the collection of all modules provided by Friendzone.
+class FriendZone(pluginplay.Plugin):
+    """The FriendZone plugin.
 
-    This function calls the various friend specific module loading functions,
-    including:
+    Load it into a ModuleManager with
+    ``mm.load_plugin(friendzone.FriendZone())``. The plugin's name is
+    "friendzone". Its modules are added by the various friend specific module
+    loading functions, including:
 
     *  ``load_ase_modules``
     *  ``load_molssi_modules``
@@ -29,9 +33,10 @@ def load_modules(mm):
 
         Some and/or all of these may be no-ops depending on what friends were
         enabled.
-
-    :param mm: The ModuleManager that the all Modules will be loaded into.
-    :type mm: pluginplay.ModuleManager
     """
-    load_ase_modules(mm)
-    load_molssi_modules(mm)
+
+    def __init__(self):
+        pluginplay.Plugin.__init__(self)
+        self.set_name("friendzone")
+        load_ase_modules(self)
+        load_molssi_modules(self)

@@ -38,10 +38,10 @@ class SystemViaMolSSI(pp.ModuleBase):
         return pt.wrap_results(rv, mol)
 
 
-def load_system_via_molssi_modules(mm):
-    """Loads the collection of modules that wrap QCElemental calls.
+def load_system_via_molssi_modules(plugin):
+    """Adds the collection of modules that wrap QCElemental calls to a plugin.
 
-    :param mm: The ModuleManager that the NWChem Modules will be loaded into.
-    :type mm: pluginplay.ModuleManager
+    :param plugin: The plugin the modules will be added to.
+    :type plugin: pluginplay.Plugin
     """
-    mm.add_module("ChemicalSystem via QCElemental", SystemViaMolSSI())
+    plugin.add_module("ChemicalSystem via QCElemental", SystemViaMolSSI())

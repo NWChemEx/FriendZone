@@ -20,8 +20,8 @@ if is_molssi_enabled():
     from .system_via_molssi import load_system_via_molssi_modules
 
 
-def load_molssi_modules(mm):
-    """Loads the collection of all MolSSI modules.
+def load_molssi_modules(plugin):
+    """Adds the collection of all MolSSI modules to a plugin.
 
     This function calls the various submodule specific loading functions,
     including:
@@ -40,10 +40,10 @@ def load_molssi_modules(mm):
         *  ``qcengine``
         *  ``networkx``
 
-    :param mm: The ModuleManager that the all Modules will be loaded into.
-    :type mm: pluginplay.ModuleManager
+    :param plugin: The plugin the modules will be added to.
+    :type plugin: pluginplay.Plugin
     """
     if is_molssi_enabled():
-        load_system_via_molssi_modules(mm)
-        load_nwchem_via_molssi_modules(mm)
-        load_qcschema_driver_modules(mm)
+        load_system_via_molssi_modules(plugin)
+        load_nwchem_via_molssi_modules(plugin)
+        load_qcschema_driver_modules(plugin)

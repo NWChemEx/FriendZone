@@ -108,11 +108,10 @@ class QCSchemaDriver(pp.ModuleBase):
         return pt.wrap_results(rv, result)
 
 
-def load_qcschema_driver_modules(mm):
-    """Loads the QCSchemaDriver module.
+def load_qcschema_driver_modules(plugin):
+    """Adds the QCSchemaDriver module to a plugin.
 
-    :param mm: The ModuleManager that the QCSchemaDriver module will be
-               loaded into.
-    :type mm: pluginplay.ModuleManager
+    :param plugin: The plugin the QCSchemaDriver module will be added to.
+    :type plugin: pluginplay.Plugin
     """
-    mm.add_module("QCSchema Driver", QCSchemaDriver())
+    plugin.add_module("QCSchema Driver", QCSchemaDriver())

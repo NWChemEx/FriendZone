@@ -1,4 +1,5 @@
 py:class pluginplay.ModuleManager
+py:class pluginplay.Plugin
 py:class pluginplay.PropertyType
 py:class chemist.ChemicalSystem
 
