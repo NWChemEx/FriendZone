@@ -38,6 +38,15 @@ jobs:
   test_pypi_deploy:
     runs-on: ubuntu-latest
     steps:
+      # build_pypi_dist imports the built wheel to check it, and importing
+      # friendzone imports pluginplay, whose prebuilt wheel links against the
+      # system libmpi. build_pypi_dist only installs MPI for compiled
+      # (cibuildwheel) packages, and bare GitHub runners have none, so install
+      # the same runtime MPI it uses there.
+      - name: Install Runtime MPI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libopenmpi-dev openmpi-bin
       - name: Build PyPI Distribution
         uses: NWChemEx/.github/.github/actions/build_pypi_dist@master
 
