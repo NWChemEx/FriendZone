@@ -63,7 +63,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../utils/index.html">friendzone.utils</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
 </ul>
 </li>
@@ -106,8 +106,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#friendzone.nwx2molssi.qcschema_driver._failed_result" title="friendzone.nwx2molssi.qcschema_driver._failed_result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_failed_result</span></code></a>(atomic_input, error_type, error_message)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules" title="friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_qcschema_driver_modules</span></code></a>(mm)</p></td>
-<td><p>Loads the QCSchemaDriver module.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules" title="friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_qcschema_driver_modules</span></code></a>(plugin)</p></td>
+<td><p>Adds the QCSchemaDriver module to a plugin.</p></td>
 </tr>
 </tbody>
 </table>
@@ -121,12 +121,11 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules">
-<span class="sig-prename descclassname"><span class="pre">friendzone.nwx2molssi.qcschema_driver.</span></span><span class="sig-name descname"><span class="pre">load_qcschema_driver_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules" title="Link to this definition"></a></dt>
-<dd><p>Loads the QCSchemaDriver module.</p>
+<span class="sig-prename descclassname"><span class="pre">friendzone.nwx2molssi.qcschema_driver.</span></span><span class="sig-name descname"><span class="pre">load_qcschema_driver_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#friendzone.nwx2molssi.qcschema_driver.load_qcschema_driver_modules" title="Link to this definition"></a></dt>
+<dd><p>Adds the QCSchemaDriver module to a plugin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>mm</strong> (<em>pluginplay.ModuleManager</em>) – The ModuleManager that the QCSchemaDriver module will be
-loaded into.</p>
+<dd class="field-odd"><p><strong>plugin</strong> (<em>pluginplay.Plugin</em>) – The plugin the QCSchemaDriver module will be added to.</p>
 </dd>
 </dl>
 </dd></dl>

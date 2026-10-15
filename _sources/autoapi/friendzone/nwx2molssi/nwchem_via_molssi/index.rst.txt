@@ -48,9 +48,9 @@ Module Contents
    .. py:method:: run_(inputs, submods)
 
 
-.. py:function:: load_nwchem_via_molssi_modules(mm)
+.. py:function:: load_nwchem_via_molssi_modules(plugin)
 
-   Loads the collection of modules that wrap QCElemental calls.
+   Adds the collection of modules that wrap QCEngine calls to a plugin.
 
    Currently, the friends exported by this function are:
 
@@ -72,7 +72,7 @@ Module Contents
 
        This function is a no-op if NWChem is not installed.
 
-   :param mm: The ModuleManager that the NWChem Modules will be loaded into.
-   :type mm: pluginplay.ModuleManager
+   :param plugin: The plugin the NWChem modules will be added to.
+   :type plugin: pluginplay.Plugin
 
 

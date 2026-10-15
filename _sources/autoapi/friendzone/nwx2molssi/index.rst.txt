@@ -30,9 +30,9 @@ Functions
 Package Contents
 ----------------
 
-.. py:function:: load_molssi_modules(mm)
+.. py:function:: load_molssi_modules(plugin)
 
-   Loads the collection of all MolSSI modules.
+   Adds the collection of all MolSSI modules to a plugin.
 
    This function calls the various submodule specific loading functions,
    including:
@@ -51,7 +51,7 @@ Package Contents
        *  ``qcengine``
        *  ``networkx``
 
-   :param mm: The ModuleManager that the all Modules will be loaded into.
-   :type mm: pluginplay.ModuleManager
+   :param plugin: The plugin the modules will be added to.
+   :type plugin: pluginplay.Plugin
 
 

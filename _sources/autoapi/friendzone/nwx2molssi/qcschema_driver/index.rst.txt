@@ -18,12 +18,11 @@ Module Contents
 
 .. py:function:: _failed_result(atomic_input, error_type, error_message)
 
-.. py:function:: load_qcschema_driver_modules(mm)
+.. py:function:: load_qcschema_driver_modules(plugin)
 
-   Loads the QCSchemaDriver module.
+   Adds the QCSchemaDriver module to a plugin.
 
-   :param mm: The ModuleManager that the QCSchemaDriver module will be
-              loaded into.
-   :type mm: pluginplay.ModuleManager
+   :param plugin: The plugin the QCSchemaDriver module will be added to.
+   :type plugin: pluginplay.Plugin
 
 

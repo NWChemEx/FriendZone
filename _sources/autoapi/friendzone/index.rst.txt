@@ -16,23 +16,28 @@ Submodules
    /autoapi/friendzone/utils/index
 
 
-Functions
----------
+Classes
+-------
 
 .. autoapisummary::
 
-   friendzone.load_modules
+   friendzone.FriendZone
 
 
 Package Contents
 ----------------
 
-.. py:function:: load_modules(mm)
+.. py:class:: FriendZone
 
-   Loads the collection of all modules provided by Friendzone.
+   Bases: :py:obj:`pluginplay.Plugin`
 
-   This function calls the various friend specific module loading functions,
-   including:
+
+   The FriendZone plugin.
+
+   Load it into a ModuleManager with
+   ``mm.load_plugin(friendzone.FriendZone())``. The plugin's name is
+   "friendzone". Its modules are added by the various friend specific module
+   loading functions, including:
 
    *  ``load_ase_modules``
    *  ``load_molssi_modules``
@@ -41,8 +46,5 @@ Package Contents
 
        Some and/or all of these may be no-ops depending on what friends were
        enabled.
-
-   :param mm: The ModuleManager that the all Modules will be loaded into.
-   :type mm: pluginplay.ModuleManager
 
 
