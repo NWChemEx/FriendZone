@@ -96,8 +96,8 @@ class QCEngineGradient(QCEngineEnergy):
         )
 
 
-def load_nwchem_via_molssi_modules(mm):
-    """Loads the collection of modules that wrap QCElemental calls.
+def load_nwchem_via_molssi_modules(plugin):
+    """Adds the collection of modules that wrap QCEngine calls to a plugin.
 
     Currently, the friends exported by this function are:
 
@@ -119,16 +119,16 @@ def load_nwchem_via_molssi_modules(mm):
 
         This function is a no-op if NWChem is not installed.
 
-    :param mm: The ModuleManager that the NWChem Modules will be loaded into.
-    :type mm: pluginplay.ModuleManager
+    :param plugin: The plugin the NWChem modules will be added to.
+    :type plugin: pluginplay.Plugin
     """
     if is_nwchem_enabled():
         for method in ["SCF", "B3LYP", "MP2", "CCSD", "CCSD(T)"]:
             egy_key = "NWChem" + " : " + method
             grad_key = egy_key + " Gradient"
-            mm.add_module(egy_key, QCEngineEnergy())
-            mm.add_module(grad_key, QCEngineGradient())
+            plugin.add_module(egy_key, QCEngineEnergy())
+            plugin.add_module(grad_key, QCEngineGradient())
 
             for key in [egy_key, grad_key]:
-                mm.change_input(key, "program", "nwchem")
-                mm.change_input(key, "method", method)
+                plugin.modules().change_input(key, "program", "nwchem")
+                plugin.modules().change_input(key, "method", method)

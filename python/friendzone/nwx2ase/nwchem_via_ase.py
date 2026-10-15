@@ -94,15 +94,15 @@ class NWChemGradientViaASE(pp.ModuleBase):
         return pt.wrap_results(rv, augrad)
 
 
-def load_nwchem_via_ase_modules(mm):
-    """Loads the collection of all ASE(NWChem) modules.
+def load_nwchem_via_ase_modules(plugin):
+    """Adds the collection of all ASE(NWChem) modules to a plugin.
 
     .. note::
 
         This function is a no-op if NWChem is not installed.
 
-    :param mm: The ModuleManager that the all Modules will be loaded into.
-    :type mm: pluginplay.ModuleManager
+    :param plugin: The plugin the modules will be added to.
+    :type plugin: pluginplay.Plugin
     """
     if is_nwchem_enabled():
         # Loop over methods and add energy and gradient modules for each
@@ -110,8 +110,8 @@ def load_nwchem_via_ase_modules(mm):
             egy_key = "ASE(NWChem) : " + method
             grad_key = egy_key + " gradient"
 
-            mm.add_module(egy_key, NWChemEnergyViaASE())
-            mm.add_module(grad_key, NWChemGradientViaASE())
+            plugin.add_module(egy_key, NWChemEnergyViaASE())
+            plugin.add_module(grad_key, NWChemGradientViaASE())
 
             for key in [egy_key, grad_key]:
-                mm.change_input(key, "method", method)
+                plugin.modules().change_input(key, "method", method)

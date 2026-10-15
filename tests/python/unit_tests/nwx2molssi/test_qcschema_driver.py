@@ -14,7 +14,7 @@
 
 import unittest
 
-from friendzone import load_modules
+from friendzone import FriendZone
 from friendzone.friends import is_molssi_enabled
 
 if is_molssi_enabled():
@@ -101,7 +101,7 @@ class TestQCSchemaDriver(unittest.TestCase):
             self.skipTest("MolSSI friend is not enabled!")
 
         self.mm = ModuleManager()
-        load_modules(self.mm)
+        self.mm.load_plugin(FriendZone())
         self.mm.add_module("Dummy AOEnergy", DummyAOEnergyModule())
         self.mm.change_submod("QCSchema Driver", "AOEnergy", "Dummy AOEnergy")
 

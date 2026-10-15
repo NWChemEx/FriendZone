@@ -15,7 +15,7 @@
 import unittest
 
 import numpy as np
-from friendzone import load_modules
+from friendzone import FriendZone
 from friendzone.friends import is_ase_enabled, is_nwchem_enabled
 from molecules import make_h2
 from pluginplay import ModuleManager
@@ -72,4 +72,4 @@ class TestNWChemViaASE(unittest.TestCase):
             self.skipTest("NWChem backend is not enabled!")
 
         self.mm = ModuleManager()
-        load_modules(self.mm)
+        self.mm.load_plugin(FriendZone())

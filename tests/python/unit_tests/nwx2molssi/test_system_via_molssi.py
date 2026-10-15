@@ -15,7 +15,7 @@
 import unittest
 
 from compare_molecules import compare_molecules
-from friendzone import load_modules
+from friendzone import FriendZone
 from friendzone.friends import is_molssi_enabled
 from molecules import make_h2
 from pluginplay import ModuleManager
@@ -36,5 +36,5 @@ class TestSystemViaMolSSI(unittest.TestCase):
             self.skipTest("MolSSI friend is not enabled!")
 
         self.mm = ModuleManager()
-        load_modules(self.mm)
+        self.mm.load_plugin(FriendZone())
         self.pt = MoleculeFromString()
